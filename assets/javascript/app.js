@@ -1,10 +1,12 @@
+/* global $ */
+
 $(document).ready(function() {
 
 ///
-// $("#card").flip({
-//   axis: 'y',
-//   trigger: 'click'
-// });
+$("#card").flip({
+  axis: 'y',
+  trigger: 'click'
+});
 
 /// this sets the current date for the date selector
 var today = new Date();
@@ -21,6 +23,18 @@ var yyyy = today.getFullYear();
 today = yyyy+'-'+mm+'-'+dd;
 $(".calendar").attr("min", today);
 
-})
+
+$("#addTrip").click(function() {
+  fillCarousel();
+  
+  function fillCarousel() {
+    console.log("lmao");
+    }
+});
+
+});
+
+
+
 
 /// end

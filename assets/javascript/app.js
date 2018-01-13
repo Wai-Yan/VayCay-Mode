@@ -27,17 +27,19 @@ var input = document.getElementById('cityInput');
 var autocomplete = new google.maps.places.Autocomplete(input, {types: ['(cities)']});
 google.maps.event.addListener(autocomplete, 'place_changed', function(){
  var place = autocomplete.getPlace();
-return(place);
+console.log(place);
+console.log("place is: " + place.formatted_address);
 })
 
 //on click function when user clicks the add button 
-$(".destinationSubmit").on("click", function(event){
+$(document).on("click", "#destinationSubmit", function(event){
 	event.preventDefault();
+	console.log("button works");
 })
 
 
 
 /// end
-
+})
 
 

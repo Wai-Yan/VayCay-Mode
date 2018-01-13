@@ -14,6 +14,8 @@
   <script src="https://momentjs.com/downloads/moment.min.js"></script>
   <!-- card flip.js -->
   <script src="https://cdn.rawgit.com/nnattawat/flip/master/dist/jquery.flip.js"></script>
+  <!-- font awesome -->
+  <script src="https://use.fontawesome.com/70e6cfb294.js"></script>
   <!-- custom js -->
   <script src="assets/javascript/app.js"></script>
   <title>VacayMode</title>
@@ -48,9 +50,9 @@
 <!-- Site Content -->
 <div class="container">
 <!-- Using flip.js -->
-<div id="card">
+<!--<div id="card"> -->
   <!-- Front of card. Landing page -->
-  <div class="front">
+  <!-- <div class="front"> -->
       <!-- Top jumbotron -->
     <div class="jumbotron jumbotron-fluid">
   <div class="container">
@@ -73,29 +75,52 @@
     <label for="startDate">Trip start date:</label>
   <input type="date" class="form-control calendar" name="tripStartDate">
   </form>
-  <button type="submit" class="btn btn-primary btn-lg btn-block">Add</button>
-<!-- Form -->
+  <button type="submit" class="btn btn-primary btn-lg btn-block">Add <i class="fa fa-plus-square-o"></i></button>
+<!-- end Form -->
   </div>
 </div>
 </div>
 <div class="col">
 <div class="card">
+<!-- table of trips below -->
 <div class="card-body">
   Your trips:
+  <div class="mb-2">
+  </div>
+  <table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">City</th>
+      <th scope="col">Date</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="tableRow">
+      <td>Cancun</td>
+      <td>date placeholder</td>
+      <td><span class="fa fa-trash-o"></span></td>
+    </tr>
+    <tr class="tableRow">
+      <td>Hong Kong</td>
+      <td>date placeholder</td>
+      <td><span class="fa fa-trash-o"></span></td>
+    </tr>
+  </tbody>
+</table>
 </div>
+<!-- end of tables -->
 </div>
 </div>
 </div>
 
   </div>
+  <div class="container">
   <!-- Back of card. Tile view -->
-  <div class="back">
+  <!--<div class="back"> -->
     <!--Back content. This is where the results page should appear-->
-  </div>
-</div>
-</div>
 
-
+</div>
 </div>
 
 </body>

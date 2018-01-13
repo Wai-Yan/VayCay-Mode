@@ -3,10 +3,10 @@
 $(document).ready(function() {
 
 ///
-$("#card").flip({
-  axis: 'y',
-  trigger: 'click'
-});
+// $("#card").flip({
+//   axis: 'y',
+//   trigger: 'click'
+// });
 
 /// this sets the current date for the date selector
 var today = new Date();

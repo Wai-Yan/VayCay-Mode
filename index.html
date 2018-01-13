@@ -16,6 +16,8 @@
   <script src="https://cdn.rawgit.com/nnattawat/flip/master/dist/jquery.flip.js"></script>
   <!-- custom js -->
   <script src="assets/javascript/app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.8.2/firebase.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&language=en"></script>
   <title>VacayMode</title>
 </head>
 
@@ -73,7 +75,7 @@
     <label for="startDate">Trip start date:</label>
   <input type="date" class="form-control calendar" name="tripStartDate">
   </form>
-  <button type="submit" class="btn btn-primary btn-lg btn-block">Add</button>
+  <button type="submit" class="btn btn-primary btn-lg btn-block" id="destinationSubmit">Add</button>
 <!-- Form -->
   </div>
 </div>
@@ -97,6 +99,7 @@
 
 
 </div>
+
 
 </body>
 </html>

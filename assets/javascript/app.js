@@ -21,6 +21,23 @@ var yyyy = today.getFullYear();
 today = yyyy+'-'+mm+'-'+dd;
 $(".calendar").attr("min", today);
 
+
+//function to autofill city name and retreive google data 
+var input = document.getElementById('cityInput');
+var autocomplete = new google.maps.places.Autocomplete(input, {types: ['(cities)']});
+google.maps.event.addListener(autocomplete, 'place_changed', function(){
+ var place = autocomplete.getPlace();
+return(place);
 })
 
+//on click function when user clicks the add button 
+$(".destinationSubmit").on("click", function(event){
+	event.preventDefault();
+})
+
+
+
 /// end
+
+
+

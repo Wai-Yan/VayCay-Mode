@@ -20,6 +20,8 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
   <!-- custom js -->
   <script src="assets/javascript/app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.8.2/firebase.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&language=en"></script>
   <title>VacayMode</title>
 </head>
 
@@ -78,9 +80,8 @@
 <form class="mb-4" action="/action_page.php">
   <label for="startDate">Trip start date:</label>
   <input type="date" class="form-control calendar" name="tripStartDate">
-</form>
-  
 <button type="submit" class="btn btn-primary btn-lg btn-block" id="addTrip">Add</button>
+
 <!-- Form -->
   </div>
 </div>
@@ -138,6 +139,7 @@
 
 
 </div>
+
 
 </body>
 </html>

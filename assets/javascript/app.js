@@ -21,23 +21,24 @@ $(document).ready(function() {
   var database = firebase.database();
 
 //function to render rows
-function renderRows (){
-  $(".tableRow").empty()
-  console.log("render rows works")
-  console.log("render rows: " + place.formatted_address)
-  var tBody = $("tbody");
-  var tRow = $("<tr>");
+function renderRows (place){
+    $(".tableRow").empty()
+    console.log("render rows works")
+    console.log("render rows: " + place.formatted_address)
+    console.log(place.formatted_address);
+    var tBody = $("tbody");
+    var tRow = $("<tr>");
 
-  var destinationTD = $("<td>").text(place.formatted_address);
-  destinationTD.attr("class", "citySelect").attr("data-value", place.formatted_address);
-  var destinationDateTD = $("<td>").text(destinationDate);
+    var destinationTD = $("<td>").text(place.formatted_address);
+    destinationTD.attr("class", "citySelect").attr("data-value", place.formatted_address);
+    var destinationDateTD = $("<td>").text(destinationDate);
 
-  tRow.append(destinationTD, destinationDateTD);
-  tBody.prepend(tRow);
+    tRow.append(destinationTD, destinationDateTD);
+    tBody.prepend(tRow);
 }
 
 //function to store values from input fields
-function storeInputValues(){
+function storeInputValues(place){
 console.log("storeInputValues works")
 destination = place.formatted_address;
 var rawDestinationDate = $("#dateInput").val().trim();
@@ -50,27 +51,10 @@ console.log("destination date is: " + destinationDate);
 //on click function when user clicks the add button 
 $(document).on("click", "#addTrip", function(event){
 	event.preventDefault();
-  storeInputValues();
+  storeInputValues(retrieveLocation());
 	console.log("button works");
-  renderRows("render rows test: " + place)
+  renderRows(retrieveLocation());
 })
-
-// function to generate and initiate clock countdown flip
-var clock;
-function countDownDisplay() {
-  // Grab the current date
-  var currentDate = new Date();
-  // Set some date in the future. In this case, it's always Jan 1
-  var futureDate  = new Date(currentDate.getFullYear() + 1, 0, 1);
-  // Calculate the difference in seconds between the future and current date
-  var diff = futureDate.getTime() / 1000 - currentDate.getTime() / 1000;
-  // Instantiate a countdown FlipClock
-  clock = $('.clock').FlipClock(diff, {
-    clockFace: 'DailyCounter',
-    countdown: true
-    });
-  };
-  
   ///
   /// flip.js function is called here
 
@@ -110,12 +94,12 @@ function countDownDisplay() {
     return place;
   }
 
-  //on click function when user clicks the add button
-  $(document).on("click", "#addTrip", function(event){
-    event.preventDefault();
-    console.log("button works");
-    renderRows(place)
-  });
+  // //on click function when user clicks the add button
+  // $(document).on("click", "#addTrip", function(event){
+  //   event.preventDefault();
+  //   console.log("button works");
+  //   renderRows(retrieveLocation);
+  // });
 
   //function to fill carousel
   $("#addTrip").click(function() {
@@ -126,6 +110,7 @@ function countDownDisplay() {
     console.log("lmao");
   }
 
+  // function to generate and initiate clock countdown flip
   function countDownDisplay() {
     var clock;
     // Grab the current date

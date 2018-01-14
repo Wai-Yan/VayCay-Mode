@@ -2,7 +2,7 @@
 
 $(document).ready(function() {
 
-///
+/// flip.js function is called here
 // $("#card").flip({
 //   axis: 'y',
 //   trigger: 'click'
@@ -25,7 +25,7 @@ $(".calendar").attr("min", today);
 
 
 
-//function to autofill city name and retreive google data 
+//function to autofill city name and retreive google data
 var input = document.getElementById('cityInput');
 var autocomplete = new google.maps.places.Autocomplete(input, {types: ['(cities)']});
 google.maps.event.addListener(autocomplete, 'place_changed', function(){
@@ -34,7 +34,7 @@ console.log(place);
 console.log("place is: " + place.formatted_address);
 })
 
-//on click function when user clicks the add button 
+//on click function when user clicks the add button
 $(document).on("click", "#destinationSubmit", function(event){
 	event.preventDefault();
 	console.log("button works");
@@ -43,21 +43,11 @@ $(document).on("click", "#destinationSubmit", function(event){
 //function to fill carousel
 $("#addTrip").click(function() {
   fillCarousel();
-  
+
   function fillCarousel() {
     console.log("lmao");
     }
 });
+/// end
 
 });
-
-
-
-
-
-
-
-/// end
-})
-
-

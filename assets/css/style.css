@@ -7,50 +7,48 @@
 }
 
 /* naviation link effects */
-.cl-effect-1 a::before,
-.cl-effect-1 a::after {
-	display: inline-block;
-	opacity: 0;
-	-webkit-transition: -webkit-transform 0.3s, opacity 0.2s;
-	-moz-transition: -moz-transform 0.3s, opacity 0.2s;
-	transition: transform 0.3s, opacity 0.2s;
+
+.cl-effect-1 a::before, .cl-effect-1 a::after {
+  display: inline-block;
+  opacity: 0;
+  -webkit-transition: -webkit-transform 0.3s, opacity 0.2s;
+  -moz-transition: -moz-transform 0.3s, opacity 0.2s;
+  transition: transform 0.3s, opacity 0.2s;
 }
 
 .cl-effect-1 a::before {
-	margin-right: 10px;
-	content: '[';
-	-webkit-transform: translateX(20px);
-	-moz-transform: translateX(20px);
-	transform: translateX(20px);
+  margin-right: 10px;
+  content: '[';
+  -webkit-transform: translateX(20px);
+  -moz-transform: translateX(20px);
+  transform: translateX(20px);
 }
 
 .cl-effect-1 a::after {
-	margin-left: 10px;
-	content: ']';
-	-webkit-transform: translateX(-20px);
-	-moz-transform: translateX(-20px);
-	transform: translateX(-20px);
+  margin-left: 10px;
+  content: ']';
+  -webkit-transform: translateX(-20px);
+  -moz-transform: translateX(-20px);
+  transform: translateX(-20px);
 }
 
-.cl-effect-1 a:hover::before,
-.cl-effect-1 a:hover::after,
-.cl-effect-1 a:focus::before,
-.cl-effect-1 a:focus::after {
-	opacity: 1;
-	-webkit-transform: translateX(0px);
-	-moz-transform: translateX(0px);
-	transform: translateX(0px);
+.cl-effect-1 a:hover::before, .cl-effect-1 a:hover::after, .cl-effect-1 a:focus::before, .cl-effect-1 a:focus::after {
+  opacity: 1;
+  -webkit-transform: translateX(0px);
+  -moz-transform: translateX(0px);
+  transform: translateX(0px);
 }
+
 /* end css for link */
 
 .jumbotron {
-    padding: 1rem;
-    margin-bottom: 1rem;
-    text-align: center;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  text-align: center;
 }
 
 .display-4 {
-    font-size: 2.5rem;
+  font-size: 2.5rem;
 }
 
 p {
@@ -59,4 +57,31 @@ p {
 
 .card-body {
   text-align: center;
+}
+
+.table td, .table th {
+  border-top: 0px;
+}
+
+.fa-trash-o{
+  visibility: hidden;
+  cursor: pointer;
+}
+
+.showTrash:hover span {
+  visibility: visible;
+}
+
+.citySelect {
+  cursor: pointer;
+}
+
+.clock {
+  margin: 2em;
+}
+
+.flip-clock-wrapper {
+    display: inline-block;
+    width: auto;
+    height: auto:
 }

@@ -1,26 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+  <!-- flipclock.css -->
+  <link rel="stylesheet" type="text/css" href="assets/css/flipclock.css">
   <!-- custom css -->
   <link rel="stylesheet" type="text/css" href="assets/css/style.css">
   <!-- jQuery -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <!-- moment.js -->
   <script src="https://momentjs.com/downloads/moment.min.js"></script>
+  <!-- flipClock.js -->
+  <script src="assets/javascript/flipclock.min.js"></script>
   <!-- card flip.js -->
-  <script src="https://cdn.rawgit.com/nnattawat/flip/master/dist/jquery.flip.js"></script>
+  <script src = "https://cdn.rawgit.com/nnattawat/flip/master/dist/jquery.flip.js">
+  </script>
+  <!-- font awesome -->
+  <script src="https://use.fontawesome.com/70e6cfb294.js"></script>
   <!-- popper.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
   <!-- bootstrap.js (For Carousel)-->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
   <!-- custom js -->
   <script src="assets/javascript/app.js"></script>
+  <!-- firebase -->
   <script src="https://www.gstatic.com/firebasejs/4.8.2/firebase.js"></script>
+  <!-- google maps api -->
   <script src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&language=en"></script>
   <title>VacayMode</title>
 </head>
@@ -31,115 +41,160 @@
   <div class="wrapper">
     <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
       <div class="container">
-  <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="#">
   <img src="assets/images/logo_placeholder.png" height="50" alt=""></a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <span class="navbar-text">
-    Placeholder logo and tagline or short description
-  </span>
-  <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-    <ul class="navbar-nav">
-      <li class="nav-item active cl-effect-1">
-        <a class="nav-link" href="#">Your Trip<span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item cl-effect-1">
-        <a class="nav-link" href="#">About Us</a>
-      </li>
-    </ul>
-  </div>
-</div>
-</nav>
-<!-- Site Content -->
-<div class="container">
-<!-- Using flip.js -->
-<div id="card">
-  <!-- Front of card. Landing page -->
-  <div class="front">
+        <p class="navbar-text">
+          Placeholder logo and tagline or short description
+        </p>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item active cl-effect-1">
+              <a class="nav-link" href="#">Your Trip<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item cl-effect-1">
+              <a class="nav-link" href="#">About Us</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- Site Content -->
+    <div class="container">
+      <!-- Using flip.js -->
+      <!-- <div id="card"> -->
+      <!-- Front of card. Landing page -->
+      <!-- <div class="front"> -->
       <!-- Top jumbotron -->
-    <div class="jumbotron jumbotron-fluid">
-      <div class="container">
-        <p class="lead">Hi, name! Enter a new trip below or select one of your trips to view.</p>
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+          <p class="lead">Hi, name! Enter a new trip below or select one of your trips to view.</p>
+        </div>
       </div>
+      <!-- end jumbotron -->
+      <!-- beginning of row -->
+      <div class="row mb-3">
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <!-- Form -->
+              <form>
+                <div class="form-group">
+                  <label for="city">Enter a city:</label>
+                  <input type="text" class="form-control" id="cityInput" placeholder="ex: London">
+                </div>
+              </form>
+              <form class="mb-4" action="/action_page.php">
+                <label for="startDate">Trip start date:</label>
+                <input type="date" class="form-control calendar" name="tripStartDate">
+              </form>
+              <button type="submit" class="btn btn-primary btn-lg btn-block">Add <i class="fa fa-plus-square-o"></i></button>
+              <!-- end Form -->
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <!-- table of trips below -->
+            <div class="card-body">
+              Your trips:
+              <div class="mb-2">
+              </div>
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">City</th>
+                    <th scope="col">Date</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="tableRow">
+                    <td class="citySelect">Cancun</td>
+                    <td class="citySelect">date placeholder</td>
+                    <td class="showTrash"><span class="fa fa-trash-o"></span></td>
+                  </tr>
+                  <tr class="tableRow">
+                    <td class="citySelect">Hong Kong</td>
+                    <td class="citySelect">date placeholder</td>
+                    <td class="showTrash"><span class="fa fa-trash-o"></span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- end of tables -->
+          </div>
+        </div>
+      </div>
+      <!-- end of row -->
     </div>
-    <div class="row">
-      <div class="col">
-    <div class="card">
-      <div class="card-body">
-    <!-- end jumbotron -->
+    <!-- end of container and first section of site content -->
 
-<!-- Form -->
-<form>
-  <div class="form-group">
-    <label for="city">Enter a city:</label>
-    <input type="text" class="form-control" id="cityInput" placeholder="ex: London">
-  </div>
-</form>
-  
-<form class="mb-4" action="/action_page.php">
-  <label for="startDate">Trip start date:</label>
-  <input type="date" class="form-control calendar" name="tripStartDate">
-<button type="submit" class="btn btn-primary btn-lg btn-block" id="addTrip">Add</button>
 
-<!-- Form -->
-  </div>
-</div>
-</div>
-  <div class="col">
-    <div class="card">
-      <div class="card-body">
-        Your trips:
-      </div>
-    </div>
-  </div>
-</div>
-
-  </div>
-  <!-- Back of card. Tile view -->
-  <div class="back">
-    <!--Back content. This is where the results page should appear-->
-      <!-- Carousel -->
-      <div id="demo" class="carousel slide" data-ride="carousel">
-    
-      <!-- Indicators -->
-      <ul class="carousel-indicators">
-        <li data-target="#demo" data-slide-to="0" class="active"></li>
-        <li data-target="#demo" data-slide-to="1"></li>
-        <li data-target="#demo" data-slide-to="2"></li>
-      </ul>
-    
-      <!-- The slideshow -->
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="assets/images/carousel1.jpg" alt="Los Angeles">
-        </div>
-        <div class="carousel-item">
-          <img src="assets/images/carousel2.jpg" alt="Chicago">
-        </div>
-        <div class="carousel-item">
-          <img src="assets/images/carousel3.jpg" alt="New York">
+    <!-- Back of card. Tile view -->
+    <div class="container">
+      <!-- Back of card. Tile view -->
+      <!-- <div class="back"> -->
+      <!--Back content. This is where the results page should appear-->
+      <!-- Countdown begins here -->
+      <div class="row">
+        <div class="col">
+          <div class="card mb-3">
+            <div class="card-body">
+              <h2 class="countdownMessage">Count down to your trip to city!</h2>
+              <div class="clock"></div>
+            </div>
+          </div>
         </div>
       </div>
-    
-      <!-- Left and right controls -->
-      <a class="carousel-control-prev" href="#demo" data-slide="prev">
+      <!-- end of countdown area -->
+      <!-- carousel begins here -->
+      <div class="row">
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <!-- Carousel -->
+              <div id="demo" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <ul class="carousel-indicators">
+                  <li data-target="#demo" data-slide-to="0" class="active"></li>
+                  <li data-target="#demo" data-slide-to="1"></li>
+                  <li data-target="#demo" data-slide-to="2"></li>
+                </ul>
+                <!-- The slideshow -->
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <img src="assets/images/carousel1.jpg" alt="Los Angeles">
+                  </div>
+                  <div class="carousel-item">
+                    <img src="assets/images/carousel2.jpg" alt="Chicago">
+                  </div>
+                  <div class="carousel-item">
+                    <img src="assets/images/carousel3.jpg" alt="New York">
+                  </div>
+                </div>
+              </div>
+              <!-- Left and right controls -->
+              <a class="carousel-control-prev" href="#demo" data-slide="prev">
         <span class="carousel-control-prev-icon"></span>
       </a>
-      <a class="carousel-control-next" href="#demo" data-slide="next">
-        <span class="carousel-control-next-icon"></span>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
       </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end of carousel -->
+
     </div>
-    <!-- End Carousel -->
+    <!-- End container -->
+
   </div>
-</div>
-  
-</div>
-</div>
-
-
-</div>
-
 
 </body>
+
 </html>

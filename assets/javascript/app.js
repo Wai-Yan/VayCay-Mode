@@ -2,11 +2,9 @@
 
 $(document).ready(function() {
 
-
   var place = "";
   var destination = "";
   var destinationDate = 0
-
   
   //Initailize Firebase
    var config = {
@@ -17,6 +15,7 @@ $(document).ready(function() {
     storageBucket: "",
     messagingSenderId: "885151914772"
   };
+
   firebase.initializeApp(config);
 
   var database = firebase.database();
@@ -69,8 +68,9 @@ function countDownDisplay() {
   clock = $('.clock').FlipClock(diff, {
     clockFace: 'DailyCounter',
     countdown: true
+    });
   };
-                                });
+  
   ///
   /// flip.js function is called here
 
@@ -124,7 +124,7 @@ function countDownDisplay() {
 
   function fillCarousel() {
     console.log("lmao");
-
+  }
 
   function countDownDisplay() {
     var clock;
@@ -140,7 +140,5 @@ function countDownDisplay() {
       countdown: true
     });
   }
-
-
 });
 // End document

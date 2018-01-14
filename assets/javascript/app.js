@@ -5,7 +5,7 @@ $(document).ready(function() {
   var place = "";
   var destination = "";
   var destinationDate = 0
-  
+
   //Initailize Firebase
    var config = {
     apiKey: "AIzaSyDFiW-XEMBCNpnjixW04WxSoybIbyvS9OY",
@@ -47,7 +47,7 @@ console.log("destination date is: " + destinationDate);
 }
 
 
-//on click function when user clicks the add button 
+//on click function when user clicks the add button
 $(document).on("click", "#addTrip", function(event){
 	event.preventDefault();
   storeInputValues();
@@ -70,7 +70,7 @@ function countDownDisplay() {
     countdown: true
     });
   };
-  
+
   ///
   /// flip.js function is called here
 

@@ -23,6 +23,7 @@ $(document).ready(function() {
   //   trigger: 'click'
   // });
 
+
   /// this sets the current date for the date selector
   var today = new Date();
   var dd = today.getDate();
@@ -53,7 +54,7 @@ $(document).ready(function() {
     return place;
   }
 
-  //on click function when user clicks the add button 
+  //on click function when user clicks the add button
   $(document).on("click", "#addTrip", function(event){
     event.preventDefault();
     console.log("button works");

@@ -2,7 +2,7 @@
 
 $(document).ready(function() {
 
-//
+
 // $("#card").flip({
 //   axis: 'y',
 //   trigger: 'click'
@@ -32,10 +32,6 @@ $("#addTrip").click(function() {
     console.log("lmao");
     }
 });
+/// end
 
 });
-
-
-
-
-/// end

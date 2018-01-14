@@ -14,6 +14,10 @@
   <script src="https://momentjs.com/downloads/moment.min.js"></script>
   <!-- card flip.js -->
   <script src="https://cdn.rawgit.com/nnattawat/flip/master/dist/jquery.flip.js"></script>
+  <!-- popper.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+  <!-- bootstrap.js (For Carousel)-->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
   <!-- custom js -->
   <script src="assets/javascript/app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/4.8.2/firebase.js"></script>
@@ -55,45 +59,81 @@
   <div class="front">
       <!-- Top jumbotron -->
     <div class="jumbotron jumbotron-fluid">
-  <div class="container">
-    <p class="lead">Hi, name! Enter a new trip below or select one of your trips to view.</p>
-  </div>
-</div>
-<div class="row">
-  <div class="col">
-<div class="card">
-  <div class="card-body">
-<!-- end jumbotron -->
+      <div class="container">
+        <p class="lead">Hi, name! Enter a new trip below or select one of your trips to view.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+    <div class="card">
+      <div class="card-body">
+    <!-- end jumbotron -->
+
 <!-- Form -->
 <form>
   <div class="form-group">
     <label for="city">Enter a city:</label>
     <input type="text" class="form-control" id="cityInput" placeholder="ex: London">
   </div>
-  </form>
-  <form class="mb-4" action="/action_page.php">
-    <label for="startDate">Trip start date:</label>
+</form>
+  
+<form class="mb-4" action="/action_page.php">
+  <label for="startDate">Trip start date:</label>
   <input type="date" class="form-control calendar" name="tripStartDate">
-  </form>
-  <button type="submit" class="btn btn-primary btn-lg btn-block" id="destinationSubmit">Add</button>
+<button type="submit" class="btn btn-primary btn-lg btn-block" id="addTrip">Add</button>
+
 <!-- Form -->
   </div>
 </div>
 </div>
-<div class="col">
-<div class="card">
-<div class="card-body">
-  Your trips:
-</div>
-</div>
-</div>
+  <div class="col">
+    <div class="card">
+      <div class="card-body">
+        Your trips:
+      </div>
+    </div>
+  </div>
 </div>
 
   </div>
   <!-- Back of card. Tile view -->
   <div class="back">
     <!--Back content. This is where the results page should appear-->
+      <!-- Carousel -->
+      <div id="demo" class="carousel slide" data-ride="carousel">
+    
+      <!-- Indicators -->
+      <ul class="carousel-indicators">
+        <li data-target="#demo" data-slide-to="0" class="active"></li>
+        <li data-target="#demo" data-slide-to="1"></li>
+        <li data-target="#demo" data-slide-to="2"></li>
+      </ul>
+    
+      <!-- The slideshow -->
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="assets/images/carousel1.jpg" alt="Los Angeles">
+        </div>
+        <div class="carousel-item">
+          <img src="assets/images/carousel2.jpg" alt="Chicago">
+        </div>
+        <div class="carousel-item">
+          <img src="assets/images/carousel3.jpg" alt="New York">
+        </div>
+      </div>
+    
+      <!-- Left and right controls -->
+      <a class="carousel-control-prev" href="#demo" data-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </a>
+      <a class="carousel-control-next" href="#demo" data-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </a>
+    </div>
+    <!-- End Carousel -->
   </div>
+</div>
+  
 </div>
 </div>
 

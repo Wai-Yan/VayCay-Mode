@@ -1,3 +1,5 @@
+/* global $ */
+
 $(document).ready(function() {
 
 ///
@@ -22,6 +24,7 @@ today = yyyy+'-'+mm+'-'+dd;
 $(".calendar").attr("min", today);
 
 
+
 //function to autofill city name and retreive google data 
 var input = document.getElementById('cityInput');
 var autocomplete = new google.maps.places.Autocomplete(input, {types: ['(cities)']});
@@ -36,6 +39,21 @@ $(document).on("click", "#destinationSubmit", function(event){
 	event.preventDefault();
 	console.log("button works");
 })
+
+//function to fill carousel
+$("#addTrip").click(function() {
+  fillCarousel();
+  
+  function fillCarousel() {
+    console.log("lmao");
+    }
+});
+
+});
+
+
+
+
 
 
 

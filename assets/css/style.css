@@ -63,18 +63,25 @@ p {
   border-top: 0px;
 }
 
-span {
+.fa-trash-o{
   visibility: hidden;
-}
-
-.tableRow:hover span {
-  visibility: visible;
-}
-
-.row {
   cursor: pointer;
 }
 
-.fa-trash-o {
-  cursor: url('../images/rubbish-bin.png'), default;
+.showTrash:hover span {
+  visibility: visible;
+}
+
+.citySelect {
+  cursor: pointer;
+}
+
+.clock {
+  margin: 2em;
+}
+
+.flip-clock-wrapper {
+    display: inline-block;
+    width: auto;
+    height: auto:
 }

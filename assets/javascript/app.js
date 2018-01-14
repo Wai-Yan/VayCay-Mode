@@ -40,6 +40,23 @@ $(document).on("click", "#destinationSubmit", function(event){
 	console.log("button works");
 })
 
+// function to generate and initiate clock countdown flip
+var clock;
+function countDownDisplay() {
+  // Grab the current date
+  var currentDate = new Date();
+  // Set some date in the future. In this case, it's always Jan 1
+  var futureDate  = new Date(currentDate.getFullYear() + 1, 0, 1);
+  // Calculate the difference in seconds between the future and current date
+  var diff = futureDate.getTime() / 1000 - currentDate.getTime() / 1000;
+  // Instantiate a countdown FlipClock
+  clock = $('.clock').FlipClock(diff, {
+    clockFace: 'DailyCounter',
+    countdown: true
+  });
+  //clock.createDivider(label, [css, excludeDots])
+}
+
 //function to fill carousel
 $("#addTrip").click(function() {
   fillCarousel();
@@ -49,5 +66,7 @@ $("#addTrip").click(function() {
     }
 });
 /// end
+
+countDownDisplay()
 
 });

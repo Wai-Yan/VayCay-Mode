@@ -30,10 +30,13 @@ function renderRows (place){
     var tRow = $("<tr>");
 
     var destinationTD = $("<td>").text(place.formatted_address);
-    destinationTD.attr("class", "citySelect").attr("data-value", place.formatted_address);
-    var destinationDateTD = $("<td>").text(destinationDate);
+    destinationTD.attr("class", "citySelect").attr("data-city", place.formatted_address);
+    var destinationDateTD = $("<td>").text(destinationDate).attr("data-city", place.formatted_address);
+    var trashTD = $("<td>").attr("class", "showTrash");
+    var trashSpan = $("<span>").attr("class", "fa fa-trash-o");
 
-    tRow.append(destinationTD, destinationDateTD);
+    trashTD.append(trashSpan);
+    tRow.append(destinationTD, destinationDateTD, trashTD);
     tBody.prepend(tRow);
 }
 
@@ -47,6 +50,12 @@ console.log("destination is" + destination);
 console.log("destination date is: " + destinationDate);
 }
 
+//click function on table data 
+$(document).on("click", ".citySelect", function(event){
+  destination = $(this).attr("data-city")
+  console.log("This is the value when you click on a city: " + destination);
+})
+
 
 //on click function when user clicks the add button 
 $(document).on("click", "#addTrip", function(event){
@@ -54,7 +63,9 @@ $(document).on("click", "#addTrip", function(event){
   storeInputValues(retrieveLocation());
 	console.log("button works");
   renderRows(retrieveLocation());
+  fillCarousel();
 })
+
   ///
   /// flip.js function is called here
 
@@ -101,10 +112,6 @@ $(document).on("click", "#addTrip", function(event){
   //   renderRows(retrieveLocation);
   // });
 
-  //function to fill carousel
-  $("#addTrip").click(function() {
-    fillCarousel();
-  });
 
   function fillCarousel() {
     console.log("lmao");

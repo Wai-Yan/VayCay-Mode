@@ -1,10 +1,11 @@
 /* global $ */
 
 $(document).ready(function() {
-
+  var trips = [];
   var place = "";
   var destination = "";
   var destinationDate = 0
+  var latLng = "";
 
   //Initailize Firebase
   var config = {
@@ -30,7 +31,7 @@ $(document).ready(function() {
     var tRow = $("<tr>");
 
     var destinationTD = $("<td>").text(place.formatted_address);
-    destinationTD.attr("class", "citySelect").attr("data-city", place.formatted_address);
+    destinationTD.attr("class", "citySelect").attr("data-city", place.formatted_address).attr("lat", place.geometry.location.lat).attr("lng", place.geometry.location.lng);
     var destinationDateTD = $("<td>").text(destinationDate).attr("data-city", place.formatted_address);
     var trashTD = $("<td>").attr("class", "showTrash");
     var trashSpan = $("<span>").attr("class", "fa fa-trash-o");
@@ -64,7 +65,17 @@ $(document).on("click", "#addTrip", function(event){
 	console.log("button works");
   renderRows(retrieveLocation());
   fillCarousel();
-})
+  })
+
+  // function to delete packing list item
+  $(document.body).on("click", ".showTrash", function() {
+    var listRow = $(this).parent();
+    // console.log(listRow)
+    // Select and Remove the specific <p> element that previously held the to do item number.
+    listRow.remove();
+  }); 
+ 
+
   ///
   /// flip.js function is called here
 
@@ -102,16 +113,11 @@ $(document).on("click", "#addTrip", function(event){
   //function to retrieve destination from Google
   function retrieveLocation() {
     var place = autocomplete.getPlace();
+    trips.push(place)
     console.log(place)
     return place;
   }
 
-  // //on click function when user clicks the add button
-  // $(document).on("click", "#addTrip", function(event){
-  //   event.preventDefault();
-  //   console.log("button works");
-  //   renderRows(retrieveLocation);
-  // });
 
 
   function fillCarousel() {
@@ -179,6 +185,8 @@ $(document).on("click", "#addTrip", function(event){
     // Select and Remove the specific <p> element that previously held the to do item number.
     listRow.remove();
   });
+
+
 
 
 

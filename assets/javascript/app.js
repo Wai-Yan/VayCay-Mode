@@ -142,7 +142,17 @@ $(document).on("click", "#addTrip", function(event){
     */
 
     var userCity = userPlace.formatted_address;
-    userCity = userCity.replace(/\s/g, '');
+    userCity = userCity.split(",");
+    userCity[0] = userCity[0].replace(/\s/g, '+');
+    userCity = userCity.join(",");
+    userCity = userCity.split(",");
+    userCityLength = userCity.length;
+
+    for (var i = 0; i < userCityLength; i++) {
+      userCity[i] = userCity[i].replace(/\s/g, '');
+    }
+
+    userCity = userCity.join();
 
     var APIKey = "ef097988a11b755c604a7aad621cf60d";
 
@@ -166,12 +176,24 @@ $(document).on("click", "#addTrip", function(event){
     */
 
     var userCity = userPlace.formatted_address;
-    userCity = userCity.replace(/\s/g, '');
+    userCity = userCity.split(",");
+    userCity[0] = userCity[0].replace(/\s/g, '+');
+    userCity = userCity.join(",");
+    userCity = userCity.split(",");
+    userCityLength = userCity.length;
+
+    for (var i = 0; i < userCityLength; i++) {
+      userCity[i] = userCity[i].replace(/\s/g, '');
+    }
+
+    userCity = userCity.join();
 
     var newForecastImage, date;
     var APIKey = "ef097988a11b755c604a7aad621cf60d";
 
     var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + userCity + "&units=imperial&appid=" + APIKey;
+
+    console.log(queryURL);
 
     $.ajax({
     url: queryURL,

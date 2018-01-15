@@ -85,3 +85,30 @@ p {
     width: auto;
     height: auto:
 }
+
+.align-left {
+  text-align: left;
+}
+
+.float-right {
+  float: right;
+}
+
+.float-left {
+  float; left;
+}
+
+.clear {
+  clear: both;
+}
+
+.trashColumn:hover span {
+  visibility: visible;
+}
+
+@media only screen and (max-width: 700px) {
+  .clock {
+  zoom: 0.35;
+  -moz-transform: scale(0.35)
+  }
+}

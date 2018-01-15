@@ -66,6 +66,7 @@ $(document).on("click", "#addTrip", function(event){
   showCurrentWeather(retrieveLocation())
   showForecastedWeather(retrieveLocation());
   fillCarousel();
+  initMap(retrieveLocation());
 })
   ///
   /// flip.js function is called here
@@ -135,6 +136,25 @@ $(document).on("click", "#addTrip", function(event){
       countdown: true
     });
   };
+  
+  function initMap(place) {
+    
+    var userLatitude = place.geometry.location.lat();
+    console.log(userLatitude);
+    
+    var userLongitude = place.geometry.location.lng();
+    console.log(userLongitude);
+    
+    var userCoordinate = {lat: userLatitude, lng: userLongitude};
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 13,
+      center: userCoordinate
+    });
+    var marker = new google.maps.Marker({
+      position: userCoordinate,
+      map: map
+    });
+  }
 
   function showCurrentWeather(userPlace) {
     /*
@@ -146,7 +166,7 @@ $(document).on("click", "#addTrip", function(event){
     userCity[0] = userCity[0].replace(/\s/g, '+');
     userCity = userCity.join(",");
     userCity = userCity.split(",");
-    userCityLength = userCity.length;
+    var userCityLength = userCity.length;
 
     for (var i = 0; i < userCityLength; i++) {
       userCity[i] = userCity[i].replace(/\s/g, '');
@@ -168,7 +188,7 @@ $(document).on("click", "#addTrip", function(event){
         var newImage = $("<img src='http://openweathermap.org/img/w/" + response.weather[0].icon +".png'>");
         $("#currentWeather").prepend(newImage);
       });
-  };
+  }
 
   function showForecastedWeather(userPlace) {
     /*
@@ -180,7 +200,7 @@ $(document).on("click", "#addTrip", function(event){
     userCity[0] = userCity[0].replace(/\s/g, '+');
     userCity = userCity.join(",");
     userCity = userCity.split(",");
-    userCityLength = userCity.length;
+    var userCityLength = userCity.length;
 
     for (var i = 0; i < userCityLength; i++) {
       userCity[i] = userCity[i].replace(/\s/g, '');

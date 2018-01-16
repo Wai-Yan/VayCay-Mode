@@ -86,24 +86,43 @@ p {
     height: auto:
 }
 
+.fixed-height-city {
+  overflow-y: scroll;
+  height: 280px;
+}
+
+.fixed-height {
+  overflow-y: scroll;
+  height: 350px;
+}
+
 .align-left {
   text-align: left;
 }
 
-.float-right {
-  float: right;
-}
-
-.float-left {
-  float; left;
-}
-
-.clear {
-  clear: both;
-}
+.btn-sm {
+    font-size: .5rem;
+  }
 
 .trashColumn:hover span {
   visibility: visible;
+}
+
+.list-p:hover {
+  cursor: pointer;
+  opacity: .7;
+}
+
+/* When clicked on, add a background color and strike out text */
+.col-checked {
+  text-decoration: line-through;
+  padding-left: 1em;
+}
+
+/* Add a "checked" mark when clicked on */
+.col-checked::before {
+  content: '✓';
+  position: absolute;
 }
 
 @media only screen and (max-width: 992px) {

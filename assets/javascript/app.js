@@ -38,35 +38,35 @@ $(document).ready(function() {
     trashTD.append(trashSpan);
     tRow.append(destinationTD, destinationDateTD, trashTD);
     tBody.prepend(tRow);
-}
+  }
 
-//function to store values from input fields
-function storeInputValues(place){
-console.log("storeInputValues works")
-destination = place.formatted_address;
-var rawDestinationDate = $("#dateInput").val().trim();
-destinationDate = moment(rawDestinationDate).format('MM/DD/YYYY');
-// console.log("destination is" + destination);
-// console.log("destination date is: " + destinationDate);
-}
+  //function to store values from input fields
+  function storeInputValues(place) {
+    console.log("storeInputValues works")
+    destination = place.formatted_address;
+    var rawDestinationDate = $("#dateInput").val().trim();
+    destinationDate = moment(rawDestinationDate).format('MM/DD/YYYY');
+    // console.log("destination is" + destination);
+    // console.log("destination date is: " + destinationDate);
+  }
 
-//click function on table data
-$(document).on("click", ".citySelect", function(event){
-  destination = $(this).attr("data-city")
-  console.log("This is the value when you click on a city: " + destination);
-})
+  //click function on table data
+  $(document).on("click", ".citySelect", function(event) {
+    destination = $(this).attr("data-city")
+    console.log("This is the value when you click on a city: " + destination);
+  })
 
 
-//on click function when user clicks the add button
-$(document).on("click", "#addTrip", function(event){
-	event.preventDefault();
-  storeInputValues(retrieveLocation());
-	// console.log("button works");
-  renderRows(retrieveLocation());
-  showCurrentWeather(retrieveLocation())
-  showForecastedWeather(retrieveLocation());
-  fillCarousel();
-})
+  //on click function when user clicks the add button
+  $(document).on("click", "#addTrip", function(event) {
+    event.preventDefault();
+    storeInputValues(retrieveLocation());
+    // console.log("button works");
+    renderRows(retrieveLocation());
+    showCurrentWeather(retrieveLocation())
+    showForecastedWeather(retrieveLocation());
+    fillCarousel();
+  })
   ///
   /// flip.js function is called here
 
@@ -155,14 +155,14 @@ $(document).on("click", "#addTrip", function(event){
       // We store all of the retrieved data inside of an object called "response"
       .done(function(response) {
         $("#currentWeather").text("Temperature (F) " + response.main.temp);
-        var newImage = $("<img src='http://openweathermap.org/img/w/" + response.weather[0].icon +".png'>");
+        var newImage = $("<img src='http://openweathermap.org/img/w/" + response.weather[0].icon + ".png'>");
         $("#currentWeather").prepend(newImage);
       });
   };
 
   function showForecastedWeather(userPlace) {
     /*
-      Grabs a 5 day forecast and projects temperature and icon into HTML 
+      Grabs a 5 day forecast and projects temperature and icon into HTML
     */
 
     var userCity = userPlace.formatted_address;
@@ -174,68 +174,109 @@ $(document).on("click", "#addTrip", function(event){
     var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + userCity + "&units=imperial&appid=" + APIKey;
 
     $.ajax({
-    url: queryURL,
-    method: "GET"
-    })
-    // We store all of the retrieved data inside of an object called "response"
-    .done(function(response) {
+        url: queryURL,
+        method: "GET"
+      })
+      // We store all of the retrieved data inside of an object called "response"
+      .done(function(response) {
 
-      for (var i = 0; i < 6; i++) {
-        newForecastImage = $("<img src='http://openweathermap.org/img/w/" + response.list[i].weather[0].icon + ".png'>");
-        $("#forecastedWeather").append(newForecastImage);
+        for (var i = 0; i < 6; i++) {
+          newForecastImage = $("<img src='http://openweathermap.org/img/w/" + response.list[i].weather[0].icon + ".png'>");
+          $("#forecastedWeather").append(newForecastImage);
 
-        date = (response.list[i].dt_txt).slice(0, 11);
+          date = (response.list[i].dt_txt).slice(0, 11);
 
-        $("#forecastedWeather").append(date + "|" + response.list[i].main.temp + "Fahrenheit");
-      }
-    });
+          $("#forecastedWeather").append(date + "|" + response.list[i].main.temp + "Fahrenheit");
+        }
+      });
   }
 
 
   // function to add items to packing list
-  var packListCount = 0;
-  var trashColumn
+  var packListArr = []
+  // var packListStr = ""
 
   $("#addPackingItem").on("click", function(event) {
     event.preventDefault();
     var itemValue = $("#packingListItem").val().trim();
-    var itemString = String(itemValue)
-    console.log("string", itemString)
-    //console.log("recently added item", toAddItem);
+    // var itemString = String(itemValue)
+    // console.log("string", itemString)
     if (itemValue === "") {
-      console.log("put modal or tooltip here")
     } else {
-      var listRow = $("<div>").addClass("row")
-      var itemColumn = $("<div>").addClass("col-auto")
-      trashColumn = $("<div>").addClass("col-auto trashColumn")
-      //trashColumn.attr("id", "deleteListItem")
-      //var listDiv = $("<div>")
-      var checkBox = $("<input>").attr("type", "checkbox")
-      var itemText = $("<p>")
-      itemText.append(" " + itemString)
-      itemText.prepend(checkBox)
+      var listRow = $("<div>").addClass("row listRow")
+      var itemColumn = $("<div>").addClass("col-auto listColumn")
+      var trashColumn = $("<div>").addClass("col-2 trashColumn")
+      // var checkBox = $("<input>").attr("type", "checkbox")
+      var itemText = $("<p>").addClass("list-p")
+      itemText.text(itemValue)
+      // itemText.prepend(checkBox)
       itemColumn.append(itemText)
-      listRow.attr("id", "item-" + packListCount);
-      console.log(packListCount);
-      // $(".trashColumn").attr("item-data", packListCount)
-      // console.log("this is the trashcolumn value: " + $('.trashColumn').attr("item-data"))
       var trashItem = $("<span>").addClass("fa fa-trash-o")
       trashColumn.append(trashItem)
+      trashColumn.attr("value", itemValue)
       listRow.append(itemColumn, trashColumn)
       $("#packingListView").append(listRow)
+      packListArr.push(" " + itemValue)
+      // packListStr = packListArr.join()
       $("#packingListItem").val("");
-
     }
-    packListCount++;
   });
+
+  // Add a "checked" symbol when clicking on a list item
+  $(document.body).on("click", ".listColumn", function() {
+    var listItem = $(this).parent();
+    listItem.toggleClass("col-checked");
+  })
 
   // function to delete packing list item
   $(document.body).on("click", ".trashColumn", function() {
     var listRow = $(this).parent();
-    // console.log(listRow)
-    // Select and Remove the specific <p> element that previously held the to do item number.
+    var deletedArrItem = (" " + $(this).attr("value"))
+    var deletedArrItem = packListArr.indexOf(deletedArrItem)
+    packListArr.splice(deletedArrItem, 1)
     listRow.remove();
   });
+
+  // function to initiate tooltip once copy is successful
+  $(".copyButton").tooltip({
+    trigger: 'click',
+  });
+
+  function setTooltip(btn, message) {
+    $("btn").tooltip('enable')
+      .attr('data-original-title', message)
+      .tooltip('show')
+      .tooltip('disable')
+  }
+
+  function hideTooltip(btn) {
+    setTimeout(function() {
+      $("btn").tooltip('hide')
+    }, 1000)
+  }
+
+  // beginning of function for clipboard
+var clipboard = new Clipboard(".copyButton", {
+  text: function(trigger) {
+    return packListArr;
+  }
+});
+
+  // checks if items have been copied
+  clipboard.on('success', function(e) {
+    console.info('Action:', e.action)
+    console.info('Text:', e.text)
+    console.info('Trigger:', e.trigger)
+    setTooltip(e.trigger, 'Copied!');
+    hideTooltip(e.trigger);
+    e.clearSelection()
+  })
+  clipboard.on('error', function(e) {
+    console.error('Action:', e.action)
+    console.error('Trigger:', e.trigger)
+    setTooltip(e.trigger, 'Failed!');
+    hideTooltip(e.trigger);
+  })
 
 
 

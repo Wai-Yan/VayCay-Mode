@@ -38,35 +38,36 @@ $(document).ready(function() {
     trashTD.append(trashSpan);
     tRow.append(destinationTD, destinationDateTD, trashTD);
     tBody.prepend(tRow);
-  }
+}
 
-  //function to store values from input fields
-  function storeInputValues(place) {
-    console.log("storeInputValues works")
-    destination = place.formatted_address;
-    var rawDestinationDate = $("#dateInput").val().trim();
-    destinationDate = moment(rawDestinationDate).format('MM/DD/YYYY');
-    // console.log("destination is" + destination);
-    // console.log("destination date is: " + destinationDate);
-  }
+//function to store values from input fields
+function storeInputValues(place){
+console.log("storeInputValues works")
+destination = place.formatted_address;
+var rawDestinationDate = $("#dateInput").val().trim();
+destinationDate = moment(rawDestinationDate).format('MM/DD/YYYY');
+// console.log("destination is" + destination);
+// console.log("destination date is: " + destinationDate);
+}
 
-  //click function on table data
-  $(document).on("click", ".citySelect", function(event) {
-    destination = $(this).attr("data-city")
-    console.log("This is the value when you click on a city: " + destination);
-  })
+//click function on table data
+$(document).on("click", ".citySelect", function(event){
+  destination = $(this).attr("data-city")
+  console.log("This is the value when you click on a city: " + destination);
+})
 
 
-  //on click function when user clicks the add button
-  $(document).on("click", "#addTrip", function(event) {
-    event.preventDefault();
-    storeInputValues(retrieveLocation());
-    // console.log("button works");
-    renderRows(retrieveLocation());
-    showCurrentWeather(retrieveLocation())
-    showForecastedWeather(retrieveLocation());
-    fillCarousel();
-  })
+//on click function when user clicks the add button
+$(document).on("click", "#addTrip", function(event){
+	event.preventDefault();
+  storeInputValues(retrieveLocation());
+	// console.log("button works");
+  renderRows(retrieveLocation());
+  showCurrentWeather(retrieveLocation())
+  showForecastedWeather(retrieveLocation());
+  fillCarousel();
+  initMap(retrieveLocation());
+})
   ///
   /// flip.js function is called here
 
@@ -136,13 +137,42 @@ $(document).ready(function() {
     });
   };
 
+  function initMap(place) {
+
+    var userLatitude = place.geometry.location.lat();
+    console.log(userLatitude);
+
+    var userLongitude = place.geometry.location.lng();
+    console.log(userLongitude);
+
+    var userCoordinate = {lat: userLatitude, lng: userLongitude};
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 13,
+      center: userCoordinate
+    });
+    var marker = new google.maps.Marker({
+      position: userCoordinate,
+      map: map
+    });
+  }
+
   function showCurrentWeather(userPlace) {
     /*
       Shows the main weather component-- current weather
     */
 
     var userCity = userPlace.formatted_address;
-    userCity = userCity.replace(/\s/g, '');
+    userCity = userCity.split(",");
+    userCity[0] = userCity[0].replace(/\s/g, '+');
+    userCity = userCity.join(",");
+    userCity = userCity.split(",");
+    var userCityLength = userCity.length;
+
+    for (var i = 0; i < userCityLength; i++) {
+      userCity[i] = userCity[i].replace(/\s/g, '');
+    }
+
+    userCity = userCity.join();
 
     var APIKey = "ef097988a11b755c604a7aad621cf60d";
 
@@ -158,7 +188,7 @@ $(document).ready(function() {
         var newImage = $("<img src='http://openweathermap.org/img/w/" + response.weather[0].icon + ".png'>");
         $("#currentWeather").prepend(newImage);
       });
-  };
+  }
 
   function showForecastedWeather(userPlace) {
     /*
@@ -166,12 +196,24 @@ $(document).ready(function() {
     */
 
     var userCity = userPlace.formatted_address;
-    userCity = userCity.replace(/\s/g, '');
+    userCity = userCity.split(",");
+    userCity[0] = userCity[0].replace(/\s/g, '+');
+    userCity = userCity.join(",");
+    userCity = userCity.split(",");
+    var userCityLength = userCity.length;
+
+    for (var i = 0; i < userCityLength; i++) {
+      userCity[i] = userCity[i].replace(/\s/g, '');
+    }
+
+    userCity = userCity.join();
 
     var newForecastImage, date;
     var APIKey = "ef097988a11b755c604a7aad621cf60d";
 
     var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + userCity + "&units=imperial&appid=" + APIKey;
+
+    console.log(queryURL);
 
     $.ajax({
         url: queryURL,

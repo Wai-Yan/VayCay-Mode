@@ -93,7 +93,7 @@ p {
 
 .fixed-height {
   overflow-y: scroll;
-  height: 350px;
+  height: 400px;
 }
 
 .align-left {
@@ -125,6 +125,12 @@ p {
   position: absolute;
 }
 
+#map {
+   width: 100%;
+   height: 400px;
+   background-color: grey;
+}
+
 @media only screen and (max-width: 992px) {
   .clock {
   zoom: 0.8;
@@ -145,6 +151,7 @@ p {
   -moz-transform: scale(0.35)
   }
 }
+
 
 @media only screen and (max-width: 410px) {
   .clock {

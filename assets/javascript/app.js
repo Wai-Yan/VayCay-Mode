@@ -1,10 +1,12 @@
 /* global $ */
 
 $(document).ready(function() {
-
+  var trips = [];
   var place = "";
   var destination = "";
-  var destinationDate = 0
+  var destinationDate = 0;
+  var latitude = 0;
+  var longitude = 0;
 
   //Initailize Firebase
   var config = {
@@ -30,7 +32,7 @@ $(document).ready(function() {
     var tRow = $("<tr>");
 
     var destinationTD = $("<td>").text(place.formatted_address);
-    destinationTD.attr("class", "citySelect").attr("data-city", place.formatted_address);
+    destinationTD.attr("class", "citySelect").attr("data-city", place.formatted_address).attr("lat", place.geometry.location.lat).attr("lng", place.geometry.location.lng);
     var destinationDateTD = $("<td>").text(destinationDate).attr("data-city", place.formatted_address);
     var trashTD = $("<td>").attr("class", "showTrash");
     var trashSpan = $("<span>").attr("class", "fa fa-trash-o");
@@ -46,14 +48,19 @@ console.log("storeInputValues works")
 destination = place.formatted_address;
 var rawDestinationDate = $("#dateInput").val().trim();
 destinationDate = moment(rawDestinationDate).format('MM/DD/YYYY');
-// console.log("destination is" + destination);
-// console.log("destination date is: " + destinationDate);
+latitude = place.geometry.location.lat;
+longitude = place.geometry.location.lng;
+console.log(latitude);
+console.log(longitude);
 }
 
 //click function on table data
 $(document).on("click", ".citySelect", function(event){
   destination = $(this).attr("data-city")
-  console.log("This is the value when you click on a city: " + destination);
+  latitude = $(this).attr("lat");
+  longitude = $(this).attr("lng")
+  myMap(latitude, longitude);
+
 })
 
 
@@ -66,8 +73,19 @@ $(document).on("click", "#addTrip", function(event){
   showCurrentWeather(retrieveLocation())
   showForecastedWeather(retrieveLocation());
   fillCarousel();
-  initMap(retrieveLocation());
-})
+
+  myMap(latitude(), longitude())
+  })
+
+  // function to delete packing list item
+  $(document.body).on("click", ".showTrash", function() {
+    var listRow = $(this).parent();
+    // console.log(listRow)
+    // Select and Remove the specific <p> element that previously held the to do item number.
+    listRow.remove();
+  }); 
+ 
+
   ///
   /// flip.js function is called here
 
@@ -105,16 +123,10 @@ $(document).on("click", "#addTrip", function(event){
   //function to retrieve destination from Google
   function retrieveLocation() {
     var place = autocomplete.getPlace();
-    console.log(place);
+    console.log(place)
     return place;
   }
 
-  // //on click function when user clicks the add button
-  // $(document).on("click", "#addTrip", function(event){
-  //   event.preventDefault();
-  //   console.log("button works");
-  //   renderRows(retrieveLocation);
-  // });
 
 
   function fillCarousel() {
@@ -279,6 +291,23 @@ $(document).on("click", "#addTrip", function(event){
     listRow.remove();
   });
 
+
+//function to generate map
+function myMap(latitude, longitude) {
+  console.log(latitude + "," + longitude)
+  var mapOptions = {
+      center: new google.maps.LatLng(latitude, longitude),
+      zoom: 10,
+  }
+  var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+  var marker = new google.maps.Marker({
+    position:{lat: latitude, lng: longitude},
+    map: map
+  })
+}
+
+
   // function to initiate tooltip once copy is successful
   $(".copyButton").tooltip({
     trigger: 'click',
@@ -319,6 +348,7 @@ var clipboard = new Clipboard(".copyButton", {
     setTooltip(e.trigger, 'Failed!');
     hideTooltip(e.trigger);
   })
+
 
 
 

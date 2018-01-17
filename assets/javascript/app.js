@@ -4,8 +4,9 @@ $(document).ready(function() {
   var trips = [];
   var place = "";
   var destination = "";
-  var destinationDate = 0
-  var latLng = "";
+  var destinationDate = 0;
+  var latitude = 0;
+  var longitude = 0;
 
   //Initailize Firebase
   var config = {
@@ -24,9 +25,9 @@ $(document).ready(function() {
   //function to render rows
   function renderRows(place) {
     $(".tableRow").empty()
-    console.log("render rows works")
-    console.log("render rows: " + place.formatted_address)
-    console.log(place.formatted_address);
+    // console.log("render rows works")
+    // console.log("render rows: " + place.formatted_address)
+    // console.log(place.formatted_address);
     var tBody = $("tbody");
     var tRow = $("<tr>");
 
@@ -47,14 +48,19 @@ console.log("storeInputValues works")
 destination = place.formatted_address;
 var rawDestinationDate = $("#dateInput").val().trim();
 destinationDate = moment(rawDestinationDate).format('MM/DD/YYYY');
-console.log("destination is" + destination);
-console.log("destination date is: " + destinationDate);
+latitude = place.geometry.location.lat;
+longitude = place.geometry.location.lng;
+console.log(latitude);
+console.log(longitude);
 }
 
 //click function on table data
 $(document).on("click", ".citySelect", function(event){
   destination = $(this).attr("data-city")
-  console.log("This is the value when you click on a city: " + destination);
+  latitude = $(this).attr("lat");
+  longitude = $(this).attr("lng")
+  myMap(latitude, longitude);
+
 })
 
 
@@ -62,9 +68,12 @@ $(document).on("click", ".citySelect", function(event){
 $(document).on("click", "#addTrip", function(event){
 	event.preventDefault();
   storeInputValues(retrieveLocation());
-	console.log("button works");
+	// console.log("button works");
   renderRows(retrieveLocation());
+  showCurrentWeather(retrieveLocation())
+  showForecastedWeather(retrieveLocation());
   fillCarousel();
+  myMap(latitude(), longitude())
   })
 
   // function to delete packing list item
@@ -113,7 +122,6 @@ $(document).on("click", "#addTrip", function(event){
   //function to retrieve destination from Google
   function retrieveLocation() {
     var place = autocomplete.getPlace();
-    trips.push(place)
     console.log(place)
     return place;
   }
@@ -121,7 +129,7 @@ $(document).on("click", "#addTrip", function(event){
 
 
   function fillCarousel() {
-    console.log("lmao");
+    // console.log("lmao");
   }
 
   // function to generate and initiate clock countdown flip
@@ -137,6 +145,83 @@ $(document).on("click", "#addTrip", function(event){
     clock = $('.clock').FlipClock(diff, {
       clockFace: 'DailyCounter',
       countdown: true
+    });
+  };
+
+  function showCurrentWeather(userPlace) {
+    /*
+      Shows the main weather component-- current weather
+    */
+
+    var userCity = userPlace.formatted_address;
+    userCity = userCity.split(",");
+    userCity[0] = userCity[0].replace(/\s/g, '+');
+    userCity = userCity.join(",");
+    userCity = userCity.split(",");
+    userCityLength = userCity.length;
+
+    for (var i = 0; i < userCityLength; i++) {
+      userCity[i] = userCity[i].replace(/\s/g, '');
+    }
+
+    userCity = userCity.join();
+
+    var APIKey = "ef097988a11b755c604a7aad621cf60d";
+
+    var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + userCity + "&units=imperial&appid=" + APIKey;
+
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+      })
+      // We store all of the retrieved data inside of an object called "response"
+      .done(function(response) {
+        $("#currentWeather").text("Temperature (F) " + response.main.temp);
+        var newImage = $("<img src='http://openweathermap.org/img/w/" + response.weather[0].icon +".png'>");
+        $("#currentWeather").prepend(newImage);
+      });
+  };
+
+  function showForecastedWeather(userPlace) {
+    /*
+      Grabs a 5 day forecast and projects temperature and icon into HTML 
+    */
+
+    var userCity = userPlace.formatted_address;
+    userCity = userCity.split(",");
+    userCity[0] = userCity[0].replace(/\s/g, '+');
+    userCity = userCity.join(",");
+    userCity = userCity.split(",");
+    userCityLength = userCity.length;
+
+    for (var i = 0; i < userCityLength; i++) {
+      userCity[i] = userCity[i].replace(/\s/g, '');
+    }
+
+    userCity = userCity.join();
+
+    var newForecastImage, date;
+    var APIKey = "ef097988a11b755c604a7aad621cf60d";
+
+    var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + userCity + "&units=imperial&appid=" + APIKey;
+
+    console.log(queryURL);
+
+    $.ajax({
+    url: queryURL,
+    method: "GET"
+    })
+    // We store all of the retrieved data inside of an object called "response"
+    .done(function(response) {
+
+      for (var i = 0; i < 6; i++) {
+        newForecastImage = $("<img src='http://openweathermap.org/img/w/" + response.list[i].weather[0].icon + ".png'>");
+        $("#forecastedWeather").append(newForecastImage);
+
+        date = (response.list[i].dt_txt).slice(0, 11);
+
+        $("#forecastedWeather").append(date + "|" + response.list[i].main.temp + "Fahrenheit");
+      }
     });
   }
 
@@ -186,6 +271,20 @@ $(document).on("click", "#addTrip", function(event){
     listRow.remove();
   });
 
+//function to generate map
+function myMap(latitude, longitude) {
+  console.log(latitude + "," + longitude)
+  var mapOptions = {
+      center: new google.maps.LatLng(latitude, longitude),
+      zoom: 10,
+  }
+  var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+  var marker = new google.maps.Marker({
+    position:{lat: latitude, lng: longitude},
+    map: map
+  })
+}
 
 
 

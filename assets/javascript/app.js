@@ -7,20 +7,46 @@ $(document).ready(function() {
   var destinationDate = 0;
   var latitude = 0;
   var longitude = 0;
+  
+  var signinInput;
+  var keys = [];
+  var users = [];
+
+
 
   //Initailize Firebase
   var config = {
-    apiKey: "AIzaSyDFiW-XEMBCNpnjixW04WxSoybIbyvS9OY",
-    authDomain: "alitraintime-fa097.firebaseapp.com",
-    databaseURL: "https://alitraintime-fa097.firebaseio.com",
-    projectId: "alitraintime-fa097",
-    storageBucket: "",
-    messagingSenderId: "885151914772"
+    apiKey: "AIzaSyCK6_akMjy07IekkbM6Mvq7nX9n1bMJIpY",
+    authDomain: "vacayproject-c7e75.firebaseapp.com",
+    databaseURL: "https://vacayproject-c7e75.firebaseio.com",
+    projectId: "vacayproject-c7e75",
+    storageBucket: "vacayproject-c7e75.appspot.com",
+    messagingSenderId: "127370399579"
   };
 
   firebase.initializeApp(config);
 
   var database = firebase.database();
+
+  // Create reference for firebase's node "users"
+  var usersRef = firebase.database().ref("users");
+  // Hide main-content when the page first loaded
+  $("#main-content").hide();
+  // Check what button was clicked
+  $("button").click(function() {
+    event.preventDefault();
+    var button_clicked = $(this).attr('id');
+    console.log(button_clicked);
+
+    $("#sign-in").hide();
+    $("#main-content").show();
+
+    if (button_clicked === "register") {
+      usersRegister();
+    } else if (button_clicked === "sign_in") {
+      usersSignin();
+    }
+  });
 
   //function to render rows
   function renderRows(place) {
@@ -83,8 +109,8 @@ $(document).on("click", "#addTrip", function(event){
     // console.log(listRow)
     // Select and Remove the specific <p> element that previously held the to do item number.
     listRow.remove();
-  }); 
- 
+  });
+
 
   ///
   /// flip.js function is called here
@@ -348,6 +374,55 @@ var clipboard = new Clipboard(".copyButton", {
     setTooltip(e.trigger, 'Failed!');
     hideTooltip(e.trigger);
   })
+
+// ************ Firebase Section ************ //
+  function usersRegister() {
+    var newUsername = $("#username").val().trim();
+    var newPassword = $("#password").val().trim();
+    console.log(newUsername);
+    console.log(newPassword);
+
+    if (newUsername !== "" && newPassword !== "") {
+      var uid = newUsername + "-" + newPassword;
+      console.log(uid);
+
+      //store username and password in firebase
+      usersRef.child(uid).set({
+          username: newUsername,
+          password: newPassword
+      });
+
+    } else {
+      //alert("UID is Empty");
+    }
+
+    // clear input boxes
+    $("#username").val("");
+    $("#password").val("");
+
+  }
+
+  function usersSignin() {
+    var signUsername = $("#username").val().trim();
+    var signPassword = $("#password").val().trim();
+    signinInput = signUsername + "-" + signPassword;
+
+    console.log("signUsername", signUsername);
+    console.log("signPassword", signPassword);
+
+    for (var i = 0; i < keys.length; i++) {
+      if (keys[i] === signinInput) {
+        console.log("FOUND!!");
+        break;
+      } else {
+        //not found try again
+        console.log("NOT FOUND!!");
+      }
+    }
+    $("#username").val("");
+    $("#password").val("");
+  }
+  // ************ End Firebase Section ************ //
 
 
 

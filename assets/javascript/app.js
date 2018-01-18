@@ -1,7 +1,6 @@
 /* global $ */
 
 $(document).ready(function() {
-  var trips = [];
   var place = "";
   var destination = "";
   var destinationDate = 0;
@@ -32,7 +31,7 @@ $(document).ready(function() {
     var tRow = $("<tr>");
 
     var destinationTD = $("<td>").text(place.formatted_address);
-    destinationTD.attr("class", "citySelect").attr("data-city", place.formatted_address).attr("lat", place.geometry.location.lat).attr("lng", place.geometry.location.lng);
+    destinationTD.attr("class", "citySelect").attr("data-city", place.formatted_address).attr("lat", place.geometry.location.lat).attr("lng", place.geometry.location.lng).attr("data-id", place.place_id);
     var destinationDateTD = $("<td>").text(destinationDate).attr("data-city", place.formatted_address);
     var trashTD = $("<td>").attr("class", "showTrash");
     var trashSpan = $("<span>").attr("class", "fa fa-trash-o");
@@ -48,18 +47,15 @@ console.log("storeInputValues works")
 destination = place.formatted_address;
 var rawDestinationDate = $("#dateInput").val().trim();
 destinationDate = moment(rawDestinationDate).format('MM/DD/YYYY');
-latitude = place.geometry.location.lat;
-longitude = place.geometry.location.lng;
-console.log(latitude);
-console.log(longitude);
 }
 
 //click function on table data
 $(document).on("click", ".citySelect", function(event){
   destination = $(this).attr("data-city")
-  latitude = $(this).attr("lat");
-  longitude = $(this).attr("lng")
-  myMap(latitude, longitude);
+  googleId = $(this).attr("data-id");
+  console.log("googleId is: " + googleId)
+  retrieveGoogleApi(googleId)
+  initMap(retrieveLocation())
 
 })
 
@@ -73,7 +69,8 @@ $(document).on("click", "#addTrip", function(event){
   showCurrentWeather(retrieveLocation())
   showForecastedWeather(retrieveLocation());
   fillCarousel();
-  myMap(latitude(), longitude())
+  // myMap(latitude(), longitude())
+  initMap(retrieveLocation());
   })
 
   // function to delete packing list item
@@ -152,10 +149,9 @@ $(document).on("click", "#addTrip", function(event){
   function initMap(place) {
 
     var userLatitude = place.geometry.location.lat();
-    console.log(userLatitude);
 
     var userLongitude = place.geometry.location.lng();
-    console.log(userLongitude);
+
 
     var userCoordinate = {lat: userLatitude, lng: userLongitude};
     var map = new google.maps.Map(document.getElementById('map'), {
@@ -186,9 +182,9 @@ $(document).on("click", "#addTrip", function(event){
 
     userCity = userCity.join();
 
-    var APIKey = "ef097988a11b755c604a7aad621cf60d";
+    var weatherAPIKey = "ef097988a11b755c604a7aad621cf60d";
 
-    var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + userCity + "&units=imperial&appid=" + APIKey;
+    var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + userCity + "&units=imperial&appid=" + weatherAPIKey;
 
     $.ajax({
         url: queryURL,
@@ -221,9 +217,9 @@ $(document).on("click", "#addTrip", function(event){
     userCity = userCity.join();
 
     var newForecastImage, date;
-    var APIKey = "ef097988a11b755c604a7aad621cf60d";
+    var weatherAPIKey = "ef097988a11b755c604a7aad621cf60d";
 
-    var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + userCity + "&units=imperial&appid=" + APIKey;
+    var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + userCity + "&units=imperial&appid=" + weatherAPIKey;
 
     console.log(queryURL);
 
@@ -293,19 +289,19 @@ $(document).on("click", "#addTrip", function(event){
 
 
 //function to generate map
-function myMap(latitude, longitude) {
-  console.log(latitude + "," + longitude)
-  var mapOptions = {
-      center: new google.maps.LatLng(latitude, longitude),
-      zoom: 10,
-  }
-  var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+// function myMap(latitude, longitude) {
+//   console.log(latitude + "," + longitude)
+//   var mapOptions = {
+//       center: new google.maps.LatLng(latitude, longitude),
+//       zoom: 10,
+//   }
+//   var map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
-  var marker = new google.maps.Marker({
-    position:{lat: latitude, lng: longitude},
-    map: map
-  })
-}
+//   var marker = new google.maps.Marker({
+//     position:{lat: latitude, lng: longitude},
+//     map: map
+//   })
+// }
 
 
   // function to initiate tooltip once copy is successful
@@ -349,8 +345,29 @@ var clipboard = new Clipboard(".copyButton", {
     hideTooltip(e.trigger);
   })
 
+  
 
+// //function to retrieve googleAPI
+// function retrieveGoogleApi(googleId){
+//     console.log("retrieveGoogleApi works")
+//     var googleAPIKey = "AIzaSyCjavChZIbTmZdrRikg4ud62aTy45LFdbw";
 
+//     var queryURL = "https://maps.googleapis.com/maps/api/place/details/json?placeid=" + googleId + "&key=" + googleAPIKey ;
+//     console.log("queryURL = " + queryURL)
 
-});
+//     $.ajax({
+//         url: queryURL,
+//         method: "GET",
+//         dataType: 'jsonp',
+//         cache: false,
+//       })
+//       // We store all of the retrieved data inside of an object called "response"
+//       .done(function(response) {
+//         console.log(response);
+//         return response;
+//       });
+
+// }
+
+// });
 // End document

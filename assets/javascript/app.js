@@ -6,12 +6,12 @@ $(document).ready(function() {
   var destinationDate = 0;
   var latitude = 0;
   var longitude = 0;
-  
+
   var signinInput;
   var keys = [];
   var users = [];
   var map;
-  
+
   //Initailize Firebase
   var config = {
     apiKey: "AIzaSyCK6_akMjy07IekkbM6Mvq7nX9n1bMJIpY",
@@ -57,7 +57,7 @@ $(document).ready(function() {
 
     var destinationTD = $("<td>").text(place.formatted_address);
     destinationTD.attr("class", "citySelect").attr("data-city", place.formatted_address).attr("data-lat", place.geometry.location.lat).attr("data-lng", place.geometry.location.lng).attr("data-id", place.place_id).attr("data-date", destinationDate);
-    var destinationDateTD = $("<td>").text(destinationDate).attr("data-city", place.formatted_address);
+    var destinationDateTD = $("<td>").text(destinationDate).attr("data-city", place.formatted_address).attr("data-date", destinationDate);
     var trashTD = $("<td>").attr("class", "showTrash");
     var trashSpan = $("<span>").attr("class", "fa fa-trash-o");
 
@@ -77,12 +77,13 @@ destinationDate = moment(rawDestinationDate).format('MM/DD/YYYY');
 //click function on table data
 $(document).on("click", ".citySelect", function(event){
   destination = $(this).attr("data-city")
+  destinationDate = $(this).attr("data-date")
   var userLatitude = parseFloat($(this).attr("data-lat"));
   var userLongitude = parseFloat($(this).attr("data-lng"));
-  
   console.log(userLatitude);
   console.log(userLongitude);
   retrieveGoogleApi(userLatitude, userLongitude);
+  countDownDisplay(destinationDate, destination);
 })
 
 
@@ -96,8 +97,9 @@ $(document).on("click", "#addTrip", function(event){
   showForecastedWeather(retrieveLocation());
   fillCarousel();
   initMap(retrieveLocation());
-
-
+  countDownDisplay(destinationDate, destination);
+  $("#cityInput").val("");
+  $("#dateInput").val("");
   })
 
   // function to delete packing list item
@@ -135,7 +137,6 @@ $(document).on("click", "#addTrip", function(event){
   today = yyyy + '-' + mm + '-' + dd;
   $(".calendar").attr("min", today);
 
-  countDownDisplay();
 
   //function to autofill city name and retreive google data
   var input = document.getElementById('cityInput');
@@ -158,14 +159,19 @@ $(document).on("click", "#addTrip", function(event){
   }
 
   // function to generate and initiate clock countdown flip
-  function countDownDisplay() {
+  function countDownDisplay(destinationDate, destination) {
+    // print the clicked or entered city in the message area
+    $(".countdownMessage").text("Count down to your trip to " + destination + "!")
     var clock;
     // Grab the current date
-    var currentDate = new Date();
-    // Set some date in the future. In this case, it's always Jan 1
-    var futureDate = new Date(currentDate.getFullYear() + 1, 0, 1);
+    var currentDate = moment();
+    console.log("currentdateformat", currentDate)
+    // Grabbing the date from the city
+    var futureDate = moment(destinationDate);
+    console.log("future date format", futureDate)
     // Calculate the difference in seconds between the future and current date
-    var diff = futureDate.getTime() / 1000 - currentDate.getTime() / 1000;
+    var diff = futureDate.diff(currentDate, 'seconds');
+    console.log(diff)
     // Instantiate a countdown FlipClock
     clock = $('.clock').FlipClock(diff, {
       clockFace: 'DailyCounter',
@@ -195,7 +201,7 @@ $(document).on("click", "#addTrip", function(event){
     /*
       Shows the main weather component-- current weather
     */
-    
+
     $("#currentWeather").empty();
 
     var userCity = userPlace.formatted_address;
@@ -231,7 +237,7 @@ $(document).on("click", "#addTrip", function(event){
     /*
       Grabs a 5 day forecast and projects temperature and icon into HTML
     */
-    
+
     $("#forecastedWeather").empty();
 
     var userCity = userPlace.formatted_address;
@@ -361,6 +367,15 @@ var clipboard = new Clipboard(".copyButton", {
     hideTooltip(e.trigger);
   })
 
+  // function to add blog posts on save click
+  $(document.body).on("click", "#blogSaveBtn", function() {
+    var savedTime = moment().format('MMMM Do YYYY, h:mm:ss a')
+    var blogTitle = $("#blogPostTitle").val().trim()
+    var blogPost = $("#blogPostEntry").val().trim()
+    var blogEntry = ("<div class='blogEntryContainer my-2'>") + ("<div class='blogTitleView'>") + blogTitle + ("</div>") + ("<div class='blogTimeStampView'>") + "Posted on: " + savedTime + ("</div>") + ("<div class='blogEntryView'>") + blogPost + ("</div>") + ("</div>")
+    $("#blogPostArea").prepend(blogEntry)
+  })
+
 
 // ************ Firebase Section ************ //
   function usersRegister() {
@@ -410,22 +425,22 @@ var clipboard = new Clipboard(".copyButton", {
     $("#password").val("");
   }
   // ************ End Firebase Section ************ //
-    
+
     function retrieveGoogleApi(userLatitude, userLongitude) {
-      
+
       // service = new google.maps.places.PlacesService(map);
       // service.getDetails(request, callback);
-      
+
       // function callback(place, status) {
       //   if (status == google.maps.places.PlacesServiceStatus.OK) {
       //     createMarker(place);
       //     console.log("We in this");
       //   }
       // }
-      
+
       console.log(userLongitude);
       console.log(userLatitude);
-      
+
       var userCoordinate = {lat: userLatitude, lng: userLongitude};
       map = new google.maps.Map(document.getElementById('map'), {
         zoom: 13,

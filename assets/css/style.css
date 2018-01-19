@@ -125,7 +125,7 @@ p {
   position: absolute;
 }
 
-#map {
+.map-height {
    width: 100%;
    height: 400px;
    background-color: grey;

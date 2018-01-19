@@ -6,7 +6,7 @@ $(document).ready(function() {
   var destinationDate = 0;
   var latitude = 0;
   var longitude = 0;
-  
+
   var signinInput;
   var keys = [];
   var users = [];
@@ -195,7 +195,7 @@ $(document).on("click", "#addTrip", function(event){
     /*
       Shows the main weather component-- current weather
     */
-    
+
     $("#currentWeather").empty();
 
     var userCity = userPlace.formatted_address;
@@ -231,7 +231,7 @@ $(document).on("click", "#addTrip", function(event){
     /*
       Grabs a 5 day forecast and projects temperature and icon into HTML
     */
-    
+
     $("#forecastedWeather").empty();
 
     var userCity = userPlace.formatted_address;
@@ -359,6 +359,14 @@ var clipboard = new Clipboard(".copyButton", {
     console.error('Trigger:', e.trigger)
     setTooltip(e.trigger, 'Failed!');
     hideTooltip(e.trigger);
+  })
+
+  // function to add blog posts on save click
+  $(document.body).on("click", "#blogSaveBtn", function() {
+    var blogTitle = $("#blogPostTitle").val().trim()
+    var blogPost = $("#blogPostEntry").val().trim()
+    var fullBlogEntry = $("<div>") + blogTitle + $("<div>") + blogPost
+    $("#blogPostArea").append(fullBlogEntry)
   })
 
 

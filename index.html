@@ -292,7 +292,13 @@
                 <h2>Notes/Blog Area:</h2>
               <form>
                 <div class="form-group">
-                  <textarea class="form-control" id="blogPostEntry" rows="3" placeholder="Enter text here"></textarea>
+                  <textarea class="form-control title-area-size" id="blogPostTitle" rows="1" placeholder="Title" maxlength="60"></textarea>
+                  <small id="blogPostTitleHelp" class="form-text text-muted">
+                  (60 character limit)
+                  </small>
+                </div>
+                <div class="form-group">
+                  <textarea class="form-control" id="blogPostEntry" rows="3" placeholder="Entry"></textarea>
                 </div>
               </form>
               <button type="submit" class="btn btn-primary mb-2">Save</button>

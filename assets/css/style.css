@@ -131,6 +131,10 @@ p {
    background-color: grey;
 }
 
+.title-area-size {
+  width: 50%;
+}
+
 @media only screen and (max-width: 992px) {
   .clock {
   zoom: 0.8;

@@ -198,6 +198,8 @@ $(document).on("click", "#addTrip", function(event){
     /*
       Shows the main weather component-- current weather
     */
+    
+    $("#currentWeather").empty();
 
     var userCity = userPlace.formatted_address;
     userCity = userCity.split(",");
@@ -232,6 +234,8 @@ $(document).on("click", "#addTrip", function(event){
     /*
       Grabs a 5 day forecast and projects temperature and icon into HTML
     */
+    
+    $("#forecastedWeather").empty();
 
     var userCity = userPlace.formatted_address;
     userCity = userCity.split(",");

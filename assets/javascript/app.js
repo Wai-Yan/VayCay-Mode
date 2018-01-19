@@ -11,7 +11,7 @@ $(document).ready(function() {
   var keys = [];
   var users = [];
   var map;
-  
+
   //Initailize Firebase
   var config = {
     apiKey: "AIzaSyCK6_akMjy07IekkbM6Mvq7nX9n1bMJIpY",
@@ -79,7 +79,7 @@ $(document).on("click", ".citySelect", function(event){
   destination = $(this).attr("data-city")
   var userLatitude = parseFloat($(this).attr("data-lat"));
   var userLongitude = parseFloat($(this).attr("data-lng"));
-  
+
   console.log(userLatitude);
   console.log(userLongitude);
   retrieveGoogleApi(userLatitude, userLongitude);
@@ -363,10 +363,11 @@ var clipboard = new Clipboard(".copyButton", {
 
   // function to add blog posts on save click
   $(document.body).on("click", "#blogSaveBtn", function() {
+    var savedTime = moment().format('MMMM Do YYYY, h:mm:ss a')
     var blogTitle = $("#blogPostTitle").val().trim()
     var blogPost = $("#blogPostEntry").val().trim()
-    var fullBlogEntry = $("<div>") + blogTitle + $("<div>") + blogPost
-    $("#blogPostArea").append(fullBlogEntry)
+    var blogEntry = ("<div class='blogEntryContainer my-2'>") + ("<div class='blogTitleView'>") + blogTitle + ("</div>") + ("<div class='blogTimeStampView'>") + "Posted on: " + savedTime + ("</div>") + ("<div class='blogEntryView'>") + blogPost + ("</div>") + ("</div>")
+    $("#blogPostArea").prepend(blogEntry)
   })
 
 
@@ -418,22 +419,22 @@ var clipboard = new Clipboard(".copyButton", {
     $("#password").val("");
   }
   // ************ End Firebase Section ************ //
-    
+
     function retrieveGoogleApi(userLatitude, userLongitude) {
-      
+
       // service = new google.maps.places.PlacesService(map);
       // service.getDetails(request, callback);
-      
+
       // function callback(place, status) {
       //   if (status == google.maps.places.PlacesServiceStatus.OK) {
       //     createMarker(place);
       //     console.log("We in this");
       //   }
       // }
-      
+
       console.log(userLongitude);
       console.log(userLatitude);
-      
+
       var userCoordinate = {lat: userLatitude, lng: userLongitude};
       map = new google.maps.Map(document.getElementById('map'), {
         zoom: 13,

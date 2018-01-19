@@ -135,6 +135,20 @@ p {
   width: 50%;
 }
 
+.blogEntryContainer {
+  border: 1px solid #DCDCDC;
+  padding: 1rem;
+}
+
+.blogTitleView {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.blogTimeStampView {
+  font-size: .5rem;
+}
+
 @media only screen and (max-width: 992px) {
   .clock {
   zoom: 0.8;

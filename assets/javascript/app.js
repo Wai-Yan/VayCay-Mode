@@ -10,9 +10,8 @@ $(document).ready(function() {
   var signinInput;
   var keys = [];
   var users = [];
-
-
-
+  var map;
+  
   //Initailize Firebase
   var config = {
     apiKey: "AIzaSyCK6_akMjy07IekkbM6Mvq7nX9n1bMJIpY",
@@ -57,7 +56,7 @@ $(document).ready(function() {
     var tRow = $("<tr>");
 
     var destinationTD = $("<td>").text(place.formatted_address);
-    destinationTD.attr("class", "citySelect").attr("data-city", place.formatted_address).attr("lat", place.geometry.location.lat).attr("lng", place.geometry.location.lng).attr("data-id", place.place_id);
+    destinationTD.attr("class", "citySelect").attr("data-city", place.formatted_address).attr("data-lat", place.geometry.location.lat).attr("data-lng", place.geometry.location.lng).attr("data-id", place.place_id).attr("data-date", destinationDate);
     var destinationDateTD = $("<td>").text(destinationDate).attr("data-city", place.formatted_address);
     var trashTD = $("<td>").attr("class", "showTrash");
     var trashSpan = $("<span>").attr("class", "fa fa-trash-o");
@@ -78,11 +77,12 @@ destinationDate = moment(rawDestinationDate).format('MM/DD/YYYY');
 //click function on table data
 $(document).on("click", ".citySelect", function(event){
   destination = $(this).attr("data-city")
-  googleId = $(this).attr("data-id");
-  console.log("googleId is: " + googleId)
-  retrieveGoogleApi(googleId)
-  initMap(retrieveLocation())
-
+  var userLatitude = parseFloat($(this).attr("data-lat"));
+  var userLongitude = parseFloat($(this).attr("data-lng"));
+  
+  console.log(userLatitude);
+  console.log(userLongitude);
+  retrieveGoogleApi(userLatitude, userLongitude);
 })
 
 
@@ -181,7 +181,7 @@ $(document).on("click", "#addTrip", function(event){
 
 
     var userCoordinate = {lat: userLatitude, lng: userLongitude};
-    var map = new google.maps.Map(document.getElementById('map'), {
+    map = new google.maps.Map(document.getElementById('map'), {
       zoom: 13,
       center: userCoordinate
     });
@@ -410,25 +410,31 @@ var clipboard = new Clipboard(".copyButton", {
     $("#password").val("");
   }
   // ************ End Firebase Section ************ //
-
-
-
-//     var queryURL = "https://maps.googleapis.com/maps/api/place/details/json?placeid=" + googleId + "&key=" + googleAPIKey ;
-//     console.log("queryURL = " + queryURL)
-
-//     $.ajax({
-//         url: queryURL,
-//         method: "GET",
-//         dataType: 'jsonp',
-//         cache: false,
-//       })
-//       // We store all of the retrieved data inside of an object called "response"
-//       .done(function(response) {
-//         console.log(response);
-//         return response;
-//       });
-
-// }
-
-// });
+    
+    function retrieveGoogleApi(userLatitude, userLongitude) {
+      
+      // service = new google.maps.places.PlacesService(map);
+      // service.getDetails(request, callback);
+      
+      // function callback(place, status) {
+      //   if (status == google.maps.places.PlacesServiceStatus.OK) {
+      //     createMarker(place);
+      //     console.log("We in this");
+      //   }
+      // }
+      
+      console.log(userLongitude);
+      console.log(userLatitude);
+      
+      var userCoordinate = {lat: userLatitude, lng: userLongitude};
+      map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 13,
+        center: userCoordinate
+      });
+      var marker = new google.maps.Marker({
+        position: userCoordinate,
+        map: map
+      });
+    }
+});
 // End document

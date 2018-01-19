@@ -57,7 +57,7 @@ $(document).ready(function() {
 
     var destinationTD = $("<td>").text(place.formatted_address);
     destinationTD.attr("class", "citySelect").attr("data-city", place.formatted_address).attr("data-lat", place.geometry.location.lat).attr("data-lng", place.geometry.location.lng).attr("data-id", place.place_id).attr("data-date", destinationDate);
-    var destinationDateTD = $("<td>").text(destinationDate).attr("data-city", place.formatted_address);
+    var destinationDateTD = $("<td>").text(destinationDate).attr("data-city", place.formatted_address).attr("data-date", destinationDate);
     var trashTD = $("<td>").attr("class", "showTrash");
     var trashSpan = $("<span>").attr("class", "fa fa-trash-o");
 
@@ -77,12 +77,13 @@ destinationDate = moment(rawDestinationDate).format('MM/DD/YYYY');
 //click function on table data
 $(document).on("click", ".citySelect", function(event){
   destination = $(this).attr("data-city")
+  destinationDate = $(this).attr("data-date")
   var userLatitude = parseFloat($(this).attr("data-lat"));
   var userLongitude = parseFloat($(this).attr("data-lng"));
-
   console.log(userLatitude);
   console.log(userLongitude);
   retrieveGoogleApi(userLatitude, userLongitude);
+  countDownDisplay(destinationDate, destination);
 })
 
 
@@ -96,8 +97,9 @@ $(document).on("click", "#addTrip", function(event){
   showForecastedWeather(retrieveLocation());
   fillCarousel();
   initMap(retrieveLocation());
-
-
+  countDownDisplay(destinationDate, destination);
+  $("#cityInput").val("");
+  $("#dateInput").val("");
   })
 
   // function to delete packing list item
@@ -135,7 +137,6 @@ $(document).on("click", "#addTrip", function(event){
   today = yyyy + '-' + mm + '-' + dd;
   $(".calendar").attr("min", today);
 
-  countDownDisplay();
 
   //function to autofill city name and retreive google data
   var input = document.getElementById('cityInput');
@@ -158,14 +159,19 @@ $(document).on("click", "#addTrip", function(event){
   }
 
   // function to generate and initiate clock countdown flip
-  function countDownDisplay() {
+  function countDownDisplay(destinationDate, destination) {
+    // print the clicked or entered city in the message area
+    $(".countdownMessage").text("Count down to your trip to " + destination + "!")
     var clock;
     // Grab the current date
-    var currentDate = new Date();
-    // Set some date in the future. In this case, it's always Jan 1
-    var futureDate = new Date(currentDate.getFullYear() + 1, 0, 1);
+    var currentDate = moment();
+    console.log("currentdateformat", currentDate)
+    // Grabbing the date from the city
+    var futureDate = moment(destinationDate);
+    console.log("future date format", futureDate)
     // Calculate the difference in seconds between the future and current date
-    var diff = futureDate.getTime() / 1000 - currentDate.getTime() / 1000;
+    var diff = futureDate.diff(currentDate, 'seconds');
+    console.log(diff)
     // Instantiate a countdown FlipClock
     clock = $('.clock').FlipClock(diff, {
       clockFace: 'DailyCounter',

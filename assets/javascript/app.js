@@ -286,17 +286,13 @@ $(document).on("click", "#addTrip", function(event){
   $("#addPackingItem").on("click", function(event) {
     event.preventDefault();
     var itemValue = $("#packingListItem").val().trim();
-    // var itemString = String(itemValue)
-    // console.log("string", itemString)
     if (itemValue === "") {
     } else {
       var listRow = $("<div>").addClass("row listRow")
       var itemColumn = $("<div>").addClass("col-auto listColumn")
       var trashColumn = $("<div>").addClass("col-2 trashColumn")
-      // var checkBox = $("<input>").attr("type", "checkbox")
       var itemText = $("<p>").addClass("list-p")
       itemText.text(itemValue)
-      // itemText.prepend(checkBox)
       itemColumn.append(itemText)
       var trashItem = $("<span>").addClass("fa fa-trash-o")
       trashColumn.append(trashItem)
@@ -304,7 +300,6 @@ $(document).on("click", "#addTrip", function(event){
       listRow.append(itemColumn, trashColumn)
       $("#packingListView").append(listRow)
       packListArr.push(" " + itemValue)
-      // packListStr = packListArr.join()
       $("#packingListItem").val("");
     }
   });
@@ -332,7 +327,7 @@ $(document).on("click", "#addTrip", function(event){
   });
 
   function setTooltip(btn, message) {
-    $("btn").tooltip('enable')
+    $(".copyButton").tooltip('enable')
       .attr('data-original-title', message)
       .tooltip('show')
       .tooltip('disable')
@@ -340,7 +335,7 @@ $(document).on("click", "#addTrip", function(event){
 
   function hideTooltip(btn) {
     setTimeout(function() {
-      $("btn").tooltip('hide')
+      $(".copyButton").tooltip('hide')
     }, 1000)
   }
 

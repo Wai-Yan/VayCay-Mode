@@ -28,23 +28,23 @@ $(document).ready(function() {
 
   // Create reference for firebase's node "users"
   var usersRef = firebase.database().ref("users");
-  // Hide main-content when the page first loaded
-  $("#main-content").hide();
-  // Check what button was clicked
-  $("button").click(function() {
-    event.preventDefault();
-    var button_clicked = $(this).attr('id');
-    console.log(button_clicked);
-
-    $("#sign-in").hide();
-    $("#main-content").show();
-
-    if (button_clicked === "register") {
-      usersRegister();
-    } else if (button_clicked === "sign_in") {
-      usersSignin();
-    }
-  });
+  // // Hide main-content when the page first loaded
+  // $("#main-content").hide();
+  // // Check what button was clicked
+  // $("button").click(function() {
+  //   event.preventDefault();
+  //   var button_clicked = $(this).attr('id');
+  //   console.log(button_clicked);
+  //
+  //   $("#sign-in").hide();
+  //   $("#main-content").show();
+  //
+  //   if (button_clicked === "register") {
+  //     usersRegister();
+  //   } else if (button_clicked === "sign_in") {
+  //     usersSignin();
+  //   }
+  // });
 
   //function to render rows
   function renderRows(place) {
@@ -369,6 +369,17 @@ var clipboard = new Clipboard(".copyButton", {
     var blogPost = $("#blogPostEntry").val().trim()
     var blogEntry = ("<div class='blogEntryContainer my-2'>") + ("<div class='blogTitleView'>") + blogTitle + ("</div>") + ("<div class='blogTimeStampView'>") + "Posted on: " + savedTime + ("</div>") + ("<div class='blogEntryView'>") + blogPost + ("</div>") + ("</div>")
     $("#blogPostArea").prepend(blogEntry)
+  })
+
+  // add signout button and log the user out once clicked
+  $("#logoutbtn").on("click", function(event){
+    event.preventDefault();
+    firebase.auth().signOut()
+    firebase.auth().signOut().then(function() {
+  window.location.replace("login.html")
+}).catch(function(error) {
+  console.log("test log out error")
+});
   })
 
 

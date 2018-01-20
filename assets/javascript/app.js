@@ -1,4 +1,5 @@
 /* global $ */
+/* global google */
 
 $(document).ready(function() {
   var place = "";
@@ -180,17 +181,27 @@ $(document).on("click", "#addTrip", function(event){
   };
 
   function initMap(place) {
+    
+    console.log(place);
+    console.log("What's going on");
 
     var userLatitude = place.geometry.location.lat();
-
     var userLongitude = place.geometry.location.lng();
-
+    
+    console.log(userLatitude);
+    console.log(userLongitude);
 
     var userCoordinate = {lat: userLatitude, lng: userLongitude};
+    
+    console.log(userCoordinate);
+    
     map = new google.maps.Map(document.getElementById('map'), {
       zoom: 13,
       center: userCoordinate
     });
+    
+    console.log(map);
+    
     var marker = new google.maps.Marker({
       position: userCoordinate,
       map: map
@@ -422,19 +433,6 @@ var clipboard = new Clipboard(".copyButton", {
   // ************ End Firebase Section ************ //
 
     function retrieveGoogleApi(userLatitude, userLongitude) {
-
-      // service = new google.maps.places.PlacesService(map);
-      // service.getDetails(request, callback);
-
-      // function callback(place, status) {
-      //   if (status == google.maps.places.PlacesServiceStatus.OK) {
-      //     createMarker(place);
-      //     console.log("We in this");
-      //   }
-      // }
-
-      console.log(userLongitude);
-      console.log(userLatitude);
 
       var userCoordinate = {lat: userLatitude, lng: userLongitude};
       map = new google.maps.Map(document.getElementById('map'), {

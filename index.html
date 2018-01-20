@@ -29,8 +29,14 @@
   <!-- clipboard js -->
   <script src="assets/javascript/clipboard.min.js"></script>
   <!-- google maps api -->
-  <!-- <script src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&language=en"></script> -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZ2PsxQZzTNdRZFBMeQ9uRixxw8taSmjA&libraries=places&language=en"></script>
+  
+  <!--<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjavChZIbTmZdrRikg4ud62aTy45LFdbw&callback=initMap"></script>-->
+  
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZ2PsxQZzTNdRZFBMeQ9uRixxw8taSmjA&libraries=places&language=en"></script>
+   <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjavChZIbTmZdrRikg4ud62aTy45LFdbw&&libraries=places&language=en"></script> -->
+   
+  <!--<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjavChZIbTmZdrRikg4ud62aTy45LFdbw&libraries=places&language=en&callback=initMap"></script>-->
+  
   <!-- open weather map api -->
   <script src='http://openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script>
   <!-- firebase -->
@@ -233,17 +239,16 @@
           <!-- packing list ends here -->
           <!-- google maps begins here -->
           <div class="col">
-            <div class="card mb-3 map-height">
-              <div class="card-body">
+            <div class="card mb-3">
+              <div class="card-body map-height">
                 <div id="map"></div>
-
               </div>
             </div>
           </div>
           <!-- google maps ends here -->
         </div>
         <!-- row for packing list and google maps ends here -->
-
+        
         <!-- carousel begins here -->
         <div class="row mb-3">
           <div class="col">
@@ -303,9 +308,9 @@
               </form>
               <button type="submit" id="blogSaveBtn" class="btn btn-primary mb-2">Save</button>
               <!-- blog post entries printed here -->
-              <div id="blogPostArea"
-              </div>
+                <div id="blogPostArea"></div>
               <!-- end of blog post entry print area -->
+              </div>
             </div>
           </div>
         </div>

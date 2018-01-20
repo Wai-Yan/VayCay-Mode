@@ -41,6 +41,10 @@
 
 /* end css for link */
 
+.logoutHover {
+  cursor: pointer;
+}
+
 .jumbotron {
   padding: 1rem;
   margin-bottom: 1rem;
@@ -98,6 +102,14 @@ p {
 
 .align-left {
   text-align: left;
+}
+
+.signinCardContainer {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-15%, -65%);
 }
 
 .btn-sm {

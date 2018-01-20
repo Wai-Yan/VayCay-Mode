@@ -91,13 +91,14 @@ $(document).on("click", ".citySelect", function(event){
 //on click function when user clicks the add button
 $(document).on("click", "#addTrip", function(event){
 	event.preventDefault();
-  storeInputValues(retrieveLocation());
+  var place = retrieveLocation();
+  storeInputValues(place);
 	// console.log("button works");
-  renderRows(retrieveLocation());
-  showCurrentWeather(retrieveLocation())
-  showForecastedWeather(retrieveLocation());
-  fillCarousel();
-  initMap(retrieveLocation());
+  renderRows(place);
+  showCurrentWeather(place)
+  showForecastedWeather(place);
+  fillCarousel(place);
+  initMap(place);
   countDownDisplay(destinationDate, destination);
   $("#cityInput").val("");
   $("#dateInput").val("");
@@ -151,12 +152,6 @@ $(document).on("click", "#addTrip", function(event){
     var place = autocomplete.getPlace();
     console.log(place)
     return place;
-  }
-
-
-
-  function fillCarousel() {
-    // console.log("lmao");
   }
 
   // function to generate and initiate clock countdown flip

@@ -181,27 +181,27 @@ $(document).on("click", "#addTrip", function(event){
   };
 
   function initMap(place) {
-    
+
     console.log(place);
     console.log("What's going on");
 
     var userLatitude = place.geometry.location.lat();
     var userLongitude = place.geometry.location.lng();
-    
+
     console.log(userLatitude);
     console.log(userLongitude);
 
     var userCoordinate = {lat: userLatitude, lng: userLongitude};
-    
+
     console.log(userCoordinate);
-    
+
     map = new google.maps.Map(document.getElementById('map'), {
       zoom: 13,
       center: userCoordinate
     });
-    
+
     console.log(map);
-    
+
     var marker = new google.maps.Marker({
       position: userCoordinate,
       map: map
@@ -442,6 +442,37 @@ var clipboard = new Clipboard(".copyButton", {
     $("#password").val("");
   }
   // ************ End Firebase Section ************ //
+
+  //************ Google API Images Section ************ //
+  function fillCarousel(place){
+    var googleAPIKey = "AIzaSyDZ2PsxQZzTNdRZFBMeQ9uRixxw8taSmjA";
+
+    var lat = place.geometry.location.lat();
+    var lon = place.geometry.location.lng();
+
+    var nearbyplacesURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + "," + lon + "&radius=500&type=sightseeing&key=" + googleAPIKey;
+
+    console.log("latitude", lat);
+    console.log("longitude", lon);
+    console.log("nearbyplacesURL", nearbyplacesURL);
+
+    //call place nearby API
+    $.ajax({
+      crossDomain: true,
+      url: nearbyplacesURL,
+      dataType: 'json',
+      // jsonpCallback: 'callback',
+      //contentType: "application/json; charset=utf-8;",
+      success: function(response2){
+         console.log(JSON.stringify(response2));
+       },
+      method: "GET"
+    })
+    .done(function(response) {
+      console.log("place nearby API", response);
+    });
+
+  }
 
     function retrieveGoogleApi(userLatitude, userLongitude) {
 

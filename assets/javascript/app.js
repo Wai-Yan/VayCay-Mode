@@ -97,16 +97,12 @@ $(document).on("click", "#addTrip", function(event){
     listRow.remove();
   });
 
-
-
-  ///
-  /// flip.js function is called here
-
-  // $("#card").flip({
-  //   axis: 'y',
-  //   trigger: 'click'
-  // });
-
+  document.getElementById("myForm").onkeypress = function(e) {
+    var key = e.charCode || e.keyCode || 0;     
+    if (key == 13) {
+      e.preventDefault();
+    }
+  }
 
   /// this sets the current date for the date selector
   var today = new Date();

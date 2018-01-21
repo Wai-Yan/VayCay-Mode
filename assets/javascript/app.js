@@ -60,7 +60,7 @@ $(document).ready(function() {
     destinationTD.attr("class", "citySelect").attr("data-city", place.formatted_address).attr("data-lat", place.geometry.location.lat).attr("data-lng", place.geometry.location.lng).attr("data-id", place.place_id).attr("data-date", destinationDate);
     var destinationDateTD = $("<td>").text(destinationDate).attr("data-city", place.formatted_address).attr("data-date", destinationDate);
     var trashTD = $("<td>").attr("class", "showTrash");
-    var trashSpan = $("<span>").attr("class", "fa fa-trash-o");
+    var trashSpan = $("<span>").attr("class", "fa fa-trash-o trash-hide");
 
     trashTD.append(trashSpan);
     tRow.append(destinationTD, destinationDateTD, trashTD);
@@ -305,7 +305,7 @@ $(document).on("click", "#addTrip", function(event){
       var itemText = $("<p>").addClass("list-p")
       itemText.text(itemValue)
       itemColumn.append(itemText)
-      var trashItem = $("<span>").addClass("fa fa-trash-o")
+      var trashItem = $("<span>").addClass("fa fa-trash-o trash-hide")
       trashColumn.append(trashItem)
       trashColumn.attr("value", itemValue)
       listRow.append(itemColumn, trashColumn)
@@ -378,17 +378,42 @@ var clipboard = new Clipboard(".copyButton", {
     var savedTime = moment().format('MMMM Do YYYY, h:mm:ss a')
     var blogTitle = $("#blogPostTitle").val().trim()
     var blogPost = $("#blogPostEntry").val().trim()
-    var blogEntry = ("<div class='blogEntryContainer my-2'>") + ("<div class='blogTitleView'>") + blogTitle + ("</div>") + ("<div class='blogTimeStampView'>") + "Posted on: " + savedTime + ("</div>") + ("<div class='blogEntryView'>") + blogPost + ("</div>") + ("</div>")
+    var trashAndEdit = ("<div class='col-1'>") + ("<span class='fa fa-trash-o trash-blog-button'>") + ("</span>") + (" ") + ("<span class='fa fa-pencil-square-o edit-blog-button'>") + ("</span>") + ("</div>")
+    var blogEntry = ("<div class='blogEntryContainer my-2'>")  + ("<div class='row'>") + ("<div class='col'>") + ("<div class='blogTitleView'>") + blogTitle + ("</div>") + ("<div class='blogTimeStampView'>") + "Posted on: " + savedTime + ("</div>") + ("<div class='blogEntryView'>") + blogPost + ("</div>") + ("</div>") +  trashAndEdit + ("</div>") + ("</div>")
+    if ($("#blogPostArea") === "") {
+    } else {
     $("#blogPostArea").prepend(blogEntry)
+    $("#blogPostTitle").val("")
+    $("#blogPostEntry").val("")
+  }
+  })
+
+  // function to delete blog post
+  // $(".fa-trash-o").on("click", function() {
+  //   console.log("test trash blog button")
+  //   var blogPostItem = $(this).parent();
+  //   blogPostItem.remove();
+  // })
+
+  // function to delete blog post
+  $(document.body).on("click", ".trash-blog-button", function() {
+    console.log("test trash blog")
+    var blogPostTrash = $(this).parent();
+    var div = blogPostTrash.parent()
+    var div2 = div.parent()
+    div2.remove();
+    // Get unique Firebase ID from button (added on button creation)
+    // var trainKey = $(this).attr("data-key");
+    // Remove object from Firebase
+    // db.ref(trainKey).remove();
   })
 
   // add signout button and log the user out once clicked
-  $("#logoutbtn").on("click", function(event){
-    event.preventDefault();
+  $("#logoutbtn").on("click", function(){
     firebase.auth().signOut()
     firebase.auth().signOut().then(function() {
-  window.location.replace("login.html")
-}).catch(function(error) {
+    window.location.replace("login.html")
+    }).catch(function(error) {
   console.log("test log out error")
 });
   })

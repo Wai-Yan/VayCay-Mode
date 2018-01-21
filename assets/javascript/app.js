@@ -8,10 +8,9 @@ $(document).ready(function() {
   var latitude = 0;
   var longitude = 0;
 
-  var signinInput;
-  var keys = [];
-  var users = [];
-  var map;
+  var authUID;
+  var loc;
+  var cityKey;
 
   //Initailize Firebase
   var config = {
@@ -29,23 +28,8 @@ $(document).ready(function() {
 
   // Create reference for firebase's node "users"
   var usersRef = firebase.database().ref("users");
-  // // Hide main-content when the page first loaded
-  // $("#main-content").hide();
-  // // Check what button was clicked
-  // $("button").click(function() {
-  //   event.preventDefault();
-  //   var button_clicked = $(this).attr('id');
-  //   console.log(button_clicked);
-  //
-  //   $("#sign-in").hide();
-  //   $("#main-content").show();
-  //
-  //   if (button_clicked === "register") {
-  //     usersRegister();
-  //   } else if (button_clicked === "sign_in") {
-  //     usersSignin();
-  //   }
-  // });
+  getFirebaseAuthUID();
+
 
   //function to render rows
   function renderRows(place) {
@@ -100,6 +84,7 @@ $(document).on("click", "#addTrip", function(event){
   fillCarousel(place);
   initMap(place);
   countDownDisplay(destinationDate, destination);
+  createTripsObj(destination, destinationDate);
   $("#cityInput").val("");
   $("#dateInput").val("");
   })
@@ -150,7 +135,9 @@ $(document).on("click", "#addTrip", function(event){
   //function to retrieve destination from Google
   function retrieveLocation() {
     var place = autocomplete.getPlace();
-    console.log(place)
+    console.log(place);
+    //assign global variable for firebase function
+    loc = place;
     return place;
   }
 
@@ -307,6 +294,8 @@ $(document).on("click", "#addTrip", function(event){
       $("#packingListView").append(listRow)
       packListArr.push(" " + itemValue)
       $("#packingListItem").val("");
+
+      createPackingListObj(packListArr);
     }
   });
 
@@ -323,6 +312,8 @@ $(document).on("click", "#addTrip", function(event){
     var deletedArrItem = packListArr.indexOf(deletedArrItem)
     packListArr.splice(deletedArrItem, 1)
     listRow.remove();
+
+    //Tak - Delete item from firebase
   });
 
 
@@ -390,84 +381,156 @@ var clipboard = new Clipboard(".copyButton", {
 
 
 // ************ Firebase Section ************ //
-  function usersRegister() {
-    var newUsername = $("#username").val().trim();
-    var newPassword = $("#password").val().trim();
-    console.log(newUsername);
-    console.log(newPassword);
+function getFirebaseAuthUID() {
+  firebase.auth().onAuthStateChanged(function(user) {
+    console.log('Get Users');
+    var user = firebase.auth().currentUser;
+    var uid, name, email;
 
-    if (newUsername !== "" && newPassword !== "") {
-      var uid = newUsername + "-" + newPassword;
-      console.log(uid);
+    if (user !== null) {
+      // User is signed in.
+      uid = user.uid;
+      name = user.displayName;
+      email = user.email;
 
-      //store username and password in firebase
-      usersRef.child(uid).set({
-          username: newUsername,
-          password: newPassword
-      });
+      //Assign uid to global variable
+      authUID = uid;
 
+      checkFirebaseUser(uid, name, email);
+    }
+  });
+}
+
+function checkFirebaseUser(uid, name, email) {
+  usersRef.on("child_added", function(snapshot) {
+    var userKey = snapshot.key;
+    console.log("userKey", userKey);
+
+    if (uid === userKey) {
+      // update
+      console.log("found");
+      //getUserInfo();
     } else {
-      //alert("UID is Empty");
+      // create
+      console.log("not found");
+      createUserObj(uid, name, email);
     }
+  }, function(errorObject) {
+    console.log("Errors handled: " + errorObject.code);
+  });
+}
 
-    // clear input boxes
-    $("#username").val("");
-    $("#password").val("");
+function getUserInfo(){
+  var uidRef = usersRef.child(authUID);
 
-  }
+  uidRef.on("child_added", function(childSnapshot) {
+    var data = childSnapshot.val();
+    console.log(data.city);
 
-  function usersSignin() {
-    var signUsername = $("#username").val().trim();
-    var signPassword = $("#password").val().trim();
-    signinInput = signUsername + "-" + signPassword;
+    if(childSnapshot.key !== "credential"){
+      $(".tableRow").empty();
+      var tBody = $("tbody");
+      var tRow = $("<tr>");
 
-    console.log("signUsername", signUsername);
-    console.log("signPassword", signPassword);
+      var destinationTD = $("<td>").text(data.city).attr("class", "citySelect").attr("data-city", data.city).attr("data-lat", data.lat).attr("data-lng", data.lng).attr("data-date", data.startdate);
 
-    for (var i = 0; i < keys.length; i++) {
-      if (keys[i] === signinInput) {
-        console.log("FOUND!!");
-        break;
-      } else {
-        //not found try again
-        console.log("NOT FOUND!!");
-      }
+      var destinationDateTD = $("<td>").text(data.startdate).attr("data-city", data.city).attr("data-date", data.startdate);
+
+      var trashTD = $("<td>").attr("class", "showTrash");
+      var trashSpan = $("<span>").attr("class", "fa fa-trash-o");
+
+      trashTD.append(trashSpan);
+      tRow.append(destinationTD, destinationDateTD, trashTD);
+      tBody.prepend(tRow);
     }
-    $("#username").val("");
-    $("#password").val("");
+  });
+}
+
+function createUserObj(uid, name, email) {
+  var keyRef = usersRef.child(uid);
+  // Create user's folder
+  keyRef.child("credential").set({
+    "name": name,
+    "email": email
+  });
+}
+
+function createTripsObj(city, trip_date) {
+  var formattedKey = city.toLowerCase() + "_" + trip_date;
+  // Replace non-word character with single "_"
+  formattedKey = formattedKey.replace(/\W+/g, "_");
+  console.log("formattedKey", formattedKey);
+
+  //Assign value to global variable
+  cityKey = formattedKey;
+
+  var lat = loc.geometry.location.lat();
+  var lng = loc.geometry.location.lng();
+  var uidRef = usersRef.child(authUID);
+  var tripsKey;
+
+  uidRef.on("child_added", function(childSnapshot) {
+    tripsKey = childSnapshot.key;
+  });
+
+  console.log(tripsKey);
+
+  if (tripsKey !== formattedKey){
+    uidRef.child(formattedKey).set({
+      "city": city,
+      "startdate": trip_date,
+      "lat": lat,
+      "lng": lng,
+    });
   }
+}
+
+function createPackingListObj(arr) {
+  //Retrieve firebase
+  var path = authUID + "/" + cityKey;
+  var packRef = usersRef.child(path);
+  console.log(arr);
+  packRef.update({
+      "packinglist": arr
+    });
+}
+
+function createBlogObj() {
+  console.log("Create Blog");
+
+}
   // ************ End Firebase Section ************ //
 
   //************ Google API Images Section ************ //
   function fillCarousel(place){
-    var googleAPIKey = "AIzaSyDZ2PsxQZzTNdRZFBMeQ9uRixxw8taSmjA";
-
-    var lat = place.geometry.location.lat();
-    var lon = place.geometry.location.lng();
-
-    var nearbyplacesURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + "," + lon + "&radius=500&type=sightseeing&key=" + googleAPIKey;
-
-    console.log("latitude", lat);
-    console.log("longitude", lon);
-    console.log("nearbyplacesURL", nearbyplacesURL);
-
-    //call place nearby API
-    $.ajax({
-      crossDomain: true,
-      url: nearbyplacesURL,
-      dataType: 'json',
-      // jsonpCallback: 'callback',
-      //contentType: "application/json; charset=utf-8;",
-      success: function(response2){
-         console.log(JSON.stringify(response2));
-       },
-      method: "GET"
-    })
-    .done(function(response) {
-      console.log("place nearby API", response);
-    });
-
+    // var googleAPIKey = "AIzaSyDZ2PsxQZzTNdRZFBMeQ9uRixxw8taSmjA";
+    //
+    // var lat = place.geometry.location.lat();
+    // var lon = place.geometry.location.lng();
+    //
+    // var nearbyplacesURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + "," + lon + "&radius=500&type=sightseeing&key=" + googleAPIKey;
+    //
+    // console.log("latitude", lat);
+    // console.log("longitude", lon);
+    // console.log("nearbyplacesURL", nearbyplacesURL);
+    //
+    // //call place nearby API
+    // $.ajax({
+    //   crossDomain: true,
+    //   url: nearbyplacesURL,
+    //   dataType: 'json',
+    //   method: "GET",
+    //   // jsonpCallback: 'callback',
+    //   //contentType: "application/json; charset=utf-8;",
+    //   success: function(response2){
+    //      console.log(JSON.stringify(response2));
+    //    }
+    // })
+    // .done(function(response) {
+    //   console.log("place nearby API", response);
+    // });
   }
+  //************ End Google API Images Section ************ //
 
     function retrieveGoogleApi(userLatitude, userLongitude) {
 

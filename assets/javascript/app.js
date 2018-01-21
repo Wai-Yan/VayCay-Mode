@@ -69,6 +69,8 @@ $(document).on("click", ".citySelect", function(event){
   console.log(userLongitude);
   retrieveGoogleApi(userLatitude, userLongitude);
   countDownDisplay(destinationDate, destination);
+  showCurrentWeather(destination)
+  showForecastedWeather(destination);
 })
 
 
@@ -79,8 +81,8 @@ $(document).on("click", "#addTrip", function(event){
   storeInputValues(place);
 	// console.log("button works");
   renderRows(place);
-  showCurrentWeather(place)
-  showForecastedWeather(place);
+  showCurrentWeather(destination)
+  showForecastedWeather(destination);
   fillCarousel(place);
   initMap(place);
   countDownDisplay(destinationDate, destination);
@@ -190,14 +192,14 @@ $(document).on("click", "#addTrip", function(event){
     });
   }
 
-  function showCurrentWeather(userPlace) {
+  function showCurrentWeather(destination) {
     /*
       Shows the main weather component-- current weather
     */
 
     $("#currentWeather").empty();
 
-    var userCity = userPlace.formatted_address;
+    var userCity = destination;
     userCity = userCity.split(",");
     userCity[0] = userCity[0].replace(/\s/g, '+');
     userCity = userCity.join(",");
@@ -226,14 +228,14 @@ $(document).on("click", "#addTrip", function(event){
       });
   }
 
-  function showForecastedWeather(userPlace) {
+  function showForecastedWeather(destination) {
     /*
       Grabs a 5 day forecast and projects temperature and icon into HTML
     */
 
     $("#forecastedWeather").empty();
 
-    var userCity = userPlace.formatted_address;
+    var userCity = destination;
     userCity = userCity.split(",");
     userCity[0] = userCity[0].replace(/\s/g, '+');
     userCity = userCity.join(",");

@@ -67,7 +67,7 @@ p {
   border-top: 0px;
 }
 
-.fa-trash-o{
+.trash-hide {
   visibility: hidden;
   cursor: pointer;
 }
@@ -164,6 +164,14 @@ p {
 
 .blogTimeStampView {
   font-size: .5rem;
+}
+
+.trash-blog-button {
+  cursor: pointer;
+}
+
+.trash-blog-button:hover {
+  opacity: .7;
 }
 
 @media only screen and (max-width: 992px) {

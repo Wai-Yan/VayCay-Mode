@@ -406,6 +406,10 @@ var clipboard = new Clipboard(".copyButton", {
 
   $(document.body).on("click", ".edit-blog-button", function() {
     console.log("test edit blog");
+    
+    var blogPostTrash = $(this).parent();
+    var div = blogPostTrash.parent()
+    var div2 = div.parent()
   });
 
   // add signout button and log the user out once clicked

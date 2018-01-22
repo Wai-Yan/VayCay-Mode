@@ -100,6 +100,7 @@ $(document).on("click", "#addTrip", function(event){
   document.getElementById("myForm").onkeypress = function(e) {
     var key = e.charCode || e.keyCode || 0;     
     if (key == 13) {
+      console.log("Big money");
       e.preventDefault();
     }
   }

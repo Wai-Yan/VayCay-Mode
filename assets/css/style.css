@@ -6,6 +6,24 @@
   margin-right: 2rem;
 }
 
+/* .navbar-toggler {
+  margin-left: -50px;
+} */
+
+.navbar-light .navbar-text {
+  font-family: 'Lato', sans-serif;
+  color: #454545;
+}
+
+.navbar-light .navbar-nav .nav-link {
+  font-family: 'Lato', sans-serif;
+  color: #009FDC;
+}
+
+.bg-light {
+    background-color: #FFFF;
+}
+
 .addTripLink:hover {
   opacity: 0.8;
 }
@@ -23,6 +41,7 @@
 .cl-effect-1 a::before {
   margin-right: 10px;
   content: '[';
+  color: #F99B0C;
   -webkit-transform: translateX(20px);
   -moz-transform: translateX(20px);
   transform: translateX(20px);
@@ -31,6 +50,7 @@
 .cl-effect-1 a::after {
   margin-left: 10px;
   content: ']';
+  color: #F99B0C;
   -webkit-transform: translateX(-20px);
   -moz-transform: translateX(-20px);
   transform: translateX(-20px);
@@ -47,6 +67,23 @@
 
 .logoutHover {
   cursor: pointer;
+}
+
+.login-bg {
+  background-image: url(../images/backgrounds/login-bg-1.jpeg)
+}
+
+.login-heading {
+  font-size: 3rem;
+  color: #FFFF;
+  font-family: 'Abril Fatface', cursive;
+}
+
+.login-text-bg {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 1rem;
+  width: 100%;
 }
 
 .jumbotron {
@@ -110,10 +147,10 @@ p {
 
 .signinCardContainer {
   position: fixed;
+  width: 100%;
   top: 50%;
   left: 50%;
-  /* bring your own prefixes */
-  transform: translate(-15%, -65%);
+  transform: translate(-50%, -50%);
 }
 
 .btn-sm {
@@ -179,16 +216,23 @@ p {
 }
 
 .footer {
-  width: 100%;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  background-color: #FFFF;
+  text-align: center;
   font-size: 0.8rem;
-  padding: .8rem;
+  font-family: 'Lato', sans-serif;
+  color: #009FDC;
 }
 
 .wrapper {
   position: relative;
   margin: auto;
   width: 100%;
-  min-height: calc(100vh - 3.5rem);
+  min-height: calc(100vh - 3rem);
 }
 
 

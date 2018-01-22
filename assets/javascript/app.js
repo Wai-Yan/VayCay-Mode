@@ -26,10 +26,20 @@ $(document).ready(function() {
 
   var database = firebase.database();
 
+  // hide the results page and hide nav item
+  $("#part-2").hide()
+  $("#AddTripNav").hide()
+
+  // function to pull the search area up and show the results area
+  function showResults() {
+    $("#showSearch").removeClass("show")
+    $("#part-2").slideDown("slow")
+  }
+
+
   // Create reference for firebase's node "users"
   var usersRef = firebase.database().ref("users");
   getFirebaseAuthUID();
-
 
   //function to render rows
   function renderRows(place) {
@@ -67,6 +77,8 @@ $(document).on("click", ".citySelect", function(event){
   var userLongitude = parseFloat($(this).attr("data-lng"));
   console.log(userLatitude);
   console.log(userLongitude);
+  showResults()
+  $("#AddTripNav").show()
   retrieveGoogleApi(userLatitude, userLongitude);
   countDownDisplay(destinationDate, destination);
 })
@@ -83,6 +95,8 @@ $(document).on("click", "#addTrip", function(event){
   showForecastedWeather(place);
   fillCarousel(place);
   initMap(place);
+  showResults()
+  $("#AddTripNav").show()
   countDownDisplay(destinationDate, destination);
   createTripsObj(destination, destinationDate);
   $("#cityInput").val("");
@@ -97,13 +111,12 @@ $(document).on("click", "#addTrip", function(event){
     listRow.remove();
   });
 
-  document.getElementById("myForm").onkeypress = function(e) {
-    var key = e.charCode || e.keyCode || 0;     
-    if (key == 13) {
-      console.log("Big money");
-      e.preventDefault();
-    }
-  }
+  // document.getElementById("myForm").onkeypress = function(e) {
+  //   var key = e.charCode || e.keyCode || 0;
+  //   if (key == 13) {
+  //     e.preventDefault();
+  //   }
+  // }
 
   /// this sets the current date for the date selector
   var today = new Date();
@@ -390,7 +403,7 @@ var clipboard = new Clipboard(".copyButton", {
     // Remove object from Firebase
     // db.ref(trainKey).remove();
   })
-  
+
   $(document.body).on("click", ".edit-blog-button", function() {
     console.log("test edit blog");
     

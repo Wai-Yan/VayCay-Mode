@@ -6,6 +6,10 @@
   margin-right: 2rem;
 }
 
+.addTripLink:hover {
+  opacity: 0.8;
+}
+
 /* naviation link effects */
 
 .cl-effect-1 a::before, .cl-effect-1 a::after {
@@ -173,6 +177,20 @@ p {
 .trash-blog-button:hover {
   opacity: .7;
 }
+
+.footer {
+  width: 100%;
+  font-size: 0.8rem;
+  padding: .8rem;
+}
+
+.wrapper {
+  position: relative;
+  margin: auto;
+  width: 100%;
+  min-height: calc(100vh - 3.5rem);
+}
+
 
 @media only screen and (max-width: 992px) {
   .clock {

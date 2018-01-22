@@ -33,7 +33,7 @@ $(document).ready(function() {
   // function to pull the search area up and show the results area
   function showResults() {
     $("#showSearch").removeClass("show")
-    $("#part-2").show()
+    $("#part-2").slideDown("slow")
   }
 
 
@@ -111,12 +111,12 @@ $(document).on("click", "#addTrip", function(event){
     listRow.remove();
   });
 
-  document.getElementById("myForm").onkeypress = function(e) {
-    var key = e.charCode || e.keyCode || 0;     
-    if (key == 13) {
-      e.preventDefault();
-    }
-  }
+  // document.getElementById("myForm").onkeypress = function(e) {
+  //   var key = e.charCode || e.keyCode || 0;
+  //   if (key == 13) {
+  //     e.preventDefault();
+  //   }
+  // }
 
   /// this sets the current date for the date selector
   var today = new Date();
@@ -403,7 +403,7 @@ var clipboard = new Clipboard(".copyButton", {
     // Remove object from Firebase
     // db.ref(trainKey).remove();
   })
-  
+
   $(document.body).on("click", ".edit-blog-button", function() {
     console.log("test edit blog");
   });

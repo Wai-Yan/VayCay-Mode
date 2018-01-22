@@ -26,29 +26,64 @@ $(document).ready(function() {
 
   var database = firebase.database();
 
+  // on auth function so users can't access before logging in
+  firebase.auth().onAuthStateChanged(user => {
+  if(!user) {
+    window.location = 'login.html'; //If User is not logged in, redirect to login page
+  }
+    });
+
+  // hide the results page and hide nav item
+  $("#part-2").hide()
+  $("#AddTripNav").hide()
+
+  // function to pull the search area up and show the results area
+  function showResults() {
+    $("#showSearch").removeClass("show")
+    $("#part-2").slideDown("slow")
+  }
+
+
   // Create reference for firebase's node "users"
   var usersRef = firebase.database().ref("users");
   getFirebaseAuthUID();
 
-
   //function to render rows
-  function renderRows(place) {
-    $(".tableRow").empty()
-    // console.log("render rows works")
-    // console.log("render rows: " + place.formatted_address)
-    // console.log(place.formatted_address);
-    var tBody = $("tbody");
-    var tRow = $("<tr>");
+  function renderRows(place, childSnapshot) {
+    // $(".tableRow").empty()
+    // // console.log("render rows works")
+    // // console.log("render rows: " + place.formatted_address)
+    // // console.log(place.formatted_address);
+    // var tBody = $("tbody");
+    // var tRow = $("<tr>");
+    //
+    // var destinationTD = $("<td>").text(place.formatted_address);
+    // destinationTD.attr("class", "citySelect").attr("data-city", place.formatted_address).attr("data-lat", place.geometry.location.lat).attr("data-lng", place.geometry.location.lng).attr("data-id", place.place_id).attr("data-date", destinationDate);
+    // var destinationDateTD = $("<td>").text(destinationDate).attr("data-city", place.formatted_address).attr("data-date", destinationDate);
+    // var trashTD = $("<td>").attr("class", "showTrash");
+    // var trashSpan = $("<span>").attr("class", "fa fa-trash-o trash-hide");
+    //
+    // trashTD.append(trashSpan);
+    // tRow.append(destinationTD, destinationDateTD, trashTD);
+    // tBody.prepend(tRow);
+    var data = childSnapshot.val();
 
-    var destinationTD = $("<td>").text(place.formatted_address);
-    destinationTD.attr("class", "citySelect").attr("data-city", place.formatted_address).attr("data-lat", place.geometry.location.lat).attr("data-lng", place.geometry.location.lng).attr("data-id", place.place_id).attr("data-date", destinationDate);
-    var destinationDateTD = $("<td>").text(destinationDate).attr("data-city", place.formatted_address).attr("data-date", destinationDate);
-    var trashTD = $("<td>").attr("class", "showTrash");
-    var trashSpan = $("<span>").attr("class", "fa fa-trash-o trash-hide");
+    if (childSnapshot.key !== "credential") {
+      $(".tableRow").empty();
+      var tBody = $("tbody");
+      var tRow = $("<tr>").attr("class", "cityRow");
 
-    trashTD.append(trashSpan);
-    tRow.append(destinationTD, destinationDateTD, trashTD);
-    tBody.prepend(tRow);
+      var destinationTD = $("<td>").text(data.city).attr("class", "citySelect").attr("data-city", data.city).attr("data-lat", data.lat).attr("data-lng", data.lng).attr("data-date", data.startdate);
+
+      var destinationDateTD = $("<td>").text(data.startdate).attr("data-city", data.city).attr("data-date", data.startdate);
+
+      var trashTD = $("<td>").attr("class", "showTrash");
+      var trashSpan = $("<span>").attr("class", "fa fa-trash-o");
+
+      trashTD.append(trashSpan);
+      tRow.append(destinationTD, destinationDateTD, trashTD);
+      tBody.prepend(tRow);
+    }
 }
 
 //function to store values from input fields
@@ -67,6 +102,8 @@ $(document).on("click", ".citySelect", function(event){
   var userLongitude = parseFloat($(this).attr("data-lng"));
   console.log(userLatitude);
   console.log(userLongitude);
+  showResults()
+  $("#AddTripNav").show()
   retrieveGoogleApi(userLatitude, userLongitude);
   countDownDisplay(destinationDate, destination);
   showCurrentWeather(destination)
@@ -85,6 +122,8 @@ $(document).on("click", "#addTrip", function(event){
   showForecastedWeather(destination);
   fillCarousel(place);
   initMap(place);
+  showResults()
+  $("#AddTripNav").show()
   countDownDisplay(destinationDate, destination);
   createTripsObj(destination, destinationDate);
   $("#cityInput").val("");
@@ -94,17 +133,26 @@ $(document).on("click", "#addTrip", function(event){
   // function to delete packing list item
   $(document.body).on("click", ".showTrash", function() {
     var listRow = $(this).parent();
-    // console.log(listRow)
+    var city = $(this).prev().attr("data-city");
+    var date = $(this).prev().attr("data-date");
+
     // Select and Remove the specific <p> element that previously held the to do item number.
     listRow.remove();
+
+    //Remove from Firebase
+    var childKey = formatFirebaseCityKey(city,date);
+    console.log("authUID", authUID);
+    console.log("childKey", childKey);
+    var uidRef = usersRef.child(authUID);
+    uidRef.child(childKey).remove();
   });
 
-  document.getElementById("myForm").onkeypress = function(e) {
-    var key = e.charCode || e.keyCode || 0;     
-    if (key == 13) {
-      e.preventDefault();
-    }
-  }
+  // document.getElementById("myForm").onkeypress = function(e) {
+  //   var key = e.charCode || e.keyCode || 0;
+  //   if (key == 13) {
+  //     e.preventDefault();
+  //   }
+  // }
 
   /// this sets the current date for the date selector
   var today = new Date();
@@ -293,7 +341,7 @@ $(document).on("click", "#addTrip", function(event){
       packListArr.push(" " + itemValue)
       $("#packingListItem").val("");
 
-      createPackingListObj(packListArr);
+      //createPackingListObj(packListArr);
     }
   });
 
@@ -391,9 +439,13 @@ var clipboard = new Clipboard(".copyButton", {
     // Remove object from Firebase
     // db.ref(trainKey).remove();
   })
-  
+
   $(document.body).on("click", ".edit-blog-button", function() {
     console.log("test edit blog");
+
+    var blogPostTrash = $(this).parent();
+    var div = blogPostTrash.parent()
+    var div2 = div.parent()
   });
 
   // add signout button and log the user out once clicked
@@ -436,7 +488,7 @@ function checkFirebaseUser(uid, name, email) {
     if (uid === userKey) {
       // update
       console.log("found");
-      //getUserInfo();
+      getUserInfo();
     } else {
       // create
       console.log("not found");
@@ -449,27 +501,11 @@ function checkFirebaseUser(uid, name, email) {
 
 function getUserInfo(){
   var uidRef = usersRef.child(authUID);
+  var place = retrieveLocation();
 
   uidRef.on("child_added", function(childSnapshot) {
-    var data = childSnapshot.val();
-    console.log(data.city);
-
-    if(childSnapshot.key !== "credential"){
-      $(".tableRow").empty();
-      var tBody = $("tbody");
-      var tRow = $("<tr>");
-
-      var destinationTD = $("<td>").text(data.city).attr("class", "citySelect").attr("data-city", data.city).attr("data-lat", data.lat).attr("data-lng", data.lng).attr("data-date", data.startdate);
-
-      var destinationDateTD = $("<td>").text(data.startdate).attr("data-city", data.city).attr("data-date", data.startdate);
-
-      var trashTD = $("<td>").attr("class", "showTrash");
-      var trashSpan = $("<span>").attr("class", "fa fa-trash-o");
-
-      trashTD.append(trashSpan);
-      tRow.append(destinationTD, destinationDateTD, trashTD);
-      tBody.prepend(tRow);
-    }
+    //Display City Section upon loading
+    renderRows(place, childSnapshot);
   });
 }
 
@@ -483,27 +519,18 @@ function createUserObj(uid, name, email) {
 }
 
 function createTripsObj(city, trip_date) {
-  var formattedKey = city.toLowerCase() + "_" + trip_date;
-  // Replace non-word character with single "_"
-  formattedKey = formattedKey.replace(/\W+/g, "_");
-  console.log("formattedKey", formattedKey);
-
-  //Assign value to global variable
-  cityKey = formattedKey;
-
+  cityKey = formatFirebaseCityKey(city, trip_date);
+  var tripsKey;
   var lat = loc.geometry.location.lat();
   var lng = loc.geometry.location.lng();
   var uidRef = usersRef.child(authUID);
-  var tripsKey;
 
   uidRef.on("child_added", function(childSnapshot) {
     tripsKey = childSnapshot.key;
   });
 
-  console.log(tripsKey);
-
-  if (tripsKey !== formattedKey){
-    uidRef.child(formattedKey).set({
+  if (tripsKey !== cityKey){
+    uidRef.child(cityKey).set({
       "city": city,
       "startdate": trip_date,
       "lat": lat,
@@ -516,7 +543,7 @@ function createPackingListObj(arr) {
   //Retrieve firebase
   var path = authUID + "/" + cityKey;
   var packRef = usersRef.child(path);
-  console.log(arr);
+  console.log(cityKey);
   packRef.update({
       "packinglist": arr
     });
@@ -525,6 +552,14 @@ function createPackingListObj(arr) {
 function createBlogObj() {
   console.log("Create Blog");
 
+}
+
+function formatFirebaseCityKey(city, trip_date){
+  var formattedKey = city.toLowerCase() + "_" + trip_date;
+  // Replace non-word character with single "_"
+  formattedKey = formattedKey.replace(/\W+/g, "_");
+  console.log("formattedKey", formattedKey);
+  return formattedKey;
 }
   // ************ End Firebase Section ************ //
 

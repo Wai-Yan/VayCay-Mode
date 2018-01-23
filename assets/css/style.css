@@ -229,6 +229,10 @@ p {
 }
 
 .fixed-height-city {
+  height: 270px;
+}
+
+.fixed-height-list {
   overflow-y: scroll;
   height: 270px;
 }

@@ -54,7 +54,7 @@
 <body>
   <div class="wrapper">
   <!-- Start of navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container">
         <a class="navbar-brand" href="index.html">
   <img src="assets/images/VacayMode-logo.png" height="50" alt=""></a>
@@ -69,9 +69,6 @@
             <li class="nav-item cl-effect-1" id="AddTripNav">
               <a class="nav-link addTripLink" data-toggle="collapse" data-target="#showSearch">Add or View Your Trip</a>
             </li>
-            <!-- <li class="nav-item cl-effect-1">
-              <a class="nav-link" href="about.html">About Us</a>
-            </li> -->
             <li class="nav-item">
               <a class="nav-link ml-3 logoutHover" id="logoutbtn">Logout <i class="fa fa-sign-out" aria-hidden="true"></i></a>
             </li>
@@ -83,20 +80,17 @@
 
 
       <!-- First section of search and list area begins here-->
-      <div id="part-1">
+      <div id="part-1" class="search-bg">
       <div class="container">
         <div class="collapse show" id="showSearch">
-          <div class="card card-body mb-3">
-            <!-- Top jumbotron -->
-            <div class="jumbotron jumbotron-fluid">
-              <div class="container">
-                <p class="lead">Hi, name! Enter a new trip below or select one of your trips to view.</p>
+            <!-- Top text -->
+              <div class="container text-center">
+                <p class="lead part-1-lead">Hi, name! Enter a new trip below or select one of your trips to view.</p>
               </div>
-            </div>
             <!-- end jumbotron -->
             <!-- beginning of row -->
-            <div class="row">
-              <div class="col mb-3">
+            <div class="row mt-3">
+              <div class="col">
                 <div class="card fixed-height-city">
                   <div class="card-body">
                     <!-- Form -->
@@ -115,7 +109,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col mb-3">
+              <div class="col">
                 <div class="card fixed-height-city">
                   <!-- table of trips below -->
                   <div class="card-body">
@@ -140,7 +134,6 @@
               </div>
             </div>
             <!-- end of row -->
-          </div>
         </div>
 
         <!-- end of button area -->
@@ -338,7 +331,7 @@
   <!-- End of wrapper -->
   <!-- footer --->
   <div class="container-fluid footer text-center">
-    Copyright &copy 2018 vaycaymode.co | <a class="nav-item footer-link" href="about.html">About</a>
+    Copyright &copy 2018 vaycaymode | <a class="nav-item footer-link" href="about.html">About</a>
   </div>
   <!-- end of footer -->
 

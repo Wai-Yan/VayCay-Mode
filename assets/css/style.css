@@ -89,6 +89,22 @@ body {
   background-image: url(../images/backgrounds/login-bg-1.jpeg);
 }
 
+.search-bg {
+  background-image: url(../images/backgrounds/index-search-bg-1.jpeg);
+}
+
+.part-1-lead {
+  padding-top: 2rem;
+  padding-bottom: 1.5rem;
+  font-size: 2rem;
+  color: #454545;
+  font-family: 'Abril Fatface', cursive;
+}
+
+.card {
+  background-color: #f8f9fa;
+}
+
 .about-bg {
   background-image: url(../images/backgrounds/about-bg-1.jpeg);
   background-position: 50% 18%;
@@ -106,14 +122,12 @@ body {
 }
 
 .login-text-bg {
-  width: 100%;
   background-color: rgba(0, 0, 0, 0.4);
   padding: 1rem;
   width: 100%;
 }
 
 .about-text-bg {
-  width: 100%;
   background-color: rgba(0, 0, 0, 0.4);
   padding: 1rem;
   width: 100%;
@@ -121,14 +135,14 @@ body {
 
 .about-heading {
   font-size: 2.5rem;
-  color: #FFFF;
+  color: #f8f9fa;
   font-family: 'Abril Fatface', cursive;
   padding-top: 150px;
 }
 
 .about-heading-text {
   font-family: 'Lato', sans-serif;
-  color: #FFFF;
+  color: #f8f9fa;
   font-size: 1rem;
   width: 50%;
   margin: auto;
@@ -145,7 +159,7 @@ body {
 .section {
   padding: 60px 0;
   position: relative;
-  background: #FFF;
+  background: #f8f9fa;
 }
 
 .title {
@@ -213,7 +227,7 @@ p {
 
 .fixed-height-city {
   overflow-y: scroll;
-  height: 280px;
+  height: 55%;
 }
 
 .fixed-height {
@@ -303,7 +317,7 @@ p {
   bottom: 0;
   left: 0;
   padding: 1rem;
-  background-color: #FFFF;
+  background-color: #f8f9fa;
   text-align: center;
   font-size: 0.8rem;
   font-family: 'Lato', sans-serif;

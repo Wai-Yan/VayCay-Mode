@@ -19,10 +19,10 @@ body {
   margin-bottom: 0;
 }
 
-/* .navbar-light .navbar-nav .nav-link {
-  font-family: 'Lato', sans-serif;
-  color: #009FDC;
-} */
+.navbar .navbar-toggler {
+    width: 60px;
+    height: 40px;
+}
 
 .navbar a:not(.btn):not(.dropdown-item) {
   color: #009FDC;
@@ -91,6 +91,8 @@ body {
 
 .search-bg {
   background-image: url(../images/backgrounds/index-search-bg-1.jpeg);
+  background-size: cover;
+  height: 600px;
 }
 
 .part-1-lead {
@@ -103,6 +105,7 @@ body {
 
 .card {
   background-color: #f8f9fa;
+  margin-bottom: auto;
 }
 
 .about-bg {
@@ -227,7 +230,7 @@ p {
 
 .fixed-height-city {
   overflow-y: scroll;
-  height: 55%;
+  height: 270px;
 }
 
 .fixed-height {
@@ -341,11 +344,36 @@ a.footer-link {
   min-height: calc(100vh - 4rem);
 }
 
+/* @media only screen and (max-width: 1366px) {
+.search-bg {
+    background-size: 300%;
+    height: 890px;
+} */
+
+@media only screen and (max-width: 1024px) {
+.search-bg {
+    background-size: 300%;
+    height: 1230px;
+}
+
 @media only screen and (max-width: 992px) {
   .clock {
     zoom: 0.8;
     -moz-transform: scale(0.8)
   }
+  .login-heading {
+    font-size: 2.8rem;
+  }
+  /* .fixed-height-city {
+    overflow-y: scroll;
+    height: auto;
+} */
+.part-1-lead {
+    font-size: 1.2rem;
+}
+.search-bg {
+  height: 900px;
+}
 }
 
 @media only screen and (max-width: 768px) {
@@ -353,6 +381,19 @@ a.footer-link {
     zoom: 0.5;
     -moz-transform: scale(0.5)
   }
+  .login-heading {
+    font-size: 2.5rem;
+  }
+  /* .fixed-height-city {
+    overflow-y: scroll;
+    height: auto;
+} */
+.part-1-lead {
+    font-size: 2rem;
+}
+.search-bg {
+  height: 900px;
+}
 }
 
 @media only screen and (max-width: 483px) {
@@ -360,6 +401,19 @@ a.footer-link {
     zoom: 0.35;
     -moz-transform: scale(0.35)
   }
+  .login-heading {
+    font-size: 2.3rem;
+  }
+  /* .fixed-height-city {
+    overflow-y: scroll;
+    height: auto;
+} */
+.part-1-lead {
+    font-size: 1.5rem;
+}
+.search-bg {
+  height: 750px;
+}
 }
 
 @media only screen and (max-width: 410px) {
@@ -367,4 +421,17 @@ a.footer-link {
     zoom: 0.3;
     -moz-transform: scale(0.3)
   }
+  .login-heading {
+    font-size: 2rem;
+  }
+  /* .fixed-height-city {
+    overflow-y: scroll;
+    height: auto;
+} */
+.part-1-lead {
+    font-size: 1.2rem;
+}
+.search-bg {
+  height: 750px;
+}
 }

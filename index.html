@@ -80,9 +80,9 @@
 
 
       <!-- First section of search and list area begins here-->
-      <div id="part-1" class="search-bg">
+    <div class="collapse show search-bg" id="showSearch">
+      <div id="part-1">
       <div class="container">
-        <div class="collapse show" id="showSearch">
             <!-- Top text -->
               <div class="container text-center">
                 <p class="lead part-1-lead">Hi, name! Enter a new trip below or select one of your trips to view.</p>
@@ -90,18 +90,18 @@
             <!-- end jumbotron -->
             <!-- beginning of row -->
             <div class="row mt-3">
-              <div class="col">
+              <div class="col mb-3">
                 <div class="card fixed-height-city">
                   <div class="card-body">
                     <!-- Form -->
                     <form>
                       <div class="form-group">
-                        <label for="city">Enter a city:</label>
+                        <label for="city">Enter a city</label>
                         <input type="text" class="form-control" id="cityInput" placeholder="ex: London">
                       </div>
                     </form>
                     <form class="mb-4" action="/action_page.php">
-                      <label for="startDate">Trip start date:</label>
+                      <label for="startDate">Trip start date</label>
                       <input type="date" class="form-control calendar" name="tripStartDate" id="dateInput">
                     </form>
                     <button type="submit" class="btn btn-primary btn-lg btn-block" id="addTrip">Add <i class="fa fa-plus-square-o"></i></button>
@@ -113,9 +113,7 @@
                 <div class="card fixed-height-city">
                   <!-- table of trips below -->
                   <div class="card-body">
-                    Your trips:
-                    <div class="mb-2">
-                    </div>
+                    YOUR TRIPS
                     <table class="table table-hover">
                       <thead>
                         <tr>

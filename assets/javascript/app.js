@@ -66,6 +66,7 @@ $(document).ready(function() {
     // trashTD.append(trashSpan);
     // tRow.append(destinationTD, destinationDateTD, trashTD);
     // tBody.prepend(tRow);
+
     var data = childSnapshot.val();
 
     if (childSnapshot.key !== "credential") {
@@ -116,8 +117,8 @@ $(document).on("click", "#addTrip", function(event){
 	event.preventDefault();
   var place = retrieveLocation();
   storeInputValues(place);
-	// console.log("button works");
-  renderRows(place);
+	console.log("button works");
+  //renderRows(place);
   showCurrentWeather(destination)
   showForecastedWeather(destination);
   fillCarousel(place);
@@ -147,12 +148,12 @@ $(document).on("click", "#addTrip", function(event){
     uidRef.child(childKey).remove();
   });
 
-  // document.getElementById("myForm").onkeypress = function(e) {
-  //   var key = e.charCode || e.keyCode || 0;
-  //   if (key == 13) {
-  //     e.preventDefault();
-  //   }
-  // }
+  document.getElementById("cityInput").onkeypress = function(e) {
+    var key = e.charCode || e.keyCode || 0;
+    if (key == 13) {
+      e.preventDefault();
+    }
+  }
 
   /// this sets the current date for the date selector
   var today = new Date();
@@ -306,7 +307,11 @@ $(document).on("click", "#addTrip", function(event){
       // We store all of the retrieved data inside of an object called "response"
       .done(function(response) {
 
-        for (var i = 0; i < 6; i++) {
+        console.log(response);
+
+        var allPredictions = response.list.length
+
+        for (var i = 6; i < allPredictions; i+= 8) {
           newForecastImage = $("<img src='http://openweathermap.org/img/w/" + response.list[i].weather[0].icon + ".png'>");
           $("#forecastedWeather").append(newForecastImage);
 
@@ -443,9 +448,17 @@ var clipboard = new Clipboard(".copyButton", {
   $(document.body).on("click", ".edit-blog-button", function() {
     console.log("test edit blog");
 
-    var blogPostTrash = $(this).parent();
-    var div = blogPostTrash.parent()
-    var div2 = div.parent()
+    var editCol = $(this).parent();
+    var wholeRow = editCol.parent()
+    var targetCol = wholeRow[0].childNodes[0];
+    var entryInfo = [targetCol.childNodes[0].innerText, targetCol.childNodes[2].innerText];
+    
+    console.log(targetCol);
+    console.log(entryInfo[0]);
+    console.log(entryInfo[1]);
+    
+    $("#myModal #blogPostTitle").val(entryInfo[0]);
+    $("#myModal #blogPostEntry").val(entryInfo[1]);
   });
 
   // add signout button and log the user out once clicked

@@ -230,7 +230,7 @@ p {
 
 .fixed-height-city {
   overflow-y: scroll;
-  height: 75%;
+  height: 270px;
 }
 
 .fixed-height {
@@ -348,13 +348,13 @@ a.footer-link {
 .search-bg {
     background-size: 300%;
     height: 890px;
-}
+} */
 
 @media only screen and (max-width: 1024px) {
 .search-bg {
     background-size: 300%;
     height: 1230px;
-} */
+}
 
 @media only screen and (max-width: 992px) {
   .clock {
@@ -364,12 +364,15 @@ a.footer-link {
   .login-heading {
     font-size: 2.8rem;
   }
-  .fixed-height-city {
+  /* .fixed-height-city {
     overflow-y: scroll;
     height: auto;
-}
+} */
 .part-1-lead {
     font-size: 1.2rem;
+}
+.search-bg {
+  height: 900px;
 }
 }
 
@@ -381,12 +384,15 @@ a.footer-link {
   .login-heading {
     font-size: 2.5rem;
   }
-  .fixed-height-city {
+  /* .fixed-height-city {
     overflow-y: scroll;
     height: auto;
-}
+} */
 .part-1-lead {
     font-size: 2rem;
+}
+.search-bg {
+  height: 900px;
 }
 }
 
@@ -398,12 +404,15 @@ a.footer-link {
   .login-heading {
     font-size: 2.3rem;
   }
-  .fixed-height-city {
+  /* .fixed-height-city {
     overflow-y: scroll;
     height: auto;
-}
+} */
 .part-1-lead {
     font-size: 1.5rem;
+}
+.search-bg {
+  height: 750px;
 }
 }
 
@@ -415,11 +424,14 @@ a.footer-link {
   .login-heading {
     font-size: 2rem;
   }
-  .fixed-height-city {
+  /* .fixed-height-city {
     overflow-y: scroll;
     height: auto;
-}
+} */
 .part-1-lead {
     font-size: 1.2rem;
+}
+.search-bg {
+  height: 750px;
 }
 }

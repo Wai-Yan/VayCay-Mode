@@ -148,12 +148,12 @@ $(document).on("click", "#addTrip", function(event){
     uidRef.child(childKey).remove();
   });
 
-  // document.getElementById("myForm").onkeypress = function(e) {
-  //   var key = e.charCode || e.keyCode || 0;
-  //   if (key == 13) {
-  //     e.preventDefault();
-  //   }
-  // }
+  document.getElementById("cityInput").onkeypress = function(e) {
+    var key = e.charCode || e.keyCode || 0;
+    if (key == 13) {
+      e.preventDefault();
+    }
+  }
 
   /// this sets the current date for the date selector
   var today = new Date();

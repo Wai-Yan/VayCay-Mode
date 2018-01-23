@@ -448,9 +448,17 @@ var clipboard = new Clipboard(".copyButton", {
   $(document.body).on("click", ".edit-blog-button", function() {
     console.log("test edit blog");
 
-    var blogPostTrash = $(this).parent();
-    var div = blogPostTrash.parent()
-    var div2 = div.parent()
+    var editCol = $(this).parent();
+    var wholeRow = editCol.parent()
+    var targetCol = wholeRow[0].childNodes[0];
+    var entryInfo = [targetCol.childNodes[0].innerText, targetCol.childNodes[2].innerText];
+    
+    console.log(targetCol);
+    console.log(entryInfo[0]);
+    console.log(entryInfo[1]);
+    
+    $("#myModal #blogPostTitle").val(entryInfo[0]);
+    $("#myModal #blogPostEntry").val(entryInfo[1]);
   });
 
   // add signout button and log the user out once clicked

@@ -66,7 +66,7 @@ $(document).ready(function() {
     // trashTD.append(trashSpan);
     // tRow.append(destinationTD, destinationDateTD, trashTD);
     // tBody.prepend(tRow);
-    
+
     var data = childSnapshot.val();
 
     if (childSnapshot.key !== "credential") {
@@ -118,7 +118,7 @@ $(document).on("click", "#addTrip", function(event){
   var place = retrieveLocation();
   storeInputValues(place);
 	console.log("button works");
-  renderRows(place);
+  //renderRows(place);
   showCurrentWeather(destination)
   showForecastedWeather(destination);
   fillCarousel(place);
@@ -306,9 +306,9 @@ $(document).on("click", "#addTrip", function(event){
       })
       // We store all of the retrieved data inside of an object called "response"
       .done(function(response) {
-        
+
         console.log(response);
-        
+
         var allPredictions = response.list.length
 
         for (var i = 6; i < allPredictions; i+= 8) {

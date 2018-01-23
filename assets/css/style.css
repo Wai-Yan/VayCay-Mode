@@ -230,7 +230,7 @@ p {
 
 .fixed-height-city {
   overflow-y: scroll;
-  height: 100%;
+  height: 75%;
 }
 
 .fixed-height {

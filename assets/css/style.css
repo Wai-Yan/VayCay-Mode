@@ -1,3 +1,7 @@
+body {
+  font-family: 'Lato', sans-serif;
+}
+
 .brand-logo {
   margin-left: 2rem;
 }
@@ -11,13 +15,28 @@
   color: #454545;
 }
 
-.navbar-light .navbar-nav .nav-link {
+.navbar {
+  margin-bottom: 0;
+}
+
+/* .navbar-light .navbar-nav .nav-link {
   font-family: 'Lato', sans-serif;
+  color: #009FDC;
+} */
+
+.navbar a:not(.btn):not(.dropdown-item) {
   color: #009FDC;
 }
 
+.navbar .navbar-nav .nav-link:not(.btn) {
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  padding: 0.5rem 0.7rem;
+  line-height: 1.625rem;
+}
+
 .bg-light {
-    background-color: #FFFF;
+  background-color: #FFFF;
 }
 
 .addTripLink:hover {
@@ -73,6 +92,11 @@
 .about-bg {
   background-image: url(../images/backgrounds/about-bg-1.jpeg);
   background-position: 50% 18%;
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .login-heading {
@@ -82,6 +106,13 @@
 }
 
 .login-text-bg {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 1rem;
+  width: 100%;
+}
+
+.about-text-bg {
   width: 100%;
   background-color: rgba(0, 0, 0, 0.4);
   padding: 1rem;
@@ -102,6 +133,37 @@
   width: 50%;
   margin: auto;
   padding-bottom: 150px;
+}
+
+.about-heading-team {
+  font-size: 2.5rem;
+  color: #009FDC;
+  font-family: 'Abril Fatface', cursive;
+  /* padding: 1.5rem; */
+}
+
+.section {
+  padding: 60px 0;
+  position: relative;
+  background: #FFF;
+}
+
+.title {
+  color: #454545;
+}
+
+.text-primary {
+  color: #F99B0C !important;
+}
+
+.description {
+  color: #454545;
+  font-weight: 300;
+}
+
+.btn-primary {
+    background-color: #F99B0C;
+    color: #FFFFFF;
 }
 
 .jumbotron {
@@ -144,9 +206,9 @@ p {
 }
 
 .flip-clock-wrapper {
-    display: inline-block;
-    width: auto;
-    height: auto:
+  display: inline-block;
+  width: auto;
+  height: auto:
 }
 
 .fixed-height-city {
@@ -172,8 +234,8 @@ p {
 }
 
 .btn-sm {
-    font-size: .5rem;
-  }
+  font-size: .5rem;
+}
 
 .trashColumn:hover span {
   visibility: visible;
@@ -185,20 +247,22 @@ p {
 }
 
 /* When clicked on, add a background color and strike out text */
+
 .col-checked {
   text-decoration: line-through;
   padding-left: 1em;
 }
 
 /* Add a "checked" mark when clicked on */
+
 .col-checked::before {
   content: '✓';
   position: absolute;
 }
 
 .map-height {
-   width: 100%;
-   height: 400px;
+  width: 100%;
+  height: 400px;
 }
 
 .map {
@@ -247,6 +311,15 @@ p {
   height: 3rem;
 }
 
+.footer-link:hover {
+  color: #454545;
+  decoration: none;
+}
+
+a.footer-link {
+  color: #009FDC;
+}
+
 .wrapper {
   position: relative;
   margin: auto;
@@ -254,32 +327,30 @@ p {
   min-height: calc(100vh - 4rem);
 }
 
-
 @media only screen and (max-width: 992px) {
   .clock {
-  zoom: 0.8;
-  -moz-transform: scale(0.8)
+    zoom: 0.8;
+    -moz-transform: scale(0.8)
   }
 }
 
 @media only screen and (max-width: 768px) {
   .clock {
-  zoom: 0.5;
-  -moz-transform: scale(0.5)
+    zoom: 0.5;
+    -moz-transform: scale(0.5)
   }
 }
 
 @media only screen and (max-width: 483px) {
   .clock {
-  zoom: 0.35;
-  -moz-transform: scale(0.35)
+    zoom: 0.35;
+    -moz-transform: scale(0.35)
   }
 }
 
-
 @media only screen and (max-width: 410px) {
   .clock {
-  zoom: 0.3;
-  -moz-transform: scale(0.3)
+    zoom: 0.3;
+    -moz-transform: scale(0.3)
   }
 }

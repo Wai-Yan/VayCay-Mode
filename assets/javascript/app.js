@@ -66,6 +66,7 @@ $(document).ready(function() {
     // trashTD.append(trashSpan);
     // tRow.append(destinationTD, destinationDateTD, trashTD);
     // tBody.prepend(tRow);
+    
     var data = childSnapshot.val();
 
     if (childSnapshot.key !== "credential") {
@@ -116,7 +117,7 @@ $(document).on("click", "#addTrip", function(event){
 	event.preventDefault();
   var place = retrieveLocation();
   storeInputValues(place);
-	// console.log("button works");
+	console.log("button works");
   renderRows(place);
   showCurrentWeather(destination)
   showForecastedWeather(destination);
@@ -305,8 +306,12 @@ $(document).on("click", "#addTrip", function(event){
       })
       // We store all of the retrieved data inside of an object called "response"
       .done(function(response) {
+        
+        console.log(response);
+        
+        var allPredictions = response.list.length
 
-        for (var i = 0; i < 6; i++) {
+        for (var i = 6; i < allPredictions; i+= 8) {
           newForecastImage = $("<img src='http://openweathermap.org/img/w/" + response.list[i].weather[0].icon + ".png'>");
           $("#forecastedWeather").append(newForecastImage);
 

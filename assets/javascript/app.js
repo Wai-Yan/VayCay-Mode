@@ -267,7 +267,7 @@ $(document).on("click", "#addTrip", function(event){
       })
       // We store all of the retrieved data inside of an object called "response"
       .done(function(response) {
-        $("#currentWeather").text("Temperature (F) " + response.main.temp);
+        $("#currentWeather").text("Current weather " + Math.floor(response.main.temp) + "F");
         var newImage = $("<img src='http://openweathermap.org/img/w/" + response.weather[0].icon + ".png'>");
         $("#currentWeather").prepend(newImage);
       });
@@ -316,8 +316,9 @@ $(document).on("click", "#addTrip", function(event){
           $("#forecastedWeather").append(newForecastImage);
 
           date = (response.list[i].dt_txt).slice(0, 11);
+          formattedDate = moment(date).format("MM/DD/YY");
 
-          $("#forecastedWeather").append(date + "|" + response.list[i].main.temp + "Fahrenheit");
+          $("#forecastedWeather").append(formattedDate + "  | " + Math.floor(response.list[i].main.temp) + "F");
         }
       });
   }

@@ -672,8 +672,6 @@ function createBlogObj(savedTime) {
   // });
 }
 
-  }
-
   function formatFirebaseCityKey(city, trip_date) {
     var formattedKey = city.toLowerCase() + "_" + trip_date;
     // Replace non-word character with single "_"

@@ -365,6 +365,22 @@ h2, .h2 {
   overflow: scroll;
 }
 
+.blog-list-bg {
+  background-image: url(../images/backgrounds/blog-bg.jpg);
+  background-position: 90% 90%;
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.blog-text-bg {
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 3rem;
+  width: 100%;
+}
+
 /* When clicked on, add a background color and strike out text */
 
 .col-checked {
@@ -401,8 +417,9 @@ h2, .h2 {
 }
 
 .blogEntryContainer {
-  border: 1px solid #DCDCDC;
+  border: 0.5px solid #F99B0C;
   padding: 1rem;
+  box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.3);
 }
 
 .blogTitleView {

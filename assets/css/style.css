@@ -361,7 +361,7 @@ h2, .h2 {
 }
 
 .packing-list-height {
-  max-height: 300px;
+  max-height: 250px;
   overflow: scroll;
 }
 

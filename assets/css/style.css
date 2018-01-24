@@ -20,8 +20,8 @@ body {
 }
 
 .navbar .navbar-toggler {
-    width: 60px;
-    height: 40px;
+  width: 60px;
+  height: 40px;
 }
 
 .navbar a:not(.btn):not(.dropdown-item) {
@@ -179,8 +179,8 @@ body {
 }
 
 .btn-primary {
-    background-color: #F99B0C;
-    color: #FFFFFF;
+  background-color: #F99B0C;
+  color: #FFFFFF;
 }
 
 .jumbotron {
@@ -218,6 +218,49 @@ p {
   cursor: pointer;
 }
 
+.carousel {
+  z-index: -1;
+
+}
+
+.carousel-item {
+  height: 500px;
+}
+
+.countdown-text-bg {
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 1rem;
+  width: 100%;
+  position: absolute;
+  top: 20%;
+  left: 0%;
+  z-index: 1;
+  height: 250px;
+}
+
+.countdownMessage {
+  position: absolute;
+  /* text-align: center; */
+  top: 12%;
+  left: 29%;
+  z-index: 1;
+  pointer-events: none;
+  font-family: 'Abril Fatface', cursive;
+  color: #FFFFFF;
+}
+
+.clock {
+  position: absolute;
+  top: 30%;
+  left: 25%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.flip-clock-divider .flip-clock-label {
+  color: #FFFFFF;
+}
+
 .clock {
   margin: 2em;
 }
@@ -226,6 +269,26 @@ p {
   display: inline-block;
   width: auto;
   height: auto:
+}
+
+.weather-title {
+  font-family: 'Abril Fatface', cursive;
+  padding-top: 3rem;
+  color: #454545;
+}
+
+h2, .h2 {
+    margin-bottom: 0px;
+}
+
+.weather-div {
+  height: 300px;
+  background-color: #f8f9fa;
+}
+
+.weather-body {
+  height: 100%;
+  padding: auto;
 }
 
 .fixed-height-city {
@@ -318,6 +381,14 @@ p {
   opacity: .7;
 }
 
+.edit-blog-button {
+  cursor: pointer;
+}
+
+.edit-blog-button:hover {
+  opacity: .7;
+}
+
 .footer {
   position: relative;
   right: 0;
@@ -355,87 +426,83 @@ a.footer-link {
 } */
 
 @media only screen and (max-width: 1024px) {
-.search-bg {
+  .search-bg {
     background-size: 300%;
     height: 1230px;
-}
-
-@media only screen and (max-width: 992px) {
-  .clock {
-    zoom: 0.8;
-    -moz-transform: scale(0.8)
   }
-  .login-heading {
-    font-size: 2.8rem;
-  }
-  /* .fixed-height-city {
+  @media only screen and (max-width: 992px) {
+    .clock {
+      zoom: 0.8;
+      -moz-transform: scale(0.8)
+    }
+    .login-heading {
+      font-size: 2.8rem;
+    }
+    /* .fixed-height-city {
     overflow-y: scroll;
     height: auto;
 } */
-.part-1-lead {
-    font-size: 1.2rem;
-}
-.search-bg {
-  height: 900px;
-}
-}
-
-@media only screen and (max-width: 768px) {
-  .clock {
-    zoom: 0.5;
-    -moz-transform: scale(0.5)
+    .part-1-lead {
+      font-size: 1.2rem;
+    }
+    .search-bg {
+      height: 900px;
+    }
   }
-  .login-heading {
-    font-size: 2.5rem;
-  }
-  /* .fixed-height-city {
+  @media only screen and (max-width: 768px) {
+    .clock {
+      zoom: 0.5;
+      -moz-transform: scale(0.5)
+    }
+    .login-heading {
+      font-size: 2.5rem;
+    }
+    /* .fixed-height-city {
     overflow-y: scroll;
     height: auto;
 } */
-.part-1-lead {
-    font-size: 2rem;
-}
-.search-bg {
-  height: 900px;
-}
-}
-
-@media only screen and (max-width: 483px) {
-  .clock {
-    zoom: 0.35;
-    -moz-transform: scale(0.35)
+    .part-1-lead {
+      font-size: 2rem;
+    }
+    .search-bg {
+      height: 900px;
+    }
   }
-  .login-heading {
-    font-size: 2.3rem;
-  }
-  /* .fixed-height-city {
+  @media only screen and (max-width: 483px) {
+    .clock {
+      zoom: 0.35;
+      -moz-transform: scale(0.35)
+    }
+    .login-heading {
+      font-size: 2.3rem;
+    }
+    /* .fixed-height-city {
     overflow-y: scroll;
     height: auto;
 } */
-.part-1-lead {
-    font-size: 1.5rem;
-}
-.search-bg {
-  height: 750px;
-}
-}
-
-@media only screen and (max-width: 410px) {
-  .clock {
-    zoom: 0.3;
-    -moz-transform: scale(0.3)
+    .part-1-lead {
+      font-size: 1.5rem;
+    }
+    .search-bg {
+      height: 750px;
+    }
   }
-  .login-heading {
-    font-size: 2rem;
-  }
-  /* .fixed-height-city {
+  @media only screen and (max-width: 410px) {
+    .clock {
+      zoom: 0.3;
+      -moz-transform: scale(0.3)
+    }
+    .login-heading {
+      font-size: 2rem;
+    }
+    /* .fixed-height-city {
     overflow-y: scroll;
     height: auto;
 } */
-.part-1-lead {
-    font-size: 1.2rem;
-}
-.search-bg {
-  height: 750px;
-}
-}
+    .part-1-lead {
+      font-size: 1.2rem;
+    }
+    .search-bg {
+      height: 750px;
+    }
+  }

@@ -236,7 +236,7 @@ $(document).ready(function() {
   // function to generate and initiate clock countdown flip
   function countDownDisplay(destinationDate, destination) {
     // print the clicked or entered city in the message area
-    $(".countdownMessage").text("Count down to your trip to " + destination + "!")
+    $(".countdownMessage").text("Count down to your trip to " + destination)
     var clock;
     // Grab the current date
     var currentDate = moment();
@@ -289,8 +289,9 @@ $(document).ready(function() {
     /*
       Shows the main weather component-- current weather
     */
-
+    $("#currentweatherdestination").empty();
     $("#currentWeather").empty();
+
 
     var userCity = destination;
     userCity = userCity.split(",");
@@ -298,6 +299,8 @@ $(document).ready(function() {
     userCity = userCity.join(",");
     userCity = userCity.split(",");
     var userCityLength = userCity.length;
+
+    $("#currentweatherdestination").text(destination)
 
     for (var i = 0; i < userCityLength; i++) {
       userCity[i] = userCity[i].replace(/\s/g, '');
@@ -315,9 +318,10 @@ $(document).ready(function() {
       })
       // We store all of the retrieved data inside of an object called "response"
       .done(function(response) {
-        $("#currentWeather").text("Current weather " + Math.floor(response.main.temp) + "F");
         var newImage = $("<img src='http://openweathermap.org/img/w/" + response.weather[0].icon + ".png'>");
-        $("#currentWeather").prepend(newImage);
+        $("#currentWeather").text(Math.floor(response.main.temp) + "°" + "F");
+        $("#currentWeather").prepend(newImage)
+
       });
   }
 
@@ -359,16 +363,17 @@ $(document).ready(function() {
 
         var allPredictions = response.list.length
 
-        for (var i = 6; i < allPredictions; i += 8) {
-          newForecastImage = $("<img src='http://openweathermap.org/img/w/" + response.list[i].weather[0].icon + ".png'>");
-          $("#forecastedWeather").append(newForecastImage);
+        for (var i = 6; i < allPredictions; i+= 8) {
+          newForecastImage = ("<img src='http://openweathermap.org/img/w/" + response.list[i].weather[0].icon + ".png'>");
+          // $("#forecastedWeather").append(newForecastImage);
 
           date = (response.list[i].dt_txt).slice(0, 11);
-          var formattedDate = moment(date).format("MM/DD/YY");
+          formattedDate = moment(date).format("MM/DD/YY");
           var dayOfWeek = moment(date).format("dddd");
-
-
-          $("#forecastedWeather").append(formattedDate + "  | " + Math.floor(response.list[i].main.temp) + "F");
+          var temp = Math.floor(response.list[i].main.temp)
+          var forecastDateText = ("<div class='col'>") + ("<div>") + dayOfWeek  + ("</div>") + ("<div>") + newForecastImage + temp + "°" + "F" + ("</div>") + ("</div>")
+          $("#forecastedWeather").append(forecastDateText);
+          // formattedDate + "  | " + Math.floor(response.list[i].main.temp) + "F"
         }
       });
   }

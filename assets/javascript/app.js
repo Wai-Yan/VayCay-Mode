@@ -109,6 +109,7 @@ $(document).on("click", ".citySelect", function(event){
   countDownDisplay(destinationDate, destination);
   showCurrentWeather(destination)
   showForecastedWeather(destination);
+  createTripsObj(destination, destinationDate);
 })
 
 
@@ -211,25 +212,15 @@ $(document).on("click", "#addTrip", function(event){
 
   function initMap(place) {
 
-    console.log(place);
-    console.log("What's going on");
-
     var userLatitude = place.geometry.location.lat();
     var userLongitude = place.geometry.location.lng();
 
-    console.log(userLatitude);
-    console.log(userLongitude);
-
     var userCoordinate = {lat: userLatitude, lng: userLongitude};
-
-    console.log(userCoordinate);
 
     map = new google.maps.Map(document.getElementById('map'), {
       zoom: 13,
       center: userCoordinate
     });
-
-    console.log(map);
 
     var marker = new google.maps.Marker({
       position: userCoordinate,
@@ -310,19 +301,23 @@ $(document).on("click", "#addTrip", function(event){
         console.log(response);
 
         var allPredictions = response.list.length
-
-        for (var i = 6; i < allPredictions; i+= 8) {
-          newForecastImage = $("<img src='http://openweathermap.org/img/w/" + response.list[i].weather[0].icon + ".png'>");
+        var j = 0;
+        
+        for (var i = 0; i < 5; i++) {
+          newForecastImage = $("<img src='http://openweathermap.org/img/w/" + response.list[j].weather[0].icon + ".png'>");
           $("#forecastedWeather").append(newForecastImage);
 
-          date = (response.list[i].dt_txt).slice(0, 11);
+          date = (response.list[j].dt_txt).slice(0, 11);
           formattedDate = moment(date).format("MM/DD/YY");
 
-          $("#forecastedWeather").append(formattedDate + "  | " + Math.floor(response.list[i].main.temp) + "F");
+          $("#forecastedWeather").append(formattedDate + "  | " + Math.floor(response.list[j].main.temp) + "F");
+          
+          console.log(j);
+          
+          j += 8;
         }
       });
   }
-
 
   // function to add items to packing list
   var packListArr = []
@@ -367,8 +362,6 @@ $(document).on("click", "#addTrip", function(event){
 
     //Tak - Delete item from firebase
   });
-
-
 
   // function to initiate tooltip once copy is successful
   $(".copyButton").tooltip({
@@ -421,9 +414,10 @@ var clipboard = new Clipboard(".copyButton", {
     if ($("#blogPostArea") === "") {
     } else {
     $("#blogPostArea").prepend(blogEntry)
+    createBlogObj(savedTime);                                                                                                                                                             
     $("#blogPostTitle").val("")
     $("#blogPostEntry").val("")
-  }
+    }
   })
 
   // function to delete blog post
@@ -563,9 +557,29 @@ function createPackingListObj(arr) {
     });
 }
 
-function createBlogObj() {
-  console.log("Create Blog");
+function createBlogObj(savedTime) {
+  var postDate = savedTime;
+  var blogPath = authUID + "/" + cityKey + "/blogs";
+  var blogRef = usersRef.child(blogPath);
+  var newBlogRef = blogRef.push();
 
+  var blogTitle = $("#blogPostTitle").val();
+  var blogText = $("#blogPostEntry").val();
+  
+  // we can also chain the two calls together
+  blogRef.push().set({
+    title: blogTitle,
+    postTime: postDate,
+    contents: blogText
+  });
+  
+  // var blogContents = {title:blogTitle, postTime:"moment", contents:blogText};
+  
+  // console.log(cityKey);
+  
+  // newBlogRef.set({
+  //   blog: blogContents
+  // });
 }
 
 function formatFirebaseCityKey(city, trip_date){

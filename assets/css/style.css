@@ -1,5 +1,6 @@
 body {
   font-family: 'Lato', sans-serif;
+  background-color: #f8f9fa;
 }
 
 .brand-logo {
@@ -220,7 +221,6 @@ p {
 
 .carousel {
   z-index: -1;
-
 }
 
 .carousel-item {
@@ -240,7 +240,7 @@ p {
 
 .countdownMessage {
   position: absolute;
-  /* text-align: center; */
+  text-align: center;
   top: 12%;
   left: 29%;
   z-index: 1;
@@ -273,12 +273,11 @@ p {
 
 .weather-title {
   font-family: 'Abril Fatface', cursive;
-  padding-top: 3rem;
   color: #454545;
 }
 
 h2, .h2 {
-    margin-bottom: 0px;
+  margin-bottom: 0px;
 }
 
 .weather-div {
@@ -286,9 +285,19 @@ h2, .h2 {
   background-color: #f8f9fa;
 }
 
-.weather-body {
-  height: 100%;
-  padding: auto;
+.weather-card-body {
+  padding: 2rem;
+}
+
+.weather-destination-text {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #009FDC;
+}
+
+.weather-day {
+  font-weight: bold;
+  color: #F99B0C;
 }
 
 .fixed-height-city {
@@ -330,6 +339,48 @@ h2, .h2 {
   opacity: .7;
 }
 
+.packing-list-bg {
+  background-image: url(../images/backgrounds/packing-list-bg.jpeg);
+  background-position: 50% 18%;
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.packing-text-bg {
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 3rem;
+  width: 100%;
+}
+
+.packing-title {
+  font-family: 'Abril Fatface', cursive;
+  color: #FFFFFF;
+}
+
+.packing-list-height {
+  max-height: 250px;
+  overflow: scroll;
+}
+
+.blog-list-bg {
+  background-image: url(../images/backgrounds/blog-bg.jpg);
+  background-position: 90% 90%;
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.blog-text-bg {
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 3rem;
+  width: 100%;
+}
+
 /* When clicked on, add a background color and strike out text */
 
 .col-checked {
@@ -344,15 +395,21 @@ h2, .h2 {
   position: absolute;
 }
 
-.map-height {
-  width: 100%;
-  height: 400px;
+.separator.separator-primary {
+    background-color: #009FDC;
 }
 
 .map {
   width: 100%;
-  height: 400px;
-  background-color: grey;
+}
+
+.image-left {
+  margin-left: 20%;
+  background-image: url(../images/backgrounds/google-maps-bg.jpeg);
+}
+
+.image-right {
+  margin-bottom: 90px;
 }
 
 .title-area-size {
@@ -360,8 +417,9 @@ h2, .h2 {
 }
 
 .blogEntryContainer {
-  border: 1px solid #DCDCDC;
+  border: 0.5px solid #F99B0C;
   padding: 1rem;
+  box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.3);
 }
 
 .blogTitleView {
@@ -425,84 +483,97 @@ a.footer-link {
     height: 890px;
 } */
 
+@media screen and (min-width: 768px) {
+.image-container.image-right {
+    top: 80px;
+    margin-left: -100px;
+    margin-bottom: 90px;
+}
+}
+
 @media only screen and (max-width: 1024px) {
   .search-bg {
     background-size: 300%;
     height: 1230px;
   }
-  @media only screen and (max-width: 992px) {
-    .clock {
-      zoom: 0.8;
-      -moz-transform: scale(0.8)
-    }
-    .login-heading {
-      font-size: 2.8rem;
-    }
-    /* .fixed-height-city {
+}
+
+@media only screen and (max-width: 992px) {
+  .clock {
+    zoom: 0.8;
+    -moz-transform: scale(0.8)
+  }
+  .login-heading {
+    font-size: 2.8rem;
+  }
+  /* .fixed-height-city {
     overflow-y: scroll;
     height: auto;
 } */
-    .part-1-lead {
-      font-size: 1.2rem;
-    }
-    .search-bg {
-      height: 900px;
-    }
+  .part-1-lead {
+    font-size: 1.2rem;
   }
-  @media only screen and (max-width: 768px) {
-    .clock {
-      zoom: 0.5;
-      -moz-transform: scale(0.5)
-    }
-    .login-heading {
-      font-size: 2.5rem;
-    }
-    /* .fixed-height-city {
+  .search-bg {
+    height: 900px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .clock {
+    zoom: 0.5;
+    -moz-transform: scale(0.5)
+  }
+  .login-heading {
+    font-size: 2.5rem;
+  }
+  /* .fixed-height-city {
     overflow-y: scroll;
     height: auto;
 } */
-    .part-1-lead {
-      font-size: 2rem;
-    }
-    .search-bg {
-      height: 900px;
-    }
+  .part-1-lead {
+    font-size: 2rem;
   }
-  @media only screen and (max-width: 483px) {
-    .clock {
-      zoom: 0.35;
-      -moz-transform: scale(0.35)
-    }
-    .login-heading {
-      font-size: 2.3rem;
-    }
-    /* .fixed-height-city {
+  .search-bg {
+    height: 900px;
+  }
+}
+
+@media only screen and (max-width: 483px) {
+  .clock {
+    zoom: 0.35;
+    -moz-transform: scale(0.35)
+  }
+  .login-heading {
+    font-size: 2.3rem;
+  }
+  /* .fixed-height-city {
     overflow-y: scroll;
     height: auto;
 } */
-    .part-1-lead {
-      font-size: 1.5rem;
-    }
-    .search-bg {
-      height: 750px;
-    }
+  .part-1-lead {
+    font-size: 1.5rem;
   }
-  @media only screen and (max-width: 410px) {
-    .clock {
-      zoom: 0.3;
-      -moz-transform: scale(0.3)
-    }
-    .login-heading {
-      font-size: 2rem;
-    }
-    /* .fixed-height-city {
+  .search-bg {
+    height: 750px;
+  }
+}
+
+@media only screen and (max-width: 410px) {
+  .clock {
+    zoom: 0.3;
+    -moz-transform: scale(0.3)
+  }
+  .login-heading {
+    font-size: 2rem;
+  }
+  /* .fixed-height-city {
     overflow-y: scroll;
     height: auto;
 } */
-    .part-1-lead {
-      font-size: 1.2rem;
-    }
-    .search-bg {
-      height: 750px;
-    }
+  .part-1-lead {
+    font-size: 1.2rem;
   }
+  .search-bg {
+    height: 750px;
+  }
+}

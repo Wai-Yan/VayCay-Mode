@@ -364,7 +364,7 @@ $(document).ready(function() {
           formattedDate = moment(date).format("MM/DD/YY");
           var dayOfWeek = moment(date).format("dddd");
           var temp = Math.floor(response.list[i].main.temp)
-          var forecastDateText = ("<div class='col'>") + ("<div>") + dayOfWeek  + ("</div>") + ("<div>") + newForecastImage + temp + "°" + "F" + ("</div>") + ("</div>")
+          var forecastDateText = ("<div class='col'>") + ("<div class='weather-day'>") + dayOfWeek  + ("</div>") + ("<div>") + newForecastImage + temp + "°" + "F" + ("</div>") + ("</div>")
           $("#forecastedWeather").append(forecastDateText);
           // formattedDate + "  | " + Math.floor(response.list[i].main.temp) + "F"
         }

@@ -364,7 +364,9 @@ $(document).ready(function() {
           $("#forecastedWeather").append(newForecastImage);
 
           date = (response.list[i].dt_txt).slice(0, 11);
-          formattedDate = moment(date).format("MM/DD/YY");
+          var formattedDate = moment(date).format("MM/DD/YY");
+          var dayOfWeek = moment(date).format("dddd");
+
 
           $("#forecastedWeather").append(formattedDate + "  | " + Math.floor(response.list[i].main.temp) + "F");
         }
@@ -544,11 +546,14 @@ $(document).ready(function() {
       var user = firebase.auth().currentUser;
       var uid, name, email;
 
-      if (user !== null) {
-        // User is signed in.
-        uid = user.uid;
-        name = user.displayName;
-        email = user.email;
+
+    if (user !== null) {
+      // User is signed in.
+      uid = user.uid;
+      name = user.displayName;
+      email = user.email;
+      displayUserName(name)
+
 
         //Assign uid to global variable
         authUID = uid;
@@ -659,6 +664,16 @@ $(document).ready(function() {
     console.log("formattedKey", formattedKey);
     return formattedKey;
   }
+
+  //function to display username
+  function displayUserName(name){
+    var firstname = name.split(" ");
+    $("#nameSpan").text(firstname[0])
+
+  }
+
+  //************ End Google API Images Section ************ //
+
   // ************ End Firebase Section ************ //
 
   function retrieveGoogleApi(userLatitude, userLongitude) {
@@ -676,12 +691,11 @@ $(document).ready(function() {
       map: map
     });
   }
-});
-
-//Today
-function clearArray(array) {
-  while (array.length) {
-    array.pop();
+  //Today
+  function clearArray(array) {
+    while (array.length) {
+      array.pop();
+    }
   }
-}
+});
 // End document

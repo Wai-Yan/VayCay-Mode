@@ -240,6 +240,7 @@ p {
 
 .countdownMessage {
   position: absolute;
+  /* text-align: center; */
   top: 12%;
   left: 29%;
   z-index: 1;
@@ -274,6 +275,20 @@ p {
   font-family: 'Abril Fatface', cursive;
   padding-top: 3rem;
   color: #454545;
+}
+
+h2, .h2 {
+    margin-bottom: 0px;
+}
+
+.weather-div {
+  height: 300px;
+  background-color: #f8f9fa;
+}
+
+.weather-body {
+  height: 100%;
+  padding: auto;
 }
 
 .fixed-height-city {
@@ -363,6 +378,14 @@ p {
 }
 
 .trash-blog-button:hover {
+  opacity: .7;
+}
+
+.edit-blog-button {
+  cursor: pointer;
+}
+
+.edit-blog-button:hover {
   opacity: .7;
 }
 

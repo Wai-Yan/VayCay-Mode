@@ -241,8 +241,9 @@ $(document).on("click", "#addTrip", function(event){
     /*
       Shows the main weather component-- current weather
     */
-
+    $("#currentweatherdestination").empty();
     $("#currentWeather").empty();
+
 
     var userCity = destination;
     userCity = userCity.split(",");
@@ -250,6 +251,8 @@ $(document).on("click", "#addTrip", function(event){
     userCity = userCity.join(",");
     userCity = userCity.split(",");
     var userCityLength = userCity.length;
+
+    $("#currentweatherdestination").text(destination)
 
     for (var i = 0; i < userCityLength; i++) {
       userCity[i] = userCity[i].replace(/\s/g, '');
@@ -267,9 +270,10 @@ $(document).on("click", "#addTrip", function(event){
       })
       // We store all of the retrieved data inside of an object called "response"
       .done(function(response) {
-        $("#currentWeather").text("Current weather " + Math.floor(response.main.temp) + "F");
         var newImage = $("<img src='http://openweathermap.org/img/w/" + response.weather[0].icon + ".png'>");
-        $("#currentWeather").prepend(newImage);
+        $("#currentWeather").text(Math.floor(response.main.temp) + "°" + "F");
+        $("#currentWeather").prepend(newImage)
+
       });
   }
 
@@ -311,14 +315,18 @@ $(document).on("click", "#addTrip", function(event){
 
         var allPredictions = response.list.length
 
-        for (var i = 6; i < allPredictions; i+= 8) {
-          newForecastImage = $("<img src='http://openweathermap.org/img/w/" + response.list[i].weather[0].icon + ".png'>");
-          $("#forecastedWeather").append(newForecastImage);
+        for (var i = 0; i < 5; i++) {
+        // for (var i = 6; i < allPredictions; i+= 8) {
+          newForecastImage = ("<img src='http://openweathermap.org/img/w/" + response.list[i].weather[0].icon + ".png'>");
+          // $("#forecastedWeather").append(newForecastImage);
 
           date = (response.list[i].dt_txt).slice(0, 11);
           formattedDate = moment(date).format("MM/DD/YY");
+          var temp = Math.floor(response.list[i].main.temp)
+          var forecastDateText = ("<div class='col'>") + ("<div>") + formattedDate  + ("</div>") + ("<div>") + newForecastImage + temp + "°" + "F" + ("</div>") + ("</div>")
 
-          $("#forecastedWeather").append(formattedDate + "  | " + Math.floor(response.list[i].main.temp) + "F");
+          $("#forecastedWeather").append(forecastDateText);
+          // formattedDate + "  | " + Math.floor(response.list[i].main.temp) + "F"
         }
       });
   }

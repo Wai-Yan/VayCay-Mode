@@ -11,7 +11,6 @@ $(document).ready(function() {
   var authUID;
   var loc;
   var cityKey;
-  var packListArr = [];
 
   //Initailize Firebase
   var config = {
@@ -29,10 +28,10 @@ $(document).ready(function() {
 
   // on auth function so users can't access before logging in
   firebase.auth().onAuthStateChanged(user => {
-    if (!user) {
-      window.location = 'login.html'; //If User is not logged in, redirect to login page
-    }
-  });
+  if(!user) {
+    window.location = 'login.html'; //If User is not logged in, redirect to login page
+  }
+    });
 
   // hide the results page and hide nav item
   $("#part-2").hide()
@@ -86,117 +85,51 @@ $(document).ready(function() {
       tRow.append(destinationTD, destinationDateTD, trashTD);
       tBody.prepend(tRow);
     }
-  }
+}
 
-  // Today
-  function renderPackingList(itemValueArr) {
-    $("#packingListView").empty();
+//function to store values from input fields
+function storeInputValues(place){
+console.log("storeInputValues works")
+destination = place.formatted_address;
+var rawDestinationDate = $("#dateInput").val().trim();
+destinationDate = moment(rawDestinationDate).format('MM/DD/YYYY');
+}
 
-    if (Array.isArray(itemValueArr)) {
-      for (var i = 0; i < itemValueArr.length; i++) {
-        var listRow = $("<div>").addClass("row listRow");
-        var itemColumn = $("<div>").addClass("col-auto listColumn");
-        var trashColumn = $("<div>").addClass("col-2 trashColumn");
-        var itemText = $("<p>").addClass("list-p");
-        itemText.text(itemValueArr[i]);
-        itemColumn.append(itemText);
-        var trashItem = $("<span>").addClass("fa fa-trash-o trash-hide");
-        trashColumn.append(trashItem);
-        trashColumn.attr("value", itemValueArr[i]);
-        listRow.append(itemColumn, trashColumn);
-
-        $("#packingListView").append(listRow);
-      }
-    }
-    return;
-  }
-  
-  // function renderBlogs(itemValueArr) {
-  //   $("#blogPostArea").empty();
-
-  //   if (Array.isArray(itemValueArr)) {
-  //     for (var i = 0; i < itemValueArr.length; i++) {
-  //       var listRow = $("<div>").addClass("row listRow");
-  //       var itemColumn = $("<div>").addClass("col-auto listColumn");
-  //       var trashColumn = $("<div>").addClass("col-2 trashColumn");
-  //       var itemText = $("<p>").addClass("list-p");
-  //       itemText.text(itemValueArr[i]);
-  //       itemColumn.append(itemText);
-  //       var trashItem = $("<span>").addClass("fa fa-trash-o trash-hide");
-  //       trashColumn.append(trashItem);
-  //       trashColumn.attr("value", itemValueArr[i]);
-  //       listRow.append(itemColumn, trashColumn);
-
-  //       $("#packingListView").append(listRow);
-  //     }
-  //   }
-  //   return;
-  // }
-  
-
-  //function to store values from input fields
-  function storeInputValues(place) {
-    console.log("storeInputValues works")
-    destination = place.formatted_address;
-    var rawDestinationDate = $("#dateInput").val().trim();
-    destinationDate = moment(rawDestinationDate).format('MM/DD/YYYY');
-  }
-
-  //click function on table data
-  $(document).on("click", ".citySelect", function(event) {
-    destination = $(this).attr("data-city")
-    destinationDate = $(this).attr("data-date")
-    var userLatitude = parseFloat($(this).attr("data-lat"));
-    var userLongitude = parseFloat($(this).attr("data-lng"));
-    console.log(userLatitude);
-    console.log(userLongitude);
-    showResults()
-    $("#AddTripNav").show()
-    retrieveGoogleApi(userLatitude, userLongitude);
-    countDownDisplay(destinationDate, destination);
-    showCurrentWeather(destination)
-    showForecastedWeather(destination);
-
-    //Today
-    var childKey = formatFirebaseCityKey(destination, destinationDate);
-    var packingPath = authUID + "/" + childKey;
-    var packingRef = usersRef.child(packingPath);
-    cityKey = childKey; //Assign key to global for packing list and blog
-
-    $("#packingListView").empty();
-
-    packingRef.child("packinglist").once("value", function(childSnapshot) {
-      var packList = childSnapshot.val();
-      packListArr = packList; //Assign a list from firebase to the array
-
-      console.log("After push new array", packListArr);
-      console.log("After push new array", packListArr.length);
-      renderPackingList(packList);
-    });
-  });
+//click function on table data
+$(document).on("click", ".citySelect", function(event){
+  destination = $(this).attr("data-city")
+  destinationDate = $(this).attr("data-date")
+  var userLatitude = parseFloat($(this).attr("data-lat"));
+  var userLongitude = parseFloat($(this).attr("data-lng"));
+  console.log(userLatitude);
+  console.log(userLongitude);
+  showResults()
+  $("#AddTripNav").show()
+  retrieveGoogleApi(userLatitude, userLongitude);
+  countDownDisplay(destinationDate, destination);
+  showCurrentWeather(destination)
+  showForecastedWeather(destination);
+  createTripsObj(destination, destinationDate);
+})
 
 
-  //on click function when user clicks the add button
-  $(document).on("click", "#addTrip", function(event) {
-    event.preventDefault();
-    var place = retrieveLocation();
-    storeInputValues(place);
-    console.log("button works");
-    //renderRows(place);
-    showCurrentWeather(destination)
-    showForecastedWeather(destination);
-    initMap(place);
-    showResults()
-    $("#AddTripNav").show()
-    countDownDisplay(destinationDate, destination);
-    createTripsObj(destination, destinationDate);
-    $("#cityInput").val("");
-    $("#dateInput").val("");
-
-    //Today
-    $("#packingListView").empty();
-    //Pop old data out upon adding new city
-    clearArray(packListArr);
+//on click function when user clicks the add button
+$(document).on("click", "#addTrip", function(event){
+	event.preventDefault();
+  var place = retrieveLocation();
+  storeInputValues(place);
+	console.log("button works");
+  //renderRows(place);
+  showCurrentWeather(destination)
+  showForecastedWeather(destination);
+  fillCarousel(place);
+  initMap(place);
+  showResults()
+  $("#AddTripNav").show()
+  countDownDisplay(destinationDate, destination);
+  createTripsObj(destination, destinationDate);
+  $("#cityInput").val("");
+  $("#dateInput").val("");
   })
 
   // function to delete packing list item
@@ -209,7 +142,7 @@ $(document).ready(function() {
     listRow.remove();
 
     //Remove from Firebase
-    var childKey = formatFirebaseCityKey(city, date);
+    var childKey = formatFirebaseCityKey(city,date);
     console.log("authUID", authUID);
     console.log("childKey", childKey);
     var uidRef = usersRef.child(authUID);
@@ -259,7 +192,7 @@ $(document).ready(function() {
   // function to generate and initiate clock countdown flip
   function countDownDisplay(destinationDate, destination) {
     // print the clicked or entered city in the message area
-    $(".countdownMessage").text("Count down to your trip to " + destination)
+    $(".countdownMessage").text("Count down to your trip to " + destination + "!")
     var clock;
     // Grab the current date
     var currentDate = moment();
@@ -279,28 +212,15 @@ $(document).ready(function() {
 
   function initMap(place) {
 
-    console.log(place);
-    console.log("What's going on");
-
     var userLatitude = place.geometry.location.lat();
     var userLongitude = place.geometry.location.lng();
 
-    console.log(userLatitude);
-    console.log(userLongitude);
-
-    var userCoordinate = {
-      lat: userLatitude,
-      lng: userLongitude
-    };
-
-    console.log(userCoordinate);
+    var userCoordinate = {lat: userLatitude, lng: userLongitude};
 
     map = new google.maps.Map(document.getElementById('map'), {
       zoom: 13,
       center: userCoordinate
     });
-
-    console.log(map);
 
     var marker = new google.maps.Marker({
       position: userCoordinate,
@@ -312,9 +232,8 @@ $(document).ready(function() {
     /*
       Shows the main weather component-- current weather
     */
-    $("#currentweatherdestination").empty();
-    $("#currentWeather").empty();
 
+    $("#currentWeather").empty();
 
     var userCity = destination;
     userCity = userCity.split(",");
@@ -322,8 +241,6 @@ $(document).ready(function() {
     userCity = userCity.join(",");
     userCity = userCity.split(",");
     var userCityLength = userCity.length;
-
-    $("#currentweatherdestination").text(destination)
 
     for (var i = 0; i < userCityLength; i++) {
       userCity[i] = userCity[i].replace(/\s/g, '');
@@ -341,10 +258,9 @@ $(document).ready(function() {
       })
       // We store all of the retrieved data inside of an object called "response"
       .done(function(response) {
+        $("#currentWeather").text("Current weather " + Math.floor(response.main.temp) + "F");
         var newImage = $("<img src='http://openweathermap.org/img/w/" + response.weather[0].icon + ".png'>");
-        $("#currentWeather").text(Math.floor(response.main.temp) + "°" + "F");
-        $("#currentWeather").prepend(newImage)
-
+        $("#currentWeather").prepend(newImage);
       });
   }
 
@@ -385,56 +301,50 @@ $(document).ready(function() {
         console.log(response);
 
         var allPredictions = response.list.length
+        var j = 0;
+        
+        for (var i = 0; i < 5; i++) {
+          newForecastImage = $("<img src='http://openweathermap.org/img/w/" + response.list[j].weather[0].icon + ".png'>");
+          $("#forecastedWeather").append(newForecastImage);
 
-        for (var i = 6; i < allPredictions; i+= 8) {
-          newForecastImage = ("<img src='http://openweathermap.org/img/w/" + response.list[i].weather[0].icon + ".png'>");
-          // $("#forecastedWeather").append(newForecastImage);
-
-          date = (response.list[i].dt_txt).slice(0, 11);
+          date = (response.list[j].dt_txt).slice(0, 11);
           formattedDate = moment(date).format("MM/DD/YY");
-          var dayOfWeek = moment(date).format("dddd");
-          var temp = Math.floor(response.list[i].main.temp)
-          var forecastDateText = ("<div class='col'>") + ("<div>") + dayOfWeek  + ("</div>") + ("<div>") + newForecastImage + temp + "°" + "F" + ("</div>") + ("</div>")
-          $("#forecastedWeather").append(forecastDateText);
-          // formattedDate + "  | " + Math.floor(response.list[i].main.temp) + "F"
+
+          $("#forecastedWeather").append(formattedDate + "  | " + Math.floor(response.list[j].main.temp) + "F");
+          
+          console.log(j);
+          
+          j += 8;
         }
       });
   }
 
-
   // function to add items to packing list
+  var packListArr = []
+  // var packListStr = ""
+
   $("#addPackingItem").on("click", function(event) {
     event.preventDefault();
-
-    //Today
     var itemValue = $("#packingListItem").val().trim();
-    if(!Array.isArray(packListArr)){
-      packListArr = [];
+    if (itemValue === "") {
+    } else {
+      var listRow = $("<div>").addClass("row listRow")
+      var itemColumn = $("<div>").addClass("col-auto listColumn")
+      var trashColumn = $("<div>").addClass("col-2 trashColumn")
+      var itemText = $("<p>").addClass("list-p")
+      itemText.text(itemValue)
+      itemColumn.append(itemText)
+      var trashItem = $("<span>").addClass("fa fa-trash-o trash-hide")
+      trashColumn.append(trashItem)
+      trashColumn.attr("value", itemValue)
+      listRow.append(itemColumn, trashColumn)
+      $("#packingListView").append(listRow)
+      packListArr.push(" " + itemValue)
+      $("#packingListItem").val("");
+
+      //createPackingListObj(packListArr);
     }
-
-    packListArr.push(" " + itemValue);
-
-    $("#packingListItem").val("");
-    createPackingListObj(packListArr);
   });
-
-    // var itemValue = $("#packingListItem").val().trim();
-    // if (itemValue === "") {} else {
-    //   var listRow = $("<div>").addClass("row listRow")
-    //   var itemColumn = $("<div>").addClass("col-auto listColumn")
-    //   var trashColumn = $("<div>").addClass("col-2 trashColumn")
-    //   var itemText = $("<p>").addClass("list-p")
-    //   itemText.text(itemValue)
-    //   itemColumn.append(itemText)
-    //   var trashItem = $("<span>").addClass("fa fa-trash-o trash-hide")
-    //   trashColumn.append(trashItem)
-    //   trashColumn.attr("value", itemValue)
-    //   listRow.append(itemColumn, trashColumn)
-    //   $("#packingListView").append(listRow)
-    //   packListArr.push(" " + itemValue)
-    //   $("#packingListItem").val("");
-
-
 
   // Add a "checked" symbol when clicking on a list item
   $(document.body).on("click", ".listColumn", function() {
@@ -450,20 +360,8 @@ $(document).ready(function() {
     packListArr.splice(deletedArrItem, 1)
     listRow.remove();
 
-    //Today
-    //Remove from Firebase
-    //var childKey = formatFirebaseCityKey(destination, destinationDate);
-    //var uidRef = usersRef.child(authUID + "/" + formattedKey + "/packinglist");
-    //console.log("cityKey",cityKey);
-
-    //uidRef.child(childKey).remove();
-    // uidRef.on("child_added", function(shot){
-    //   console.log("line 425!!!@!!!!!", shot.val());
-    // });
-
+    //Tak - Delete item from firebase
   });
-
-
 
   // function to initiate tooltip once copy is successful
   $(".copyButton").tooltip({
@@ -484,11 +382,11 @@ $(document).ready(function() {
   }
 
   // beginning of function for clipboard
-  var clipboard = new Clipboard(".copyButton", {
-    text: function(trigger) {
-      return packListArr;
-    }
-  });
+var clipboard = new Clipboard(".copyButton", {
+  text: function(trigger) {
+    return packListArr;
+  }
+});
 
   // checks if items have been copied
   clipboard.on('success', function(e) {
@@ -512,11 +410,13 @@ $(document).ready(function() {
     var blogTitle = $("#blogPostTitle").val().trim()
     var blogPost = $("#blogPostEntry").val().trim()
     var trashAndEdit = ("<div class='col-1'>") + ("<span class='fa fa-trash-o trash-blog-button'>") + ("</span>") + (" ") + ("<span class='fa fa-pencil-square-o edit-blog-button' data-toggle='modal' data-target='#myModal'>") + ("</span>") + ("</div>")
-    var blogEntry = ("<div class='blogEntryContainer my-2'>") + ("<div class='row'>") + ("<div class='col'>") + ("<div class='blogTitleView'>") + blogTitle + ("</div>") + ("<div class='blogTimeStampView'>") + "Posted on: " + savedTime + ("</div>") + ("<div class='blogEntryView'>") + blogPost + ("</div>") + ("</div>") + trashAndEdit + ("</div>") + ("</div>")
-    if ($("#blogPostArea") === "") {} else {
-      $("#blogPostArea").prepend(blogEntry)
-      $("#blogPostTitle").val("")
-      $("#blogPostEntry").val("")
+    var blogEntry = ("<div class='blogEntryContainer my-2'>")  + ("<div class='row'>") + ("<div class='col'>") + ("<div class='blogTitleView'>") + blogTitle + ("</div>") + ("<div class='blogTimeStampView'>") + "Posted on: " + savedTime + ("</div>") + ("<div class='blogEntryView'>") + blogPost + ("</div>") + ("</div>") +  trashAndEdit + ("</div>") + ("</div>")
+    if ($("#blogPostArea") === "") {
+    } else {
+    $("#blogPostArea").prepend(blogEntry)
+    createBlogObj(savedTime);                                                                                                                                                             
+    $("#blogPostTitle").val("")
+    $("#blogPostEntry").val("")
     }
   })
 
@@ -547,183 +447,192 @@ $(document).ready(function() {
     var wholeRow = editCol.parent()
     var targetCol = wholeRow[0].childNodes[0];
     var entryInfo = [targetCol.childNodes[0].innerText, targetCol.childNodes[2].innerText];
-
+    
     console.log(targetCol);
     console.log(entryInfo[0]);
     console.log(entryInfo[1]);
-
+    
     $("#myModal #blogPostTitle").val(entryInfo[0]);
     $("#myModal #blogPostEntry").val(entryInfo[1]);
   });
 
   // add signout button and log the user out once clicked
-  $("#logoutbtn").on("click", function() {
+  $("#logoutbtn").on("click", function(){
     firebase.auth().signOut()
     firebase.auth().signOut().then(function() {
-      window.location.replace("login.html")
+    window.location.replace("login.html")
     }).catch(function(error) {
-      console.log("test log out error")
-    });
+  console.log("test log out error")
+});
   })
 
 
-  // ************ Firebase Section ************ //
-  function getFirebaseAuthUID() {
-    firebase.auth().onAuthStateChanged(function(user) {
-      console.log('Get Users');
-      var user = firebase.auth().currentUser;
-      var uid, name, email;
-
+// ************ Firebase Section ************ //
+function getFirebaseAuthUID() {
+  firebase.auth().onAuthStateChanged(function(user) {
+    console.log('Get Users');
+    var user = firebase.auth().currentUser;
+    var uid, name, email;
 
     if (user !== null) {
       // User is signed in.
       uid = user.uid;
       name = user.displayName;
       email = user.email;
-      displayUserName(name)
 
+      //Assign uid to global variable
+      authUID = uid;
 
-        //Assign uid to global variable
-        authUID = uid;
-
-        checkFirebaseUser(uid, name, email);
-      }
-    });
-  }
-
-  function checkFirebaseUser(uid, name, email) {
-    usersRef.on("child_added", function(snapshot) {
-      var userKey = snapshot.key;
-      console.log("userKey", userKey);
-
-      if (uid === userKey) {
-        // update
-        console.log("found");
-        getUserInfo();
-      } else {
-        // create
-        console.log("not found");
-        createUserObj(uid, name, email);
-      }
-    }, function(errorObject) {
-      console.log("Errors handled: " + errorObject.code);
-    });
-  }
-
-  function getUserInfo() {
-    var uidRef = usersRef.child(authUID);
-    var usernameRef = usersRef.child(authUID + "/credential");
-    var place = retrieveLocation();
-
-    usernameRef.once("value", function(cred){
-      var username = cred.val();
-      console.log(username);
-    });
-
-    uidRef.on("child_added", function(childSnapshot) {
-      //Display City Section upon loading
-      renderRows(place, childSnapshot);
-    });
-  }
-
-  function createUserObj(uid, name, email) {
-    var keyRef = usersRef.child(uid);
-    // Create user's folder
-    keyRef.child("credential").set({
-      "name": name,
-      "email": email
-    });
-  }
-
-  function createTripsObj(city, trip_date) {
-    cityKey = formatFirebaseCityKey(city, trip_date);
-    var tripsKey;
-    var lat = loc.geometry.location.lat();
-    var lng = loc.geometry.location.lng();
-    var uidRef = usersRef.child(authUID);
-
-    uidRef.on("child_added", function(childSnapshot) {
-      tripsKey = childSnapshot.key;
-    });
-
-    if (tripsKey !== cityKey) {
-      uidRef.child(cityKey).set({
-        "city": city,
-        "startdate": trip_date,
-        "lat": lat,
-        "lng": lng,
-        "packinglist": "",
-        "blog": ""
-      });
+      checkFirebaseUser(uid, name, email);
     }
-  }
+  });
+}
 
-  //Today
-  function createPackingListObj(arr) {
-    //Retrieve firebase
-    var path = authUID + "/" + cityKey;
-    console.log(path);
-    var packRef = usersRef.child(path);
-    var childKey;
+function checkFirebaseUser(uid, name, email) {
+  usersRef.on("child_added", function(snapshot) {
+    var userKey = snapshot.key;
+    console.log("userKey", userKey);
 
-    //Check if the packinglist is created?
-    packRef.update({
-      "packinglist": arr
-    }, function(err) {
-      if (err) {
-        console.log(err);
-      } else {
-        renderPackingList(packListArr);
-      }
+    if (uid === userKey) {
+      // update
+      console.log("found");
+      getUserInfo();
+    } else {
+      // create
+      console.log("not found");
+      createUserObj(uid, name, email);
+    }
+  }, function(errorObject) {
+    console.log("Errors handled: " + errorObject.code);
+  });
+}
+
+function getUserInfo(){
+  var uidRef = usersRef.child(authUID);
+  var place = retrieveLocation();
+
+  uidRef.on("child_added", function(childSnapshot) {
+    //Display City Section upon loading
+    renderRows(place, childSnapshot);
+  });
+}
+
+function createUserObj(uid, name, email) {
+  var keyRef = usersRef.child(uid);
+  // Create user's folder
+  keyRef.child("credential").set({
+    "name": name,
+    "email": email
+  });
+}
+
+function createTripsObj(city, trip_date) {
+  cityKey = formatFirebaseCityKey(city, trip_date);
+  var tripsKey;
+  var lat = loc.geometry.location.lat();
+  var lng = loc.geometry.location.lng();
+  var uidRef = usersRef.child(authUID);
+
+  uidRef.on("child_added", function(childSnapshot) {
+    tripsKey = childSnapshot.key;
+  });
+
+  if (tripsKey !== cityKey){
+    uidRef.child(cityKey).set({
+      "city": city,
+      "startdate": trip_date,
+      "lat": lat,
+      "lng": lng,
     });
   }
+}
 
+function createPackingListObj(arr) {
+  //Retrieve firebase
+  var path = authUID + "/" + cityKey;
+  var packRef = usersRef.child(path);
+  console.log(cityKey);
+  packRef.update({
+      "packinglist": arr
+    });
+}
 
-  function createBlogObj() {
-    console.log("Create Blog");
+function createBlogObj(savedTime) {
+  var postDate = savedTime;
+  var blogPath = authUID + "/" + cityKey + "/blogs";
+  var blogRef = usersRef.child(blogPath);
+  var newBlogRef = blogRef.push();
 
-  }
+  var blogTitle = $("#blogPostTitle").val();
+  var blogText = $("#blogPostEntry").val();
+  
+  // we can also chain the two calls together
+  blogRef.push().set({
+    title: blogTitle,
+    postTime: postDate,
+    contents: blogText
+  });
+  
+  // var blogContents = {title:blogTitle, postTime:"moment", contents:blogText};
+  
+  // console.log(cityKey);
+  
+  // newBlogRef.set({
+  //   blog: blogContents
+  // });
+}
 
-  function formatFirebaseCityKey(city, trip_date) {
-    var formattedKey = city.toLowerCase() + "_" + trip_date;
-    // Replace non-word character with single "_"
-    formattedKey = formattedKey.replace(/\W+/g, "_");
-    cityKey = formattedKey;
-    console.log("formattedKey", formattedKey);
-    return formattedKey;
-  }
-
-  //function to display username
-  function displayUserName(name){
-    var firstname = name.split(" ");
-    $("#nameSpan").text(firstname[0])
-
-  }
-
-  //************ End Google API Images Section ************ //
-
+function formatFirebaseCityKey(city, trip_date){
+  var formattedKey = city.toLowerCase() + "_" + trip_date;
+  // Replace non-word character with single "_"
+  formattedKey = formattedKey.replace(/\W+/g, "_");
+  console.log("formattedKey", formattedKey);
+  return formattedKey;
+}
   // ************ End Firebase Section ************ //
 
-  function retrieveGoogleApi(userLatitude, userLongitude) {
+  //************ Google API Images Section ************ //
+  function fillCarousel(place){
+    // var googleAPIKey = "AIzaSyDZ2PsxQZzTNdRZFBMeQ9uRixxw8taSmjA";
+    //
+    // var lat = place.geometry.location.lat();
+    // var lon = place.geometry.location.lng();
+    //
+    // var nearbyplacesURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + "," + lon + "&radius=500&type=sightseeing&key=" + googleAPIKey;
+    //
+    // console.log("latitude", lat);
+    // console.log("longitude", lon);
+    // console.log("nearbyplacesURL", nearbyplacesURL);
+    //
+    // //call place nearby API
+    // $.ajax({
+    //   crossDomain: true,
+    //   url: nearbyplacesURL,
+    //   dataType: 'json',
+    //   method: "GET",
+    //   // jsonpCallback: 'callback',
+    //   //contentType: "application/json; charset=utf-8;",
+    //   success: function(response2){
+    //      console.log(JSON.stringify(response2));
+    //    }
+    // })
+    // .done(function(response) {
+    //   console.log("place nearby API", response);
+    // });
+  }
+  //************ End Google API Images Section ************ //
 
-    var userCoordinate = {
-      lat: userLatitude,
-      lng: userLongitude
-    };
-    map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 13,
-      center: userCoordinate
-    });
-    var marker = new google.maps.Marker({
-      position: userCoordinate,
-      map: map
-    });
-  }
-  //Today
-  function clearArray(array) {
-    while (array.length) {
-      array.pop();
+    function retrieveGoogleApi(userLatitude, userLongitude) {
+
+      var userCoordinate = {lat: userLatitude, lng: userLongitude};
+      map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 13,
+        center: userCoordinate
+      });
+      var marker = new google.maps.Marker({
+        position: userCoordinate,
+        map: map
+      });
     }
-  }
 });
 // End document

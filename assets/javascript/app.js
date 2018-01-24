@@ -691,12 +691,11 @@ $(document).ready(function() {
       map: map
     });
   }
-});
-
-//Today
-function clearArray(array) {
-  while (array.length) {
-    array.pop();
+  //Today
+  function clearArray(array) {
+    while (array.length) {
+      array.pop();
+    }
   }
-}
+});
 // End document

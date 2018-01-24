@@ -36,8 +36,8 @@
 
   <!--<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjavChZIbTmZdrRikg4ud62aTy45LFdbw&callback=initMap"></script>-->
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZ2PsxQZzTNdRZFBMeQ9uRixxw8taSmjA&libraries=places&language=en"></script>
-   <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjavChZIbTmZdrRikg4ud62aTy45LFdbw&&libraries=places&language=en"></script> -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZ2PsxQZzTNdRZFBMeQ9uRixxw8taSmjA&libraries=places&language=en"></script>
+  <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjavChZIbTmZdrRikg4ud62aTy45LFdbw&&libraries=places&language=en"></script> -->
 
   <!--<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjavChZIbTmZdrRikg4ud62aTy45LFdbw&libraries=places&language=en&callback=initMap"></script>-->
 
@@ -53,7 +53,7 @@
 
 <body>
   <div class="wrapper">
-  <!-- Start of navigation -->
+    <!-- Start of navigation -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,189 +79,188 @@
     <!-- End of navigation -->
 
 
-      <!-- First section of search and list area begins here-->
+    <!-- First section of search and list area begins here-->
     <div class="collapse show search-bg" id="showSearch">
       <div id="part-1">
-      <div class="container">
-            <!-- Top text -->
-              <div class="container text-center">
-                <p class="lead part-1-lead">Hi <span id="nameSpan">name!</span>! Enter a new trip or select one of your trips from below.</p>
-              </div>
-            <!-- end jumbotron -->
-            <!-- beginning of row -->
-            <div class="row mt-3">
-              <div class="col mb-3">
-                <div class="card fixed-height-city">
-                  <div class="card-body">
-                    <!-- Form -->
-                    <form>
-                      <div class="form-group">
-                        <label for="city">Enter a city</label>
-                        <input type="text" class="form-control" id="cityInput" placeholder="ex: London">
-                      </div>
-                    </form>
-                    <form class="mb-4" action="/action_page.php">
-                      <label for="startDate">Trip start date</label>
-                      <input type="date" class="form-control calendar" name="tripStartDate" id="dateInput">
-                    </form>
-                    <button type="submit" class="btn btn-primary btn-lg btn-block" id="addTrip">Add <i class="fa fa-plus-square-o"></i></button>
-                    <!-- end Form -->
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card fixed-height-list">
-                  <!-- table of trips below -->
-                  <div class="card-body">
-                    YOUR TRIPS
-                    <table class="table table-hover">
-                      <thead>
-                        <tr>
-                          <th scope="col">City</th>
-                          <th scope="col">Date</th>
-                          <th scope="col"></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <!--TR, TH and TD goes here -->
-                      </tbody>
-                    </table>
-                  </div>
-                  <!-- end of tables -->
+        <div class="container">
+          <!-- Top text -->
+          <div class="container text-center">
+            <p class="lead part-1-lead">Hi <span id="nameSpan">name!</span>! Enter a new trip or select one of your trips from below.</p>
+          </div>
+          <!-- end jumbotron -->
+          <!-- beginning of row -->
+          <div class="row mt-3">
+            <div class="col mb-3">
+              <div class="card fixed-height-city">
+                <div class="card-body">
+                  <!-- Form -->
+                  <form>
+                    <div class="form-group">
+                      <label for="city">Enter a city</label>
+                      <input type="text" class="form-control" id="cityInput" placeholder="ex: London">
+                    </div>
+                  </form>
+                  <form class="mb-4" action="/action_page.php">
+                    <label for="startDate">Trip start date</label>
+                    <input type="date" class="form-control calendar" name="tripStartDate" id="dateInput">
+                  </form>
+                  <button type="submit" class="btn btn-primary btn-lg btn-block" id="addTrip">Add <i class="fa fa-plus-square-o"></i></button>
+                  <!-- end Form -->
                 </div>
               </div>
             </div>
-            <!-- end of row -->
+            <div class="col">
+              <div class="card fixed-height-list">
+                <!-- table of trips below -->
+                <div class="card-body">
+                  YOUR TRIPS
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">City</th>
+                        <th scope="col">Date</th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <!--TR, TH and TD goes here -->
+                    </tbody>
+                  </table>
+                </div>
+                <!-- end of tables -->
+              </div>
+            </div>
+          </div>
+          <!-- end of row -->
         </div>
 
         <!-- end of button area -->
       </div>
     </div>
-      <!-- end of container and first section of site content -->
+    <!-- end of container and first section of site content -->
 
 
-      <!-- Beginning of results page -->
-      <div id="part-2">
-      <!-- <div class="container"> -->
-        <!-- Countdown begins here -->
-        <div class="row">
-          <div class="col">
-            <!-- carousel begins here -->
-                    <!-- Carousel -->
-                    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                      <!-- Indicators -->
-                      <ul class="carousel-indicators">
-                        <li data-target="#demo" data-slide-to="0" class="active"></li>
-                        <li data-target="#demo" data-slide-to="1"></li>
-                        <li data-target="#demo" data-slide-to="2"></li>
-                        <li data-target="#demo" data-slide-to="3"></li>
-                      </ul>
-                      <!-- The slideshow -->
-                      <div class="carousel-inner">
-                        <div class="carousel-item active">
-                          <img class="carousel-bg" src="assets/images/background_images/Beach.jpg" alt="beach">
-                        </div>
-                        <div class="carousel-item">
-                          <img class="carousel-bg" src="assets/images/background_images/City.jpg" alt="city">
-                        </div>
-                        <div class="carousel-item">
-                          <img class="carousel-bg" src="assets/images/background_images/Mountain.jpg" alt="mountain">
-                        </div>
-                        <div class="carousel-item">
-                          <img class="carousel-bg" src="assets/images/background_images/Woods.jpg" alt="woods">
-                        </div>
-                      </div>
-                    </div>
-            <!-- end of carousel -->
-            <!-- <div class="card mb-3 mt-3"> -->
-              <div class="countdown-text-bg">
-                <h2 class="countdownMessage"></h2>
-                <div class="clock"></div>
+    <!-- Beginning of results page -->
+    <div id="part-2">
+      <!-- Countdown begins here -->
+      <div class="row">
+        <div class="col">
+          <!-- carousel begins here -->
+          <!-- Carousel -->
+          <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ul class="carousel-indicators">
+              <li data-target="#demo" data-slide-to="0" class="active"></li>
+              <li data-target="#demo" data-slide-to="1"></li>
+              <li data-target="#demo" data-slide-to="2"></li>
+              <li data-target="#demo" data-slide-to="3"></li>
+            </ul>
+            <!-- The slideshow -->
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img class="carousel-bg" src="assets/images/background_images/Beach.jpg" alt="beach">
               </div>
-            <!-- </div> -->
-          </div>
-        </div>
-        <!-- end of countdown area -->
-
-        <!-- weather begins here -->
-        <div class="row weather-div">
-          <!-- <div class="col"> -->
-            <!-- <div class="card mb-3"> -->
-              <div class="card-body">
-                <h2 class="weather-title">Check out the weather</h2>
-                <div class="container">
-                <!-- <div class="row weather-body"> -->
-                  <div class="col">
-                    <div id="currentweatherdestination"></div>
-                    <div>Current weather</div>
-                    <div id="currentWeather"></div>
-                  </div>
-                  <!-- <div class="col"> -->
-                    <!-- <div class="row"> -->
-                    <div class="row" id="forecastedWeather"></div>
-                  <!-- </div> -->
-                  <!-- </div> -->
-                <!-- </div> -->
+              <div class="carousel-item">
+                <img class="carousel-bg" src="assets/images/background_images/City.jpg" alt="city">
               </div>
+              <div class="carousel-item">
+                <img class="carousel-bg" src="assets/images/background_images/Mountain.jpg" alt="mountain">
               </div>
-            <!-- </div> -->
-          <!-- </div> -->
-
-        </div>
-        <!-- weather ends here -->
-
-        <!-- row for packing list and google maps begins here -->
-        <div class="row">
-
-          <!-- packing list begins here -->
-          <div class="col">
-            <div class="card mb-3 fixed-height">
-              <div class="card-body align-left">
-                <h2>My Packing List</h2>
-                <!-- enter packing list item begins here -->
-                <form>
-                  <div class="form-row align-items-center">
-                    <div class="col-sm-8 my-1">
-                      <input type="text" class="form-control" id="packingListItem" placeholder="Add item">
-                    </div>
-                    <div class="col-auto my-1">
-                      <button type="submit" id="addPackingItem" class="btn btn-primary">Add <i class="fa fa-plus-square-o"></i></button>
-                    </div>
-                  </div>
-                </form>
-                <!-- end of the packing list form -->
-                <!-- list of packing items begin here -->
-                <div id="packingListView">
-                </div>
-                <!-- packing list items end here -->
-                <div class="row">
-                  <div class="col">
-                    <div class="btn btn-secondary btn-sm mt-3 copyButton align-left">Copy full packing list <i class="fa fa-clipboard"></i>
-                    </div>
-                  </div>
-                </div>
+              <div class="carousel-item">
+                <img class="carousel-bg" src="assets/images/background_images/Woods.jpg" alt="woods">
               </div>
             </div>
           </div>
-          <!-- packing list ends here -->
+          <!-- end of carousel -->
+          <div class="countdown-text-bg">
+            <h2 class="countdownMessage"></h2>
+            <div class="clock"></div>
+          </div>
+        </div>
+      </div>
+      <!-- end of countdown area -->
+
+      <!-- weather begins here -->
+      <div class="row weather-div">
+        <div class="card-body weather-card-body">
+          <h2 class="weather-title">Check out the weather</h2>
+          <div class="container">
+            <div class="col">
+              <div id="currentweatherdestination" class="weather-destination-text"></div>
+              <div class="weather-day">Current weather</div>
+              <div id="currentWeather" class="mb-3"></div>
+            </div>
+            <div class="row" id="forecastedWeather"></div>
+          </div>
+        </div>
+      </div>
+      <!-- weather ends here -->
+
+      <div class="separator separator-primary"></div>
+
+      <!-- row for google maps begins here -->
+      <div class="section-story-overview">
+        <div class="row">
+          <div class="col-md-5">
+            <div class="image-container image-left"></div>
+          </div>
           <!-- google maps begins here -->
-          <div class="col">
-            <div class="card mb-3">
-              <div class="card-body map-height">
-                <div id="map" class="map"></div>
+          <div class="col-md-6">
+            <div id="map" class="map image-container image-right"></div>
+          </div>
+          <!-- google maps end here -->
+        </div>
+      </div>
+      <!-- google maps row ends here -->
+      
+<!-- packing list parallax background -->
+      <div class="packing-list-bg text-center">
+        <div class="packing-text-bg">
+        <h2 class="packing-title">Start your packing list</h2>
+      </div>
+      </div>
+      <!-- end of packing list background -->
+
+      <!-- packing list begins here row-->
+      <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-6">
+          <div class="card-body align-left">
+            <!-- enter packing list item begins here -->
+            <form>
+              <div class="form-row align-items-center">
+                <div class="col-8 my-1">
+                  <input type="text" class="form-control" id="packingListItem" placeholder="Add item">
+                </div>
+                <div class="col-auto my-1">
+                  <button type="submit" id="addPackingItem" class="btn btn-primary">Add <i class="fa fa-plus-square-o"></i></button>
+                </div>
+              </div>
+            </form>
+            <!-- end of the packing list form -->
+            <!-- list of packing items begin here -->
+            <div id="packingListView" class="packing-list-height">
+            </div>
+            <!-- packing list items end here -->
+            <div class="row">
+              <div class="col">
+                <div class="btn btn-secondary mt-3 copyButton align-left">Copy packing list  <i class="fa fa-clipboard"></i>
+                </div>
               </div>
             </div>
           </div>
-          <!-- google maps ends here -->
         </div>
-        <!-- row for packing list and google maps ends here -->
+        <!-- packing list ends here -->
+      </div>
+      <!-- row for packing list ends here -->
+    </div>
 
-        <!-- Blog area begins here -->
-        <div class="row mb-3">
-          <div class="col">
-            <div class="card">
-              <div class="card-body align-left">
-                <h2>Notes/Blog Area:</h2>
+      <!-- Blog area begins here -->
+      <div class="row mb-3">
+        <div class="col">
+          <div class="card">
+            <div class="card-body align-left">
+              <h2>Notes/Blog Area:</h2>
               <form>
                 <div class="form-group">
                   <textarea class="form-control title-area-size" id="blogPostTitle" rows="1" placeholder="Title" maxlength="60"></textarea>
@@ -275,25 +274,25 @@
               </form>
               <button type="submit" id="blogSaveBtn" class="btn btn-primary mb-2">Save</button>
               <!-- blog post entries printed here -->
-                <div id="blogPostArea"></div>
+              <div id="blogPostArea"></div>
               <!-- end of blog post entry print area -->
-              </div>
             </div>
           </div>
         </div>
-        <!-- end of blog area -->
-        <!-- Modal -->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      </div>
+      <!-- end of blog area -->
+      <!-- Modal -->
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
-              </div>
-              <div class="modal-body">
-                <form>
+            </div>
+            <div class="modal-body">
+              <form>
                 <div class="form-group">
                   <textarea class="form-control title-area-size" id="blogPostTitle" rows="1" placeholder="Title" maxlength="60"></textarea>
                   <small id="blogPostTitleHelp" class="form-text text-muted">
@@ -304,18 +303,18 @@
                   <textarea class="form-control" id="blogPostEntry" rows="3" placeholder="Entry"></textarea>
                 </div>
               </form>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
             </div>
           </div>
         </div>
-      <!-- </div> -->
-      <!-- End container -->
-    </div>
-    <!-- end of results page -->
+      </div>
+      <!-- End of modal container -->
+  </div>
+  <!-- end of part-2 results page -->
+
 
 
   </div>

@@ -665,14 +665,12 @@ function createBlogObj(savedTime) {
   
   // var blogContents = {title:blogTitle, postTime:"moment", contents:blogText};
   
-  // console.log(cityKey);
+  console.log("works");
   
   // newBlogRef.set({
   //   blog: blogContents
   // });
 }
-
-  }
 
   function formatFirebaseCityKey(city, trip_date) {
     var formattedKey = city.toLowerCase() + "_" + trip_date;

@@ -191,7 +191,7 @@ $(document).on("click", "#addTrip", function(event){
   // function to generate and initiate clock countdown flip
   function countDownDisplay(destinationDate, destination) {
     // print the clicked or entered city in the message area
-    $(".countdownMessage").text("Count down to your trip to " + destination + "!")
+    $(".countdownMessage").text("Count down to your trip to " + destination)
     var clock;
     // Grab the current date
     var currentDate = moment();
@@ -452,11 +452,11 @@ var clipboard = new Clipboard(".copyButton", {
     var wholeRow = editCol.parent()
     var targetCol = wholeRow[0].childNodes[0];
     var entryInfo = [targetCol.childNodes[0].innerText, targetCol.childNodes[2].innerText];
-    
+
     console.log(targetCol);
     console.log(entryInfo[0]);
     console.log(entryInfo[1]);
-    
+
     $("#myModal #blogPostTitle").val(entryInfo[0]);
     $("#myModal #blogPostEntry").val(entryInfo[1]);
   });

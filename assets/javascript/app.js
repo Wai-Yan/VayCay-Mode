@@ -256,9 +256,6 @@ $(document).ready(function() {
 
   function initMap(place) {
 
-    console.log(place);
-    console.log("What's going on");
-
     var userLatitude = place.geometry.location.lat();
     var userLongitude = place.geometry.location.lng();
 
@@ -270,14 +267,10 @@ $(document).ready(function() {
       lng: userLongitude
     };
 
-    console.log(userCoordinate);
-
     map = new google.maps.Map(document.getElementById('map'), {
       zoom: 13,
       center: userCoordinate
     });
-
-    console.log(map);
 
     var marker = new google.maps.Marker({
       position: userCoordinate,
@@ -378,7 +371,6 @@ $(document).ready(function() {
       });
   }
 
-
   // function to add items to packing list
   $("#addPackingItem").on("click", function(event) {
     event.preventDefault();
@@ -440,8 +432,6 @@ $(document).ready(function() {
 
   });
 
-
-
   // function to initiate tooltip once copy is successful
   $(".copyButton").tooltip({
     trigger: 'click',
@@ -489,11 +479,13 @@ $(document).ready(function() {
     var blogTitle = $("#blogPostTitle").val().trim()
     var blogPost = $("#blogPostEntry").val().trim()
     var trashAndEdit = ("<div class='col-1'>") + ("<span class='fa fa-trash-o trash-blog-button'>") + ("</span>") + (" ") + ("<span class='fa fa-pencil-square-o edit-blog-button' data-toggle='modal' data-target='#myModal'>") + ("</span>") + ("</div>")
-    var blogEntry = ("<div class='blogEntryContainer my-2'>") + ("<div class='row'>") + ("<div class='col'>") + ("<div class='blogTitleView'>") + blogTitle + ("</div>") + ("<div class='blogTimeStampView'>") + "Posted on: " + savedTime + ("</div>") + ("<div class='blogEntryView'>") + blogPost + ("</div>") + ("</div>") + trashAndEdit + ("</div>") + ("</div>")
-    if ($("#blogPostArea") === "") {} else {
-      $("#blogPostArea").prepend(blogEntry)
-      $("#blogPostTitle").val("")
-      $("#blogPostEntry").val("")
+    var blogEntry = ("<div class='blogEntryContainer my-2'>")  + ("<div class='row'>") + ("<div class='col'>") + ("<div class='blogTitleView'>") + blogTitle + ("</div>") + ("<div class='blogTimeStampView'>") + "Posted on: " + savedTime + ("</div>") + ("<div class='blogEntryView'>") + blogPost + ("</div>") + ("</div>") +  trashAndEdit + ("</div>") + ("</div>")
+    if ($("#blogPostArea") === "") {
+    } else {
+    $("#blogPostArea").prepend(blogEntry)
+    createBlogObj(savedTime);                                                                                                                                                             
+    $("#blogPostTitle").val("")
+    $("#blogPostEntry").val("")
     }
   })
 
@@ -655,9 +647,30 @@ $(document).ready(function() {
     });
   }
 
+function createBlogObj(savedTime) {
+  var postDate = savedTime;
+  var blogPath = authUID + "/" + cityKey + "/blogs";
+  var blogRef = usersRef.child(blogPath);
+  var newBlogRef = blogRef.push();
 
-  function createBlogObj() {
-    console.log("Create Blog");
+  var blogTitle = $("#blogPostTitle").val();
+  var blogText = $("#blogPostEntry").val();
+  
+  // we can also chain the two calls together
+  blogRef.push().set({
+    title: blogTitle,
+    postTime: postDate,
+    contents: blogText
+  });
+  
+  // var blogContents = {title:blogTitle, postTime:"moment", contents:blogText};
+  
+  // console.log(cityKey);
+  
+  // newBlogRef.set({
+  //   blog: blogContents
+  // });
+}
 
   }
 

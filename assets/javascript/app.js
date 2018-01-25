@@ -12,6 +12,12 @@ $(document).ready(function() {
   var loc;
   var cityKey;
   var packListArr = [];
+  var packListClip = [];
+  var blogsArr = []; //Jan 24
+
+  var userBlogTitle = "";
+  var userBlogContents = "";
+  var userTimeStamp = "";
 
   //Initailize Firebase
   var config = {
@@ -51,23 +57,6 @@ $(document).ready(function() {
 
   //function to render rows
   function renderRows(place, childSnapshot) {
-    // $(".tableRow").empty()
-    // // console.log("render rows works")
-    // // console.log("render rows: " + place.formatted_address)
-    // // console.log(place.formatted_address);
-    // var tBody = $("tbody");
-    // var tRow = $("<tr>");
-    //
-    // var destinationTD = $("<td>").text(place.formatted_address);
-    // destinationTD.attr("class", "citySelect").attr("data-city", place.formatted_address).attr("data-lat", place.geometry.location.lat).attr("data-lng", place.geometry.location.lng).attr("data-id", place.place_id).attr("data-date", destinationDate);
-    // var destinationDateTD = $("<td>").text(destinationDate).attr("data-city", place.formatted_address).attr("data-date", destinationDate);
-    // var trashTD = $("<td>").attr("class", "showTrash");
-    // var trashSpan = $("<span>").attr("class", "fa fa-trash-o trash-hide");
-    //
-    // trashTD.append(trashSpan);
-    // tRow.append(destinationTD, destinationDateTD, trashTD);
-    // tBody.prepend(tRow);
-
     var data = childSnapshot.val();
 
     if (childSnapshot.key !== "credential") {
@@ -94,20 +83,37 @@ $(document).ready(function() {
 
     if (Array.isArray(itemValueArr)) {
       for (var i = 0; i < itemValueArr.length; i++) {
-        var listRow = $("<div>").addClass("row listRow");
-        var itemColumn = $("<div>").addClass("col-auto listColumn");
-        var trashColumn = $("<div>").addClass("col-2 trashColumn");
-        var itemText = $("<p>").addClass("list-p");
-        itemText.text(itemValueArr[i]);
-        itemColumn.append(itemText);
-        var trashItem = $("<span>").addClass("fa fa-trash-o trash-hide");
-        trashColumn.append(trashItem);
-        trashColumn.attr("value", itemValueArr[i]);
-        listRow.append(itemColumn, trashColumn);
+        $("#packingListView").prepend(itemValueArr[i]);
+        // var listRow = $("<div>").addClass("row listRow");
+        // var itemColumn = $("<div>").addClass("col-auto listColumn");
+        // var trashColumn = $("<div>").addClass("col-2 trashColumn");
+        // var itemText = $("<p>").addClass("list-p");
+        // itemText.text(itemValueArr[i]);
+        // itemColumn.append(itemText);
+        // var trashItem = $("<span>").addClass("fa fa-trash-o trash-hide");
+        // trashColumn.append(trashItem);
+        // trashColumn.attr("value", itemValueArr[i]);
+        // listRow.append(itemColumn, trashColumn);
 
-        $("#packingListView").append(listRow);
       }
     }
+    console.log(packListArr);
+    return;
+  }
+
+  function renderBlogs(arr) {
+    $("#blogPostArea").empty();
+
+    console.log(arr);
+    console.log(arr.length);
+
+    if (Array.isArray(arr)) {
+
+      for (var i = 0; i < arr.length; i++) {
+        $("#blogPostArea").prepend(arr[i]);
+      }
+    }
+
     return;
   }
 
@@ -136,20 +142,31 @@ $(document).ready(function() {
 
     //Today
     var childKey = formatFirebaseCityKey(destination, destinationDate);
-    var packingPath = authUID + "/" + childKey;
-    var packingRef = usersRef.child(packingPath);
+    var infoPath = authUID + "/" + childKey;
+    var infoRef = usersRef.child(infoPath);
     cityKey = childKey; //Assign key to global for packing list and blog
 
     $("#packingListView").empty();
+    $("#blogPostArea").empty(); // Jan 24th
 
-    packingRef.child("packinglist").once("value", function(childSnapshot) {
+    infoRef.child("packinglist").once("value", function(childSnapshot) {
       var packList = childSnapshot.val();
       packListArr = packList; //Assign a list from firebase to the array
-
-      console.log("After push new array", packListArr);
-      console.log("After push new array", packListArr.length);
       renderPackingList(packList);
     });
+
+    infoRef.child("list4clipboard").once("value", function(childSnapshot) {
+      var clipboardList = childSnapshot.val();
+      packListClip = clipboardList; //Assign a list from firebase to the array
+    });
+
+    infoRef.child("blogs").once("value", function(childSnapshot) {
+      var userBlog = childSnapshot.val();
+      blogsArr = userBlog; //Assign a list from firebase to the array
+      renderBlogs(userBlog);
+    }); // Jan 24th
+    console.log(packListArr);
+
   });
 
 
@@ -172,8 +189,12 @@ $(document).ready(function() {
 
     //Today
     $("#packingListView").empty();
+    $("#blogPostArea").empty();
     //Pop old data out upon adding new city
     clearArray(packListArr);
+    clearArray(packListClip);
+    clearArray(blogsArr);
+    // Jan 24th
   })
 
   // function to delete packing list item
@@ -322,7 +343,6 @@ $(document).ready(function() {
     /*
       Grabs a 5 day forecast and projects temperature and icon into HTML
     */
-
     $("#forecastedWeather").empty();
 
     var userCity = destination;
@@ -356,7 +376,7 @@ $(document).ready(function() {
 
         var allPredictions = response.list.length
 
-        for (var i = 6; i < allPredictions; i+= 8) {
+        for (var i = 6; i < allPredictions; i += 8) {
           newForecastImage = ("<img src='http://openweathermap.org/img/w/" + response.list[i].weather[0].icon + ".png'>");
           // $("#forecastedWeather").append(newForecastImage);
 
@@ -364,7 +384,7 @@ $(document).ready(function() {
           formattedDate = moment(date).format("MM/DD/YY");
           var dayOfWeek = moment(date).format("dddd");
           var temp = Math.floor(response.list[i].main.temp)
-          var forecastDateText = ("<div class='col'>") + ("<div class='weather-day'>") + dayOfWeek  + ("</div>") + ("<div>") + newForecastImage + temp + "°" + "F" + ("</div>") + ("</div>")
+          var forecastDateText = ("<div class='col'>") + ("<div class='weather-day'>") + dayOfWeek + ("</div>") + ("<div>") + newForecastImage + temp + "°" + "F" + ("</div>") + ("</div>")
           $("#forecastedWeather").append(forecastDateText);
           // formattedDate + "  | " + Math.floor(response.list[i].main.temp) + "F"
         }
@@ -377,43 +397,78 @@ $(document).ready(function() {
 
     //Today
     var itemValue = $("#packingListItem").val().trim();
-    if(!Array.isArray(packListArr)){
+
+    var listRow = $("<div>").addClass("row listRow");
+    var itemColumn = $("<div>").addClass("col-auto listColumn");
+    var trashColumn = $("<div>").addClass("col-2 trashColumn");
+    var itemText = $("<p>").addClass("list-p");
+    itemText.text(itemValue);
+    itemColumn.append(itemText);
+    var trashItem = $("<span>").addClass("fa fa-trash-o trash-hide");
+    trashColumn.append(trashItem);
+    trashColumn.attr("value", itemValue);
+    listRow.append(itemColumn, trashColumn);
+
+    var packinglistDiv = '<div class="row listRow"><div class="col-auto listColumn"><p class="list-p">' + itemValue + '</p></div><div class="col-2 trashColumn" value="' + itemValue + '"><span class="fa fa-trash-o trash-hide"></span></div></div>'
+
+    if (!Array.isArray(packListArr)) {
       packListArr = [];
+    }
+
+    if (!Array.isArray(packListClip)) {
+      packListClip = [];
     }
 
     //Tak Jan 23
     $("#packingListItem").val("");
 
     if (itemValue !== "") {
-      packListArr.push(" " + itemValue);
-      createPackingListObj(packListArr);
+      //console.log(packinglistDiv);
+      packListArr.push(packinglistDiv);
+      packListClip.push(" " + itemValue);
+      createPackingListObj(packListArr, packListClip);
     }
-
   });
 
-    // var itemValue = $("#packingListItem").val().trim();
-    // if (itemValue === "") {} else {
-    //   var listRow = $("<div>").addClass("row listRow")
-    //   var itemColumn = $("<div>").addClass("col-auto listColumn")
-    //   var trashColumn = $("<div>").addClass("col-2 trashColumn")
-    //   var itemText = $("<p>").addClass("list-p")
-    //   itemText.text(itemValue)
-    //   itemColumn.append(itemText)
-    //   var trashItem = $("<span>").addClass("fa fa-trash-o trash-hide")
-    //   trashColumn.append(trashItem)
-    //   trashColumn.attr("value", itemValue)
-    //   listRow.append(itemColumn, trashColumn)
-    //   $("#packingListView").append(listRow)
-    //   packListArr.push(" " + itemValue)
-    //   $("#packingListItem").val("");
+  // var itemValue = $("#packingListItem").val().trim();
+  // if (itemValue === "") {} else {
+  //   var listRow = $("<div>").addClass("row listRow")
+  //   var itemColumn = $("<div>").addClass("col-auto listColumn")
+  //   var trashColumn = $("<div>").addClass("col-2 trashColumn")
+  //   var itemText = $("<p>").addClass("list-p")
+  //   itemText.text(itemValue)
+  //   itemColumn.append(itemText)
+  //   var trashItem = $("<span>").addClass("fa fa-trash-o trash-hide")
+  //   trashColumn.append(trashItem)
+  //   trashColumn.attr("value", itemValue)
+  //   listRow.append(itemColumn, trashColumn)
+  //   $("#packingListView").append(listRow)
+  //   packListArr.push(" " + itemValue)
+  //   $("#packingListItem").val("");
 
 
 
   // Add a "checked" symbol when clicking on a list item
   $(document.body).on("click", ".listColumn", function() {
     var listItem = $(this).parent();
+    //var packRow = listItem.parent().children();
+    var itemValue = $(this).children().html();
     listItem.toggleClass("col-checked");
-  })
+
+    console.log(listItem.attr("class"));
+    console.log(itemValue);
+
+    for (var i = 0; i < packListArr.length; i++) {
+      if (packListArr[i].includes(itemValue)) {
+        packListArr[i] = '<div class="' + listItem.attr("class") + '"><div class="col-auto listColumn"><p class="list-p">' + itemValue + '</p></div><div class="col-2 trashColumn" value="' + itemValue + '"><span class="fa fa-trash-o trash-hide"></span></div></div>'
+        break;
+      } else {
+        console.log("nothing!!");
+      }
+    }
+
+    createPackingListObj(packListArr, packListClip);
+  });
 
   // function to delete packing list item
   $(document.body).on("click", ".trashColumn", function() {
@@ -425,12 +480,15 @@ $(document).ready(function() {
     console.log(deletedArrItem);
     console.log(deletedArrPos);
     packListArr.splice(deletedArrPos, 1);
+    packListClip.splice(deletedArrPos, 1);
+
     listRow.remove();
 
     //Update Firebase with new array
     var uidRef = usersRef.child(authUID + "/" + cityKey);
     uidRef.update({
-      "packinglist": packListArr
+      "packinglist": packListArr,
+      "list4clipboard": packListClip
     });
     // var deletedArrItem = (" " + $(this).attr("value"))
     // var deletedArrItem = packListArr.indexOf(deletedArrItem)
@@ -460,7 +518,7 @@ $(document).ready(function() {
   // beginning of function for clipboard
   var clipboard = new Clipboard(".copyButton", {
     text: function(trigger) {
-      return packListArr;
+      return packListClip;
     }
   });
 
@@ -482,19 +540,31 @@ $(document).ready(function() {
 
   // function to add blog posts on save click
   $(document.body).on("click", "#blogSaveBtn", function() {
+
     var savedTime = moment().format('MMMM Do YYYY, h:mm:ss a')
     var blogTitle = $("#blogPostTitle").val().trim()
     var blogPost = $("#blogPostEntry").val().trim()
-    var trashAndEdit = ("<div class='col-1'>") + ("<span class='fa fa-trash-o trash-blog-button'>") + ("</span>") + (" ") + ("<span class='fa fa-pencil-square-o edit-blog-button' data-toggle='modal' data-target='#myModal'>") + ("</span>") + ("</div>")
-    var blogEntry = ("<div class='blogEntryContainer my-2'>")  + ("<div class='row'>") + ("<div class='col'>") + ("<div class='blogTitleView'>") + blogTitle + ("</div>") + ("<div class='blogTimeStampView'>") + "Posted on: " + savedTime + ("</div>") + ("<div class='blogEntryView'>") + blogPost + ("</div>") + ("</div>") +  trashAndEdit + ("</div>") + ("</div>")
-    if ($("#blogPostArea") === "") {
-    } else {
-    $("#blogPostArea").prepend(blogEntry)
-    createBlogObj(savedTime);
-    $("#blogPostTitle").val("")
-    $("#blogPostEntry").val("")
+
+    if (blogTitle === "" && blogPost === "") {
+      return;
     }
-  })
+
+    var trashAndEdit = ("<div class='col-1'>") + ("<span class='fa fa-trash-o trash-blog-button'>") + ("</span>") + (" ") + ("<span class='fa fa-pencil-square-o edit-blog-button' data-toggle='modal' data-target='#myModal'>") + ("</span>") + ("</div>")
+
+    var blogEntry = ("<div class='blogEntryContainer my-2'>") + ("<div class='row'>") + ("<div class='col'>") + ("<div class='blogTitleView'>") + blogTitle + ("</div>") + ("<div class='blogTimeStampView'>") + "Posted on: " + savedTime + ("</div>") + ("<div class='blogEntryView'>") + blogPost + ("</div>") + ("</div>") + trashAndEdit + ("</div>") + ("</div>")
+
+    $("#blogPostTitle").val("");
+    $("#blogPostEntry").val("");
+
+    if (!Array.isArray(blogsArr)) {
+      blogsArr = [];
+    }
+
+    if ((blogTitle !== "") && (blogPost !== "")) {
+      blogsArr.push(blogEntry);
+      createBlogObj(blogsArr);
+    }
+  });
 
   // function to delete blog post
   // $(".fa-trash-o").on("click", function() {
@@ -509,11 +579,23 @@ $(document).ready(function() {
     var blogPostTrash = $(this).parent();
     var div = blogPostTrash.parent()
     var div2 = div.parent()
+    var column = blogPostTrash.prev();
+    var timeStamp = column.find("div:last").prev().html();
+
+    for (var i = 0; i < blogsArr.length; i++) {
+      if (blogsArr[i].includes(timeStamp)) {
+        blogsArr.splice(i, 1);
+        break;
+      }
+    }
+
     div2.remove();
-    // Get unique Firebase ID from button (added on button creation)
-    // var trainKey = $(this).attr("data-key");
-    // Remove object from Firebase
-    // db.ref(trainKey).remove();
+
+    //Update Firebase with new array
+    var uidRef = usersRef.child(authUID + "/" + cityKey);
+    uidRef.update({
+      "blogs": blogsArr
+    });
   })
 
   $(document.body).on("click", ".edit-blog-button", function() {
@@ -528,8 +610,62 @@ $(document).ready(function() {
     console.log(entryInfo[0]);
     console.log(entryInfo[1]);
 
+    userBlogTitle = entryInfo[0];
+    userBlogContents = entryInfo[1];
+
+    console.log(userBlogTitle);
+    console.log(userBlogContents);
+
     $("#myModal #blogPostTitle").val(entryInfo[0]);
     $("#myModal #blogPostEntry").val(entryInfo[1]);
+
+    var blogPostTrash = $(this).parent();
+    var div = blogPostTrash.parent()
+    var div2 = div.parent()
+    var column = blogPostTrash.prev();
+    userTimeStamp = column.find("div:last").prev().html();
+
+    console.log(userTimeStamp);
+
+    // var newTitle = $("#myModal #blogPostTitle").val();
+    // var newEntry = $("#myModal #blogPostEntry").val();
+    //
+    // var blogPostTrash = $(this).parent();
+    // var div = blogPostTrash.parent()
+    // var div2 = div.parent()
+    // var column = blogPostTrash.prev();
+    // var timeStamp = column.find("div:last").prev().html();
+    //
+    // for (var i = 0; i < blogsArr.length; i++) {
+    //   if (blogsArr[i].includes(timeStamp)) {
+    //     blogsArr[i].replace
+    //     break;
+    //   }
+    // }
+
+  });
+
+  $(document.body).on("click", "#myModal #blogEditSave", function() {
+
+    var newTitle = $("#myModal #blogPostTitle").val();
+    var newEntry = $("#myModal #blogPostEntry").val();
+
+    var blogPostTrash = $(this).parent();
+    var div = blogPostTrash.parent()
+    var div2 = div.parent()
+    var column = blogPostTrash.prev();
+    var timeStamp = column.find("div:last").prev().html();
+
+    for (var i = 0; i < blogsArr.length; i++) {
+      if (blogsArr[i].includes(userTimeStamp)) {
+        blogsArr[i] = blogsArr[i].replace(userBlogContents, newEntry);
+        blogsArr[i] = blogsArr[i].replace(userBlogTitle, newTitle);
+        break;
+      }
+    }
+
+    createBlogObj(blogsArr);
+
   });
 
   // add signout button and log the user out once clicked
@@ -551,12 +687,12 @@ $(document).ready(function() {
       var uid, name, email;
 
 
-    if (user !== null) {
-      // User is signed in.
-      uid = user.uid;
-      name = user.displayName;
-      email = user.email;
-      displayUserName(name)
+      if (user !== null) {
+        // User is signed in.
+        uid = user.uid;
+        name = user.displayName;
+        email = user.email;
+        displayUserName(name)
 
 
         //Assign uid to global variable
@@ -591,7 +727,7 @@ $(document).ready(function() {
     var usernameRef = usersRef.child(authUID + "/credential");
     var place = retrieveLocation();
 
-    usernameRef.once("value", function(cred){
+    usernameRef.once("value", function(cred) {
       var username = cred.val();
       console.log(username);
     });
@@ -629,22 +765,25 @@ $(document).ready(function() {
         "lat": lat,
         "lng": lng,
         "packinglist": "",
-        "blog": ""
+        "blogs": "",
+        "list4clipboard": ""
       });
     }
   }
 
   //Today
-  function createPackingListObj(arr) {
+  function createPackingListObj(divArr, cbArr) {
     //Retrieve firebase
     var path = authUID + "/" + cityKey;
-    console.log(path);
+    console.log(divArr);
+    console.log(cbArr);
     var packRef = usersRef.child(path);
     var childKey;
 
     //Check if the packinglist is created?
     packRef.update({
-      "packinglist": arr
+      "packinglist": divArr,
+      "list4clipboard": cbArr
     }, function(err) {
       if (err) {
         console.log(err);
@@ -654,30 +793,21 @@ $(document).ready(function() {
     });
   }
 
-function createBlogObj(savedTime) {
-  var postDate = savedTime;
-  var blogPath = authUID + "/" + cityKey + "/blogs";
-  var blogRef = usersRef.child(blogPath);
-  var newBlogRef = blogRef.push();
+  function createBlogObj(blogEntry) {
+    var blogPath = authUID + "/" + cityKey; // + "/blogs";
+    var blogRef = usersRef.child(blogPath);
+    //var newBlogRef = blogRef.push();
 
-  var blogTitle = $("#blogPostTitle").val();
-  var blogText = $("#blogPostEntry").val();
-
-  // we can also chain the two calls together
-  blogRef.push().set({
-    title: blogTitle,
-    postTime: postDate,
-    contents: blogText
-  });
-
-  // var blogContents = {title:blogTitle, postTime:"moment", contents:blogText};
-
-  console.log("works");
-
-  // newBlogRef.set({
-  //   blog: blogContents
-  // });
-}
+    blogRef.update({
+      "blogs": blogEntry
+    }, function(err) {
+      if (err) {
+        console.log(err);
+      } else {
+        renderBlogs(blogsArr);
+      }
+    });
+  }
 
   function formatFirebaseCityKey(city, trip_date) {
     var formattedKey = city.toLowerCase() + "_" + trip_date;
@@ -689,7 +819,7 @@ function createBlogObj(savedTime) {
   }
 
   //function to display username
-  function displayUserName(name){
+  function displayUserName(name) {
     var firstname = name.split(" ");
     $("#nameSpan").text(firstname[0])
 

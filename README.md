@@ -1,6 +1,6 @@
 ## **VayCay Mode**
 
-Vaycaymode is an application built for the traveller who can't take their mind off of their upcoming vacation.  It gives the user a diversion from their every day tasks and remind themselves that better days to come.  It also serves as a planning tool, allowing the user to check the current weather forecast, create packing and to-do lists, and even organize their thoughts as a blog.
+Vaycaymode is an application built for the traveller who can't take their mind off of their upcoming vacation.  It gives the user a diversion from their every day tasks, and reminds them that better days are to come.  It also serves as a planning tool, allowing the user to check the current weather forecast, create packing and to-do lists, and even organize their thoughts as a blog.
 
 ## **Motivation**
 
@@ -12,9 +12,9 @@ Object-Oriented Programming (OOP).
 
 ## **Screenshots**
 
-![Landing Page](assets/images/screenshots/Landing-Page.jpg?raw=true "Landing Page")
+![Landing Page](assets/images/Screenshots/Landing-Page.jpg?raw=true "Landing Page")
 
-![Enter Trips](assets/images/screenshots/Enter-Trips.jpg?raw=true "Enter Trips Page")
+![Enter Trips](assets/images/Screenshots/Enter-Trips.jpg?raw=true "Enter Trips Page")
 
 ## **Technologies and frameworks used**
 
@@ -26,7 +26,7 @@ Object-Oriented Programming (OOP).
 - [Now UI Kit](http://demos.creative-tim.com/now-ui-kit/index.html)
 - Vanilla [JavaScript](https://www.javascript.com/)
 - [jQuery](https://jquery.com/)
-- Moment[Javascript](https://momentjs.com/)
+- Moment [Javascript](https://momentjs.com/)
 - Clipboard [Javascript](https://clipboardjs.com/)
 - [Firebase](https://firebase.google.com/)
 - [Google Maps](https://maps.google.com/) API
@@ -44,7 +44,9 @@ Object-Oriented Programming (OOP).
 
 ## **Code Example**
 
-adds an item to the packing list 
+adds an item to the packing list
+
+{noformat} 
 
 $("#addPackingItem").on("click", function(event) {
     event.preventDefault();
@@ -62,6 +64,7 @@ $("#addPackingItem").on("click", function(event) {
     }
 
   });
+{noformat}
 
 
 ## **Installation**
@@ -154,8 +157,7 @@ The Website is divided into 7 main sections:
 
 
 
-
 ## **Credits**
 
-This application was built by [Angel Kressin](https://github.com/angkressin), [Tak Nalut](https://github.com/tak009), [Wai Yan](https://github.com/Wai-Yan), [Sean](https://github.com/andersensm), and [Ali Kassam](https://github.com/alikassam0) -- Full Stack Web Development Students at George Washington University's Coding Boot Camp.
+This application was built by [Angel Kressin](https://github.com/angkressin), [Tak Nalut](https://github.com/tak009), [Wai Yan](https://github.com/Wai-Yan), and [Ali Kassam](https://github.com/alikassam0) -- Full Stack Web Development Students at George Washington University's Coding Boot Camp.
 

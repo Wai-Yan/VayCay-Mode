@@ -553,6 +553,7 @@ a.footer-link {
   }
   .section-story-overview {
     padding: 0;
+    padding-top: 10px;
   }
   .image-container.image-left {
     margin-bottom: 0px;
@@ -674,6 +675,7 @@ a.footer-link {
   }
   .separator {
     margin: 70px auto;
+    margin-top: 150px;
   }
   .section-story-overview {
     padding: 0;

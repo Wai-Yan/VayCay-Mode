@@ -157,8 +157,7 @@ The Website is divided into 7 main sections:
 
 
 
-
 ## **Credits**
 
-This application was built by [Angel Kressin](https://github.com/angkressin), [Tak Nalut](https://github.com/tak009), [Wai Yan](https://github.com/Wai-Yan), [Sean](https://github.com/andersensm), and [Ali Kassam](https://github.com/alikassam0) -- Full Stack Web Development Students at George Washington University's Coding Boot Camp.
+This application was built by [Angel Kressin](https://github.com/angkressin), [Tak Nalut](https://github.com/tak009), [Wai Yan](https://github.com/Wai-Yan), and [Ali Kassam](https://github.com/alikassam0) -- Full Stack Web Development Students at George Washington University's Coding Boot Camp.
 

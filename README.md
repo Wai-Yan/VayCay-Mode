@@ -82,58 +82,80 @@ _Google Maps API:_
 
 [https://developers.google.com/maps/documentation/javascript/3.exp/reference](https://developers.google.com/maps/documentation/javascript/3.exp/reference)
 
-_FourSquare API:_
-
-[https://developer.foursquare.com/docs/api/getting-started](https://developer.foursquare.com/docs/api/getting-started)
-
 ## **Tests**
 
-Most tests for this application are rune with a simple console.log()method. If the correct/expected information returns, then the team knows that the program is functioning.
+Most tests for this application are run with a simple console.log()method. If the correct/expected information returns, then the team knows that the program is functioning.
 
-    var queryURL3 = "https://api.foursquare.com/v2/venues/" + idArray[i] + "?v=" + date + "&clientSecret=" + clientSecret + "&client_id=" + clientID;
+  $(document.body).on("click", ".edit-blog-button", function() {
+    
+    var editCol = $(this).parent();
+    var wholeRow = editCol.parent()
+    var targetCol = wholeRow[0].childNodes[0];
+    var entryInfo = [targetCol.childNodes[0].innerText, targetCol.childNodes[2].innerText];
 
-    $.ajax({
-    url: queryURL3,
-    method: "GET"
-    }).done(function(checkins) {
+    console.log(targetCol);
+    console.log(entryInfo[0]);
+    console.log(entryInfo[1]);
 
-    **console.log(checkins);**
+    $("#myModal #blogPostTitle").val(entryInfo[0]);
+    $("#myModal #blogPostEntry").val(entryInfo[1]);
+  });
 
-    popularity = checkins.response.venue.stats.checkinsCount
-    $("#markerCheckins1").text(popularity)
-
-    //document.getElementById("#markerCheckins").innerHTML = popularity;
-    **console.log("checkins:", popularity);**
-
-    });
 
 ## **How to use?**
 
-The Website is divided into three main sections:
+The Website is divided into 7 main sections:
 
-1.    __Google Maps API__
+1. __Landing Page__ 
 
-- Dynamic search box to navigate desired locations and places of interest &amp; D.C. Recommended Locations for Restaurants, Museums, Hotels, and, Bars &amp; Clubs included in the navigation bar.
-- Each will provide markers based on the current viewport.
-- The markers that are generated can be clicked to provide a modul with a plethora of information about the desired location.
+- First time visitors to the site can register by entering an existing google email address or by entering an email address and creating a new password
+- Firebase authentication allows verification of login data 
+- A unique user is created in Firebase and all data generated throughout the application becomes associated with this unique user 
+- returning users will remain logged in unless they explicitly click the log out button
 
-2.    __Weather__
+2. __Google Autocomplete__
 
-- A table is generated with the following 24-hours @ 3-hour intervals
-- To generate the table two criteria are needed:
-- The city name should be typed as accurate as possible
-- The country should entered as 2-or-3 digit Country Code
-- Example: Baltimore, US
-- The table will display information for the Date &amp; Time(in Military Time), Weather Temperature at that time of day, and the Weather description for that time of day
-- Example: 2018-01-24 03:00:00      44.85 F     Clear - clear sky
+- Recommends cities based on proximity the user's current location
+- Returns metadata specific to the selected city which is then used to populate other components of the site 
+- Ensures that the destination entered by the user exists and integrates with other API's
 
-3.    __Site Feedback__
+3. __Flipclock__
 
-- A form that provides the user with a outlet to display their experience with the website's information
-- Name, Rating, Comments
-- The information is displayed using firebase, in table format and the information is used by the Website to provide a better user experience and to help guide future development
+- Uses moment.js to calculate the difference in time between the destination date and the current time
+- Creates movement in the application to keep the user engaged 
+
+4. __Weather__
+
+- Retrieves destination name from Firebase as entered by autocomplete
+- Provides a 5 day forecast at 24 hour intervals starting with the current time 
+- The weather will be displayed as the day of the week, the temperature rounded to a whole number, and a representation of the weather as an image 
+
+5.  __Packing List__
+
+- An easy way for users to plan for their trips by creating a packing list in a place where they check frequently
+- List is saved in Firebase and attached to each individual trip allowing the user to create multiple lists
+- Users have the ability to add and delete items, as well as mark items as completed 
+
+
+6. __Google Maps API__
+
+- Map of city autopopulates when a user creates a new trip
+- User can interact with the map based on Google Map built in functionality
+- Map takes in the latitude and longitude that is stored in Firebase and originates from the Google autocomplete object 
+
+7. __Blog__
+
+- Custom created blog allows users to share their thoughts leading up to an after their trip
+- Blog is stored in Firebase and persists even after a user logs out
+- Blogs are destination specific, meaning each trip will have it's own series of blog posts
+- Blog entries display a title, the blog text, and the time the entry was submitted
+- Users have the ability to edit or delete an existing blog post 
+
+
+
+
 
 ## **Credits**
 
-This application was built by [Athina](https://github.com/Coolaide), [Dan](https://github.com/DanYee92), [Mehvish](https://github.com/mqamar1), [Sean](https://github.com/andersensm), and [Taqwa](https://github.com/TaqwaR) -- Full Stack Web Development Students at George Washington University's Coding Boot Camp.
+This application was built by [Angel Kressin](https://github.com/angkressin), [Tak Nalut](https://github.com/tak009), [Wai Yan](https://github.com/Wai-Yan), [Sean](https://github.com/andersensm), and [Ali Kassam](https://github.com/alikassam0) -- Full Stack Web Development Students at George Washington University's Coding Boot Camp.
 

@@ -381,10 +381,14 @@ $(document).ready(function() {
       packListArr = [];
     }
 
-    packListArr.push(" " + itemValue);
-
+    //Tak Jan 23
     $("#packingListItem").val("");
-    createPackingListObj(packListArr);
+
+    if (itemValue !== "") {
+      packListArr.push(" " + itemValue);
+      createPackingListObj(packListArr);
+    }
+
   });
 
     // var itemValue = $("#packingListItem").val().trim();
@@ -414,21 +418,24 @@ $(document).ready(function() {
   // function to delete packing list item
   $(document.body).on("click", ".trashColumn", function() {
     var listRow = $(this).parent();
-    var deletedArrItem = (" " + $(this).attr("value"))
-    var deletedArrItem = packListArr.indexOf(deletedArrItem)
-    packListArr.splice(deletedArrItem, 1)
+
+    //Tak Jan 23
+    var deletedArrItem = listRow.find("div:last").attr("value");
+    var deletedArrPos = packListArr.indexOf(deletedArrItem);
+    console.log(deletedArrItem);
+    console.log(deletedArrPos);
+    packListArr.splice(deletedArrPos, 1);
     listRow.remove();
 
-    //Today
-    //Remove from Firebase
-    //var childKey = formatFirebaseCityKey(destination, destinationDate);
-    //var uidRef = usersRef.child(authUID + "/" + formattedKey + "/packinglist");
-    //console.log("cityKey",cityKey);
-
-    //uidRef.child(childKey).remove();
-    // uidRef.on("child_added", function(shot){
-    //   console.log("line 425!!!@!!!!!", shot.val());
-    // });
+    //Update Firebase with new array
+    var uidRef = usersRef.child(authUID + "/" + cityKey);
+    uidRef.update({
+      "packinglist": packListArr
+    });
+    // var deletedArrItem = (" " + $(this).attr("value"))
+    // var deletedArrItem = packListArr.indexOf(deletedArrItem)
+    // packListArr.splice(deletedArrItem, 1)
+    // listRow.remove();
 
   });
 
@@ -483,7 +490,7 @@ $(document).ready(function() {
     if ($("#blogPostArea") === "") {
     } else {
     $("#blogPostArea").prepend(blogEntry)
-    createBlogObj(savedTime);                                                                                                                                                             
+    createBlogObj(savedTime);
     $("#blogPostTitle").val("")
     $("#blogPostEntry").val("")
     }
@@ -655,18 +662,18 @@ function createBlogObj(savedTime) {
 
   var blogTitle = $("#blogPostTitle").val();
   var blogText = $("#blogPostEntry").val();
-  
+
   // we can also chain the two calls together
   blogRef.push().set({
     title: blogTitle,
     postTime: postDate,
     contents: blogText
   });
-  
+
   // var blogContents = {title:blogTitle, postTime:"moment", contents:blogText};
-  
+
   console.log("works");
-  
+
   // newBlogRef.set({
   //   blog: blogContents
   // });

@@ -1,6 +1,6 @@
 ## **VAYCAYMODE**
 
-VACAYMODE is an application built for the traveller who can't take their mind off of their upcoming vacation.  It gives the user a diversion from their every day tasks, and reminds them that better days are to come.  It also serves as a planning tool, allowing the user to check the current weather forecast, create packing and to-do lists, and even organize their thoughts as a blog.
+VAYCAYMODE is an application built for the traveller who can't take their mind off of their upcoming vacation.  It gives the user a diversion from their every day tasks, and reminds them that better days are to come.  It also serves as a planning tool, allowing the user to check the current weather forecast, create packing and to-do lists, and even organize their thoughts as a blog.
 
 ## **Motivation**
 

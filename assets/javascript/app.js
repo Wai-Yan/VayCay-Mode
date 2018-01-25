@@ -665,6 +665,8 @@ $(document).ready(function() {
     }
 
     createBlogObj(blogsArr);
+    
+    $('#myModal').modal('toggle');
 
   });
 

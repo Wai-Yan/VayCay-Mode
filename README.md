@@ -1,6 +1,6 @@
-## **VayCay Mode**
+## **VAYCAYMODE**
 
-Vaycaymode is an application built for the traveller who can't take their mind off of their upcoming vacation.  It gives the user a diversion from their every day tasks, and reminds them that better days are to come.  It also serves as a planning tool, allowing the user to check the current weather forecast, create packing and to-do lists, and even organize their thoughts as a blog.
+VACAYMODE is an application built for the traveller who can't take their mind off of their upcoming vacation.  It gives the user a diversion from their every day tasks, and reminds them that better days are to come.  It also serves as a planning tool, allowing the user to check the current weather forecast, create packing and to-do lists, and even organize their thoughts as a blog.
 
 ## **Motivation**
 
@@ -159,5 +159,5 @@ The Website is divided into 7 main sections:
 
 ## **Credits**
 
-This application was built by [Angel Kressin](https://github.com/angkressin), [Tak Nalut](https://github.com/tak009), [Wai Yan](https://github.com/Wai-Yan), and [Ali Kassam](https://github.com/alikassam0) -- Full Stack Web Development Students at George Washington University's Coding Boot Camp.
+This application was built by [Angela Kressin](https://github.com/angkressin), [Tak Nalut](https://github.com/tak009), [Wai Yan](https://github.com/Wai-Yan), and [Ali Kassam](https://github.com/alikassam0) -- Full Stack Web Development Students at George Washington University's Coding Boot Camp.
 

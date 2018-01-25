@@ -239,10 +239,8 @@ p {
 }
 
 .countdownMessage {
-  position: absolute;
   text-align: center;
-  top: 12%;
-  left: 29%;
+  margin: 1rem;
   z-index: 1;
   pointer-events: none;
   font-family: 'Abril Fatface', cursive;
@@ -250,9 +248,6 @@ p {
 }
 
 .clock {
-  position: absolute;
-  top: 30%;
-  left: 25%;
   z-index: 1;
   pointer-events: none;
 }
@@ -396,7 +391,7 @@ h2, .h2 {
 }
 
 .separator.separator-primary {
-    background-color: #009FDC;
+  background-color: #009FDC;
 }
 
 .map {
@@ -410,6 +405,10 @@ h2, .h2 {
 
 .image-right {
   margin-bottom: 90px;
+}
+
+.image-container.image-right {
+  margin-left: 0px;
 }
 
 .title-area-size {
@@ -477,24 +476,25 @@ a.footer-link {
   min-height: calc(100vh - 4rem);
 }
 
-/* @media only screen and (max-width: 1366px) {
-.search-bg {
-    background-size: 300%;
-    height: 890px;
-} */
 
-@media screen and (min-width: 768px) {
-.image-container.image-right {
-    top: 80px;
-    margin-left: -100px;
-    margin-bottom: 90px;
-}
-}
+
 
 @media only screen and (max-width: 1024px) {
+  .login-bg {
+    height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
   .search-bg {
     background-size: 300%;
     height: 1230px;
+  }
+  .image-container.image-left {
+    margin-left: 40px;
+  }
+  .image-container.image-right {
+    top: 80px;
+    margin-left: 40px;
   }
 }
 
@@ -506,10 +506,6 @@ a.footer-link {
   .login-heading {
     font-size: 2.8rem;
   }
-  /* .fixed-height-city {
-    overflow-y: scroll;
-    height: auto;
-} */
   .part-1-lead {
     font-size: 1.2rem;
   }
@@ -520,60 +516,184 @@ a.footer-link {
 
 @media only screen and (max-width: 768px) {
   .clock {
-    zoom: 0.5;
-    -moz-transform: scale(0.5)
+    zoom: 0.8;
+    -moz-transform: scale(0.8)
   }
   .login-heading {
     font-size: 2.5rem;
   }
-  /* .fixed-height-city {
-    overflow-y: scroll;
-    height: auto;
-} */
   .part-1-lead {
     font-size: 2rem;
   }
   .search-bg {
     height: 900px;
   }
+  .carousel-item {
+    height: 300px;
+  }
+  .countdownMessage {
+    font-size: 1.5rem;
+    padding-top: 3%;
+  }
+  .countdown-text-bg {
+    top: 0%;
+    height: 100%;
+  }
+  .weather-div {
+    height: 250px;
+  }
+  .weather-title {
+    font-size: 1.5rem;
+  }
+  .weather-destination-text {
+    font-size: 1.2rem;
+  }
+  .separator {
+    margin: 30px auto;
+  }
+  .section-story-overview {
+    padding: 0;
+  }
+  .image-container.image-left {
+    margin-bottom: 0px;
+    margin-left: 30px;
+  }
+  .image-container.image-right {
+    top: 80px;
+    margin-left: 30px;
+  }
+  .about-heading-text {
+    width: 100%;
+}
+  .img-small {
+  max-width: 100px;
+}
+}
+
+@media only screen and (max-width: 668px) {
+  .clock {
+    zoom: 0.6;
+    -moz-transform: scale(0.6)
+  }
+  .image-container.image-left {
+    margin-bottom: 0px;
+    margin-left: 0px;
+  }
+  .image-container.image-right {
+    top: 0px;
+    margin-left: 0px;
+    margin-bottom: 50px;
+  }
 }
 
 @media only screen and (max-width: 483px) {
   .clock {
-    zoom: 0.35;
-    -moz-transform: scale(0.35)
+    zoom: 0.45;
+    -moz-transform: scale(0.45)
   }
   .login-heading {
     font-size: 2.3rem;
   }
-  /* .fixed-height-city {
-    overflow-y: scroll;
-    height: auto;
-} */
   .part-1-lead {
     font-size: 1.5rem;
   }
   .search-bg {
     height: 750px;
   }
+  .carousel-item {
+    height: 200px;
+  }
+  .countdownMessage {
+    font-size: 1rem;
+  }
+  .countdown-text-bg {
+    top: 0%;
+    height: 100%;
+  }
+  .weather-title {
+    font-size: 1rem;
+  }
+  .weather-destination-text {
+    font-size: 1.2rem;
+  }
+  .separator {
+    margin: 70px auto;
+  }
+  .section-story-overview {
+    padding: 0;
+  }
+  .image-left {
+    margin-left: 0%;
+  }
+  .image-container.image-left {
+    margin-bottom: 0px;
+    margin-left: 0px;
+  }
+  .image-container.image-right {
+    top: 0px;
+    margin-left: 0px;
+    margin-bottom: 50px;
+  }
+  .about-heading-text {
+    width: 100%;
+}
+  .img-small {
+  max-width: 100px;
+}
 }
 
-@media only screen and (max-width: 410px) {
-  .clock {
-    zoom: 0.3;
-    -moz-transform: scale(0.3)
-  }
+@media only screen and (max-width: 414px) {
+  /* .clock {
+    zoom: 0.45;
+    -moz-transform: scale(0.45)
+  } */
   .login-heading {
     font-size: 2rem;
   }
-  /* .fixed-height-city {
-    overflow-y: scroll;
-    height: auto;
-} */
   .part-1-lead {
     font-size: 1.2rem;
   }
   .search-bg {
     height: 750px;
   }
+  .carousel-item {
+    height: 200px;
+  }
+  .countdownMessage {
+    font-size: 1rem;
+  }
+  .countdown-text-bg {
+    top: 0%;
+    height: 100%;
+  }
+  .weather-title {
+    font-size: 1rem;
+  }
+  .weather-destination-text {
+    font-size: 1.2rem;
+  }
+  .separator {
+    margin: 70px auto;
+  }
+  .section-story-overview {
+    padding: 0;
+  }
+  .image-left {
+    margin-left: 0px;
+  }
+  .image-container.image-left {
+    margin-bottom: 0px;
+    margin-left: 0px;
+  }
+  .image-container.image-right {
+    top: 0px;
+    margin-left: 0px;
+    margin-bottom: 50px;
+  }
+  .about-heading-text {
+    width: 100%;
+}
+  .img-small {
+  max-width: 100px;
+}
 }
